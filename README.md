@@ -9,3 +9,9 @@ The user will scan a waste with his camera. With the image classification algori
 ## Find recycling facilities
 
 The app is connecting to many APIs and maps to find the closest relevant recycling facility to the user.
+
+## Build
+
+```bash
+pip install -r requirements.txt
+```
