@@ -1,19 +1,21 @@
 import uuid
-from role import Role
+from data.role import Role
+import json
 
 
 class User:
-    def __init__(self, name: str, mail: str, password: str, role: Role):
+    def __init__(self, name: str, email: str, password: str, role: Role):
         self.name = name
-        self.mail = mail
+        self.email = email
         self.password = password
-        self.id = uuid.uuid1()
+        self.role = role
+        self.id = str(uuid.uuid1())
 
     def get_name(self):
         return self.name
 
-    def get_mail(self):
-        return self.mail
+    def get_email(self):
+        return self.email
 
     def get_password(self):
         return self.password
@@ -24,4 +26,9 @@ class User:
     def get_id(self):
         return self.id
 
+    def __str__(self):
+        return f'{self.name} {self.email} {self.password} {self.role}'
 
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True, indent=4)
