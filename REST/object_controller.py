@@ -18,7 +18,6 @@ class ObjectControllerReadUpdate(Resource):
     def put(self, object_id: str):
         args = dict(parser.parse_args())
 
-    
         if args is None:
             return {"Error": "Type is missing"}, 400        
 
@@ -28,6 +27,7 @@ class ObjectContollerCreate(Resource):
     # TODO: Implement post method
     def post(self):
         args = parser.parse_args()
+        
         if args['type'] is None:
             return {"Error": "Type is missing"}, 400
         if args['created_by'] is None:
