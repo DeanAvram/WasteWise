@@ -44,3 +44,12 @@ class Object:
         self.active = json_object['active']
         self.data = json_object['data']
         return self
+    
+    def toDict(self):
+        return {
+            '_id': self._id,
+            'type': self.type,
+            'created_by': self.created_by,
+            'active': self.active,
+            'data': self.data
+        }

@@ -12,14 +12,17 @@ parser.add_argument('data')
 class ObjectControllerReadUpdate(Resource):
     # TODO: Implement get method
     def get(self, object_id: str) -> dict:
-        return objectService.get_object(object_id)
+        return objectService.get_object(object_id).toDict()
 
     # TODO: Implement put method
     def put(self, object_id: str):
-        if object is None:
-            return {"Error": "Object does not exist"}, 400
-        
-        return objectService.update_object(object_id,object)
+        args = dict(parser.parse_args())
+
+    
+        if args is None:
+            return {"Error": "Type is missing"}, 400        
+
+        return objectService.update_object(object_id, args)
 
 class ObjectContollerCreate(Resource):
     # TODO: Implement post method
