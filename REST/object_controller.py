@@ -16,9 +16,6 @@ class ObjectControllerReadUpdate(Resource):
 
     # TODO: Implement put method
     def put(self, object_id: str):
-        object = Object()
-        object.fromJSON(ObjectService().get_object(object_id))
-        
         if object is None:
             return {"Error": "Object does not exist"}, 400
         

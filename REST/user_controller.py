@@ -13,10 +13,10 @@ parser.add_argument('role')
 
 
 class UserControllerReadUpdate(Resource):
-    def get(self, user_email: str) -> str:
+    def get(self, user_email: str) -> dict:
         return userService.get_user(user_email)
 
-    def put(self, user_email: str) -> str:
+    def put(self, user_email: str) -> dict:
         u = uuid.uuid1()
         d = {'key': str(u)}
         return d

@@ -9,14 +9,6 @@ class Object:
         self.active = True
         self.data = {}
 
-    # empty constructor
-    def __init__(self):
-        self._id = str(uuid.uuid1())
-        self.type = ""
-        self.created_by = ""
-        self.active = True
-        self.data = {}
-
     def get_id(self):
         return self._id
     

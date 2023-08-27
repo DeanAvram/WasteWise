@@ -9,7 +9,7 @@ class User:
         self.email = email
         self.password = password
         self.role = role
-        self.id = str(uuid.uuid1())
+        self._id = str(uuid.uuid1())
 
     def get_name(self):
         return self.name
@@ -24,7 +24,7 @@ class User:
         return self.role
 
     def get_id(self):
-        return self.id
+        return self._id
 
     def __str__(self):
         return f'{self.name} {self.email} {self.password} {self.role}'
