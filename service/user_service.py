@@ -4,6 +4,7 @@ from data.user import User
 from bson import json_util
 
 
+
 class UserService(MainService):
     def __init__(self):
         super().__init__()
