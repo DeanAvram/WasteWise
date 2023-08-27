@@ -11,7 +11,7 @@ app = Flask(__name__)
 api = Api(app)
 
 # User Routes
-api.add_resource(UserControllerReadUpdate, '/wastewize/users/<user_id>')
+api.add_resource(UserControllerReadUpdate, '/wastewize/users/<user_email>')
 api.add_resource(UserControllerCreate, '/wastewize/users')
 
 # Object Routes

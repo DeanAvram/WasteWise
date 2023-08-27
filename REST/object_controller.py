@@ -11,8 +11,8 @@ parser.add_argument('data')
 
 class ObjectControllerReadUpdate(Resource):
     # TODO: Implement get method
-    def get(self, object_id: str) -> dict:
-        return objectService.get_object(object_id).toDict()
+    def get(self, object_id: str):
+        return objectService.get_object(object_id)
 
     # TODO: Implement put method
     def put(self, object_id: str):

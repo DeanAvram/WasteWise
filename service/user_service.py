@@ -14,6 +14,6 @@ class UserService(MainService):
         self.users.insert_one(json.loads(user.toJSON()))
         return json.loads(user.toJSON())
 
-    def get_user(self, email: str) -> dict:
+    def get_user(self, email: str) -> User:
         data = self.users.find_one({'email': email})
         return json.loads(json_util.dumps(data))
