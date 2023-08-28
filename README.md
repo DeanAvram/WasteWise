@@ -10,8 +10,17 @@ The user will scan a waste with his camera. With the image classification algori
 
 The app is connecting to many APIs and maps to find the closest relevant recycling facility to the user.
 
-## Build
+## Venv
+### create a venv
+```powershell
+python -m venv venv
+```
+### activate venv
+```powershell
+.\venv\Scripts\Activate.ps1
+```
 
+## Build
 ```bash
 pip install -r requirements.txt
 ```
