@@ -4,3 +4,10 @@
 
 # Ignore all __pycache__ directories
 __pycache__/
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/WasteWize1.0.iml
+.idea/.gitignore
