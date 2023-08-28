@@ -1,4 +1,4 @@
-from datetime import datetime
+from time import time
 import uuid
 import json
 
@@ -9,7 +9,7 @@ class Command():
         self.type = type
         self.invoked_by = invoked_by
         self.data = {}
-        self.created_at = datetime.now()
+        self.created_at = int(round(time() * 1000))
 
     def get_id(self):
         return self._id

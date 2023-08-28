@@ -1,5 +1,8 @@
 from flask_restful import Resource, reqparse
 from data.command import Command
+from service.command_service import CommandService
+
+commandService = CommandService()
 
 parser = reqparse.RequestParser()
 parser.add_argument('type')
@@ -13,11 +16,9 @@ class CommandController(Resource):
             return {"Error": "Type is missing"}, 400
         if args['invoked_by'] is None:
             return {"Error": "Invoked by is missing"}, 400
-        if args['data'] is None:
-            return {"Error": "Data is missing"}, 400
         command = Command(args['type'], args['invoked_by'])
         command.set_data(args['data'])
-        return {"command_id": command.get_id()}, 201
+        return commandService.create_command(command), 201
 
 
 

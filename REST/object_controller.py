@@ -10,11 +10,9 @@ parser.add_argument('active')
 parser.add_argument('data')
 
 class ObjectControllerReadUpdate(Resource):
-    # TODO: Implement get method
     def get(self, object_id: str):
         return objectService.get_object(object_id)
 
-    # TODO: Implement put method
     def put(self, object_id: str):
         args = dict(parser.parse_args())
 
@@ -24,7 +22,6 @@ class ObjectControllerReadUpdate(Resource):
         return objectService.update_object(object_id, args)
 
 class ObjectContollerCreate(Resource):
-    # TODO: Implement post method
     def post(self):
         args = parser.parse_args()
         
