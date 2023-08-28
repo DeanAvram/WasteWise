@@ -17,6 +17,7 @@ class ObjectControllerReadUpdate(Resource):
         args = dict(parser.parse_args())
 
         if args is None:
+            # TODO: Check if this is the correct error
             return {"Error": "Type is missing"}, 400        
 
         return objectService.update_object(object_id, args)

@@ -16,10 +16,13 @@ class UserControllerReadUpdate(Resource):
     def get(self, user_email: str):
         return userService.get_user(user_email)
 
-    def put(self, user_email: str) -> dict:
-        u = uuid.uuid1()
-        d = {'key': str(u)}
-        return d
+    def put(self, user_email: str):
+        args = dict(parser.parse_args())
+        if args is None:
+            return {"Error": "New user is missing"}, 400
+
+        return userService.update_user(user_email, args)
+
 
 
 class UserControllerCreate(Resource):
