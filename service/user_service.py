@@ -1,7 +1,9 @@
 import json
 from service.main_service import MainService
+from service.input_validation import InputValidation
 from data.user import User
 from bson import json_util
+
 
 
 class UserService(MainService):
@@ -10,14 +12,7 @@ class UserService(MainService):
         self.users = super().get_db().users
 
     def create_user(self, user: dict) -> tuple:
-        if user['name'] is None:
-            return {"Error": "Name is missing"}, 400
-        if user['email'] is None:
-            return {"Error": "Email is missing"}, 400
-        if user['password'] is None:
-            return {"Error": "Password is missing"}, 400
-        if user['role'] is None:
-            return {"Error": "Role is missing"}, 400
+        InputValidation('name', 'email', 'password', 'role', body=user)
         if self.users.find_one({'email': user['email']}) is not None:
             return {"Error": "User already exists"}, 400
         new_user = User(user['name'], user['email'], user['password'], user['role'])
