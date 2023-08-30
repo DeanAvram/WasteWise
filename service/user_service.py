@@ -31,12 +31,11 @@ class UserService(MainService):
         return json.loads(json_util.dumps(data)), 200
 
     def update_user(self, user_email: str, new_user: dict) -> tuple:
-        # TODO: Add validation on input
         if new_user is None:
             return {"Error": "New user is missing"}, 400
         user = self.users.find_one({'email': user_email})  # get user from database
-        if user is None:
-            return {"Error": "Can't find user with email: " + user_email}, 404
+        if (new_user is None) or (new_user['role'] is None and new_user['name'] is None and new_user['email'] is None):
+            return {"Error": "New user is missing"}, 400
         if new_user['role'] is not None:
             return {"Error": "Can't Change User's role"}, 400
         if new_user['name'] is not None:

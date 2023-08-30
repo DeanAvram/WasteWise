@@ -1,10 +1,9 @@
 from flask import Flask
-from flask import request
-from flask_restful import reqparse, abort, Api, Resource
+from flask_restful import Api
 from REST.command_controller import CommandController
 from REST.user_controller import UserControllerReadUpdate, UserControllerCreate
 from REST.object_controller import ObjectControllerReadUpdate, ObjectContollerCreate
-from flask_pymongo import PyMongo
+from REST.admin_controller import AdminControllerUsers, AdminControllerObjects, AdminControllerCommands
 
 
 app = Flask(__name__)
@@ -20,5 +19,10 @@ api.add_resource(ObjectContollerCreate, '/wastewize/objects')
 
 # Command Routes
 api.add_resource(CommandController, '/wastewize/commands')
+
+# Admin Routes
+api.add_resource(AdminControllerUsers, '/wastewize/admin/users')
+api.add_resource(AdminControllerObjects, '/wastewize/admin/objects')
+api.add_resource(AdminControllerCommands, '/wastewize/admin/commands')
 
 app.run()
