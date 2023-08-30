@@ -18,25 +18,10 @@ class UserControllerReadUpdate(Resource):
 
     def put(self, user_email: str):
         args = dict(parser.parse_args())
-        if args is None:
-            return {"Error": "New user is missing"}, 400
-
         return userService.update_user(user_email, args)
-
 
 
 class UserControllerCreate(Resource):
     def post(self):
-        args = parser.parse_args()
-        if args['name'] is None:
-            return {"Error": "Name is missing"}, 400
-        if args['email'] is None:
-            return {"Error": "Email is missing"}, 400
-        if args['password'] is None:
-            return {"Error": "Password is missing"}, 400
-        if args['role'] is None:
-            return {"Error": "Role is missing"}, 400
-        if UserControllerReadUpdate().get(args['email']) is not None:
-            return {"Error": "User already exists"}, 400
-        user = User(args['name'], args['email'], args['password'], args['role'])
-        return userService.create_user(user), 201
+        args = dict(parser.parse_args())
+        return userService.create_user(args)
