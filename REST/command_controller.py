@@ -9,6 +9,7 @@ parser.add_argument('type')
 parser.add_argument('invoked_by')
 parser.add_argument('data')
 
+
 class CommandController(Resource):
     def post(self):
         args = parser.parse_args()
@@ -19,6 +20,3 @@ class CommandController(Resource):
         command = Command(args['type'], args['invoked_by'])
         command.set_data(args['data'])
         return commandService.create_command(command), 201
-
-
-

@@ -1,8 +1,4 @@
 from service.main_service import MainService
-from data.user import User
-from data.object import Object
-from data.command import Command
-from bson import json_util
 
 
 class AdminService(MainService):
@@ -11,6 +7,7 @@ class AdminService(MainService):
         self.users = super().get_db().users
         self.objects = super().get_db().objects
         self.commands = super().get_db().commands
+
     def delete_users(self) -> tuple:
         self.users.delete_many({})
         return '', 204
