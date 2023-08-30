@@ -1,7 +1,5 @@
 from flask_restful import Resource, reqparse
-import uuid
 from service.user_service import UserService
-from data.user import User
 
 
 parser = reqparse.RequestParser()
@@ -13,15 +11,15 @@ parser.add_argument('role')
 
 
 class UserControllerReadUpdate(Resource):
-    def get(self, user_email: str):
+    def get(self, user_email: str) -> tuple:
         return userService.get_user(user_email)
 
-    def put(self, user_email: str):
+    def put(self, user_email: str) -> tuple:
         args = dict(parser.parse_args())
         return userService.update_user(user_email, args)
 
 
 class UserControllerCreate(Resource):
-    def post(self):
+    def post(self) -> tuple:
         args = dict(parser.parse_args())
         return userService.create_user(args)

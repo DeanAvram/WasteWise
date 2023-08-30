@@ -9,7 +9,7 @@ class UserService(MainService):
         super().__init__()
         self.users = super().get_db().users
 
-    def create_user(self, user: dict):
+    def create_user(self, user: dict) -> tuple:
         if user['name'] is None:
             return {"Error": "Name is missing"}, 400
         if user['email'] is None:
@@ -22,19 +22,19 @@ class UserService(MainService):
             return {"Error": "User already exists"}, 400
         new_user = User(user['name'], user['email'], user['password'], user['role'])
         self.users.insert_one(json.loads(new_user.toJSON()))
-        return json.loads(json_util.dumps(user))
+        return json.loads(json_util.dumps(user)), 201
 
-    def get_user(self, user_email: str) -> User:
+    def get_user(self, user_email: str) -> tuple:
         data = self.users.find_one({'email': user_email})
         if data is None:
             return {"Error": "Can't find user with email: " + user_email}, 404
-        return json.loads(json_util.dumps(data))
+        return json.loads(json_util.dumps(data)), 200
 
-    def update_user(self, user_email: str, new_user: dict):
+    def update_user(self, user_email: str, new_user: dict) -> tuple:
         # TODO: Add validation on input
         if new_user is None:
             return {"Error": "New user is missing"}, 400
-        user = self.users.find_one({'email': user_email}) # get user from database
+        user = self.users.find_one({'email': user_email})  # get user from database
         if user is None:
             return {"Error": "Can't find user with email: " + user_email}, 404
         if new_user['role'] is not None:
@@ -47,5 +47,3 @@ class UserService(MainService):
             user['password'] = new_user['password']
         self.users.update_one({'email': user_email}, {'$set': user})  # update user in database
         return '', 204
-
-
