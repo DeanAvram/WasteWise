@@ -1,4 +1,5 @@
 from flask import abort
+from http import HTTPStatus
 
 
 class InputValidation:
@@ -11,5 +12,5 @@ class InputValidation:
         for inp in self.inputs:
             if body[inp] is None:
                 msg = inp + " is missing"
-                abort(400, msg)
+                abort(HTTPStatus.BAD_REQUEST, msg)
         return True

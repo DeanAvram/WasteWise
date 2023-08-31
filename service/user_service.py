@@ -3,6 +3,8 @@ from service.main_service import MainService
 from service.input_validation import InputValidation
 from data.user import User
 from bson import json_util
+from http import HTTPStatus
+
 
 
 
@@ -14,25 +16,25 @@ class UserService(MainService):
     def create_user(self, user: dict) -> tuple:
         InputValidation('name', 'email', 'password', 'role', body=user)
         if self.users.find_one({'email': user['email']}) is not None:
-            return {"Error": "User already exists"}, 400
+            return {"Error": "User already exists"}, HTTPStatus.BAD_REQUEST
         new_user = User(user['name'], user['email'], user['password'], user['role'])
         self.users.insert_one(json.loads(new_user.toJSON()))
-        return json.loads(json_util.dumps(user)), 201
+        return json.loads(json_util.dumps(user)), HTTPStatus.CREATED
 
     def get_user(self, user_email: str) -> tuple:
         data = self.users.find_one({'email': user_email})
         if data is None:
-            return {"Error": "Can't find user with email: " + user_email}, 404
-        return json.loads(json_util.dumps(data)), 200
+            return {"Error": "Can't find user with email: " + user_email}, HTTPStatus.NOT_FOUND
+        return json.loads(json_util.dumps(data)), HTTPStatus.OK
 
     def update_user(self, user_email: str, new_user: dict) -> tuple:
         if new_user is None:
-            return {"Error": "New user is missing"}, 400
+            return {"Error": "New user is missing"}, HTTPStatus.BAD_REQUEST
         user = self.users.find_one({'email': user_email})  # get user from database
         if (new_user is None) or (new_user['role'] is None and new_user['name'] is None and new_user['email'] is None):
-            return {"Error": "New user is missing"}, 400
+            return {"Error": "New user is missing"}, HTTPStatus.BAD_REQUEST
         if new_user['role'] is not None:
-            return {"Error": "Can't Change User's role"}, 400
+            return {"Error": "Can't Change User's role"}, HTTPStatus.BAD_REQUEST
         if new_user['name'] is not None:
             user['name'] = new_user['name']
         if new_user['email'] is not None:
@@ -40,4 +42,4 @@ class UserService(MainService):
         if new_user['password'] is not None:
             user['password'] = new_user['password']
         self.users.update_one({'email': user_email}, {'$set': user})  # update user in database
-        return '', 204
+        return '', HTTPStatus.NO_CONTENT

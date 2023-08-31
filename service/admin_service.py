@@ -1,4 +1,5 @@
 from service.main_service import MainService
+from http import HTTPStatus
 
 
 class AdminService(MainService):
@@ -10,21 +11,21 @@ class AdminService(MainService):
 
     def delete_users(self) -> tuple:
         self.users.delete_many({})
-        return '', 204
+        return '', HTTPStatus.NO_CONTENT
 
     def get_all_users(self) -> tuple:
-        return list(self.users.find({})), '200'
+        return list(self.users.find({})), HTTPStatus.OK
 
     def delete_objects(self) -> tuple:
         self.objects.delete_many({})
-        return '', 204
+        return '', HTTPStatus.NO_CONTENT
 
     def get_all_objects(self) -> tuple:
-        return list(self.objects.find({})), '200'
+        return list(self.objects.find({})), HTTPStatus.OK
 
     def delete_commands(self) -> tuple:
         self.commands.delete_many({})
-        return '', 204
+        return '', HTTPStatus.NO_CONTENT
 
     def get_all_commands(self) -> tuple:
-        return list(self.commands.find({})), '200'
+        return list(self.commands.find({})), HTTPStatus.OK
