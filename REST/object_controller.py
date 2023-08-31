@@ -15,23 +15,10 @@ class ObjectControllerReadUpdate(Resource):
 
     def put(self, object_id: str):
         args = dict(parser.parse_args())
-
-        if args is None:
-            # TODO: Check if this is the correct error
-            return {"Error": "Type is missing"}, 400        
-
         return objectService.update_object(object_id, args)
 
 class ObjectContollerCreate(Resource):
     def post(self):
-        args = parser.parse_args()
-        
-        if args['type'] is None:
-            return {"Error": "Type is missing"}, 400
-        if args['created_by'] is None:
-            return {"Error": "Created by is missing"}, 400
-        
-        # create object
-        object = Object(args['type'], args['created_by'])
-        return objectService.create_object(object), 201
+        args = dict(parser.parse_args())
+        return objectService.create_object(args)
 
