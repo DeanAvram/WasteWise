@@ -2,5 +2,5 @@ Flask==2.3.3
 Flask-RESTful==0.3.10
 Flask-PyMongo==2.3.0
 mongoengine==0.20.0
-
 pymongo~=3.13.0
+pytest==7.4.0

@@ -20,8 +20,16 @@ python -m venv venv
 
 ### activate venv
 
+#### powershell
+
 ```powershell
 .\venv\Scripts\Activate.ps1
+```
+
+#### bash
+
+```bash
+source venv/bin/activate 
 ```
 
 ## Build

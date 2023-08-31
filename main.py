@@ -5,10 +5,13 @@ from REST.user_controller import UserControllerReadUpdate, UserControllerCreate
 from REST.object_controller import ObjectControllerReadUpdate, ObjectContollerCreate
 from REST.admin_controller import AdminControllerUsers, AdminControllerObjects, AdminControllerCommands
 
+def create_app():
+    app = Flask(__name__)
+    app.config['ENV'] ='development'
+    return app
 
-app = Flask(__name__)
+application = app = create_app()
 api = Api(app)
-
 # User Routes
 api.add_resource(UserControllerReadUpdate, '/wastewize/users/<user_email>')
 api.add_resource(UserControllerCreate, '/wastewize/users')
@@ -25,4 +28,7 @@ api.add_resource(AdminControllerUsers, '/wastewize/admin/users')
 api.add_resource(AdminControllerObjects, '/wastewize/admin/objects')
 api.add_resource(AdminControllerCommands, '/wastewize/admin/commands')
 
-app.run()
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
