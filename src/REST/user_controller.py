@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from service.user_service import UserService
+from src.service.user_service import UserService
 
 
 parser = reqparse.RequestParser()

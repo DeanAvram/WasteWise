@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
-from data.object import Object
-from service.object_service import ObjectService
+from src.data.object import Object
+from src.service.object_service import ObjectService
 
 parser = reqparse.RequestParser()
 objectService = ObjectService()

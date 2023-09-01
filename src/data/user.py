@@ -1,5 +1,5 @@
 import uuid
-from data.role import Role
+from src.data.role import Role
 import json
 
 

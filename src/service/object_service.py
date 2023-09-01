@@ -1,7 +1,7 @@
-from service.main_service import MainService
+from src.service.main_service import MainService
 from bson import json_util
 import json
-from data.object import Object
+from src.data.object import Object
 from http import HTTPStatus
 
 class ObjectService(MainService):

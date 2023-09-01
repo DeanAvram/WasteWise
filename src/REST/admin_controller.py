@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from service.admin_service import AdminService
+from src.service.admin_service import AdminService
 
 
 adminService = AdminService()
