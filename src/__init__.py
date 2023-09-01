@@ -1,10 +1,11 @@
+import os
 from flask import Flask
 from flask_restful import Api
 from src.REST.admin_controller import AdminControllerCommands, AdminControllerObjects, AdminControllerUsers
 from src.REST.command_controller import CommandController
 from src.REST.object_controller import ObjectContollerCreate, ObjectControllerReadUpdate
-
 from src.REST.user_controller import UserControllerCreate, UserControllerReadUpdate
+
 
 
 def create_app(test_config=None):
@@ -12,7 +13,7 @@ def create_app(test_config=None):
     
     if test_config is None:
         app.config.from_mapping(
-            SEKRET_KEY='dev',
+            SEKRET_KEY=os.environ.get('SECRET_KEY'),
         )
     else:
         app.config.from_mapping(test_config)
