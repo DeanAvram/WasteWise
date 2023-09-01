@@ -1,4 +1,5 @@
 from pathlib import Path
+from http import HTTPStatus
 
 resource_path = Path(__file__).parent / 'resources'
 
@@ -10,4 +11,4 @@ def test_create_object(client):
             "created_by":"daniel"
         }
     )
-    assert response.status_code == 201
+    assert response.status_code == HTTPStatus.CREATED
