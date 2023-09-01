@@ -1,4 +1,4 @@
-# WasteWize
+# WasteWise
 
 An app that encourages people to recycle
 
