@@ -1,4 +1,4 @@
-from src.service.main_service import MainService
+from src.services.main_service import MainService
 from http import HTTPStatus
 
 

@@ -1,6 +1,6 @@
 import json
-from src.service.main_service import MainService
-from src.service.input_validation import InputValidation
+from src.services.main_service import MainService
+from src.services.input_validation import InputValidation
 from src.data.user import User
 from bson import json_util
 from http import HTTPStatus

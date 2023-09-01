@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import request
 
-from src.service.admin_service import AdminService
+from src.services.admin_service import AdminService
 
 
 
