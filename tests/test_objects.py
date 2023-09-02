@@ -12,3 +12,6 @@ def test_create_object(client):
         }
     )
     assert response.status_code == HTTPStatus.CREATED
+    assert response.json['type'] == 'image'
+    assert response.json['created_by'] == 'daniel'
+    
