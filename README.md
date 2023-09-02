@@ -52,6 +52,5 @@ flask run
 ### Srart mongo in linux
 
 ```bash
-sudo systemctl start mongod
-sudo systemctl status mongod
+sudo systemctl start mongod | sudo systemctl status mongod
 ```
