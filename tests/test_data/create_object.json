@@ -1,0 +1,12 @@
+{
+    "data":[
+        {
+            "path":"/wastewise/objects",
+            "object":{
+                "type":"image",
+                "created_by":"daniel"
+            },
+            "status_code":201
+        }
+    ]
+}
