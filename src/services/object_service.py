@@ -10,6 +10,12 @@ class ObjectService(MainService):
         self.objects = super().get_db().objects
     
     def create_object(self, args: dict) -> tuple:
+        if 'type' not in args:
+            return {"Error": "Type is missing"}, HTTPStatus.BAD_REQUEST
+        
+        if 'created_by' not in args:
+            return {"Error": "Created by is missing"}, HTTPStatus.BAD_REQUEST        
+        
         if args['type'] is None:
             return {"Error": "Type is missing"}, HTTPStatus.BAD_REQUEST
         if args['created_by'] is None:
@@ -17,7 +23,15 @@ class ObjectService(MainService):
         
         # create object
         object = Object(args['type'], args['created_by'])
+        
+        # check if args['data'] exists
+        if 'data' in args:
+            object.data = args['data']
+        
+        # insert object into database
         self.objects.insert_one(json.loads(object.toJSON()))
+        
+        # return object as json
         return json.loads(object.toJSON()), HTTPStatus.CREATED
     
     def get_object(self, object_id: str) -> tuple:
