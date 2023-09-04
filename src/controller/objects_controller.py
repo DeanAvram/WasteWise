@@ -20,3 +20,4 @@ def get_object(object_id: str):
 def update_object(object_id: str):
     data = request.get_json()
     return objectService.update_object(object_id, data)
+

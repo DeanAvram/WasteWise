@@ -6,8 +6,6 @@ from bson import json_util
 from http import HTTPStatus
 
 
-
-
 class UserService(MainService):
     def __init__(self):
         super().__init__()
