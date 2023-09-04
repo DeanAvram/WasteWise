@@ -23,6 +23,9 @@ class CommandInvoker:
             
         elif type == "command_2":
             self.command = command_2()
+
+        elif type == "predict":
+            pass
         
     def execute_command(self):
         if isinstance(self.command, ICommand):

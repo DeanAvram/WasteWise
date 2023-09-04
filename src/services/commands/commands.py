@@ -12,3 +12,9 @@ class command_2(ICommand):
         return {
             "message": "Command 2 executed"
         }
+
+class predict(ICommand):
+    def execute(self, data: dict) -> dict:
+        return {
+            "message": "Predict executed"
+        }
