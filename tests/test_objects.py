@@ -7,9 +7,6 @@ from tests.conftest import get_test_data
 resource_path = Path(__file__).parent / 'resources'
 
     
-
-
-
 def test_create_object(client):
     data = get_test_data('create_object.json')
     
