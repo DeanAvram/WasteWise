@@ -1,14 +1,21 @@
+from dataclasses import dataclass
 from time import time
 import uuid
 import json
 
+@dataclass
 class Command():
+    
+    _id: str
+    type: str
+    invoked_by: str
+    data: dict
+    created_at: int 
 
     def __init__(self, type: str, invoked_by: str):
         self._id = str(uuid.uuid1())
         self.type = type
         self.invoked_by = invoked_by
-        self.data = {}
         self.created_at = int(round(time() * 1000))
 
     def get_id(self):

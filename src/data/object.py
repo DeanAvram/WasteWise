@@ -1,15 +1,21 @@
+from dataclasses import dataclass
 import uuid
 import json
 
+@dataclass
 class Object:
+
+    _id: str
+    type: str
+    created_by: str
+    active: bool
+    data: dict
 
 
     def __init__(self, type: str, created_by: str):
         self._id = str(uuid.uuid1())
         self.type = type
         self.created_by = created_by
-        self.active = True
-        self.data = {}
 
     def get_id(self):
         return self._id
