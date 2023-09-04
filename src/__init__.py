@@ -5,6 +5,7 @@ from src.controller.objects_controller import objects
 from src.controller.users_controller import users
 from src.controller.command_controller import commands
 from src.controller.admin_controller import admin
+from src.controller.predict_controller import predict
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -21,5 +22,6 @@ def create_app(test_config=None):
     app.register_blueprint(users)
     app.register_blueprint(commands)
     app.register_blueprint(admin)
+    app.register_blueprint(predict)
 
     return app
