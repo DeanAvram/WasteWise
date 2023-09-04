@@ -1,8 +1,8 @@
 import uuid
 import json
 
-class Object:
 
+class Object:
 
     def __init__(self, type: str, created_by: str):
         self._id = str(uuid.uuid1())

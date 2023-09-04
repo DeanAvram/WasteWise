@@ -2,7 +2,8 @@ from time import time
 import uuid
 import json
 
-class Command():
+
+class Command:
 
     def __init__(self, type: str, invoked_by: str):
         self._id = str(uuid.uuid1())

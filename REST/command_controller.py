@@ -1,5 +1,4 @@
 from flask_restful import Resource, reqparse
-from data.command import Command
 from service.command_service import CommandService
 
 commandService = CommandService()

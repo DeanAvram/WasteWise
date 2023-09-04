@@ -2,6 +2,7 @@ from service.main_service import MainService
 from data.command import Command
 import json
 from http import HTTPStatus
+from service.input_validation import InputValidation
 
 
 class CommandService(MainService):
@@ -11,10 +12,7 @@ class CommandService(MainService):
         self.commands = super().get_db().commands
 
     def create_command(self, args: dict) -> tuple:
-        if args['type'] is None:
-            return {"Error": "Type is missing"}, HTTPStatus.BAD_REQUEST
-        if args['invoked_by'] is None:
-            return {"Error": "Invoked by is missing"}, HTTPStatus.BAD_REQUEST
+        InputValidation('type', 'invoked_by', request_name="POST", body=args)
         command = Command(args['type'], args['invoked_by'])
         command.set_data(args['data'])
         self.commands.insert_one(json.loads(command.toJSON()))
