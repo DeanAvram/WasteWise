@@ -38,11 +38,19 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Run
+
+### Terminal
+
+```bash
+export FLASK_APP=src 
+flask run
+```
+
 ## Mongo
 
 ### Srart mongo in linux
 
 ```bash
-sudo systemctl start mongod
-sudo systemctl status mongod
+sudo systemctl start mongod | sudo systemctl status mongod
 ```

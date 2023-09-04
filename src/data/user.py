@@ -1,15 +1,25 @@
+from dataclasses import dataclass
 import uuid
-from data.role import Role
+from src.data.role import Role
 import json
 
-
+@dataclass
 class User:
+    
+    _id: str
+    name: str
+    email: str
+    password: str
+    role: Role
+    
+    
+    
     def __init__(self, name: str, email: str, password: str, role: Role):
+        self._id = str(uuid.uuid1())
         self.name = name
         self.email = email
         self.password = password
         self.role = role
-        self._id = str(uuid.uuid1())
 
     def get_name(self):
         return self.name

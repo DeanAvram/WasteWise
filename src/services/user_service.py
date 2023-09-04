@@ -1,10 +1,9 @@
 import json
-from service.main_service import MainService
-from service.input_validation import InputValidation
-from data.user import User
+from src.services.main_service import MainService
+from src.services.input_validation import InputValidation
+from src.data.user import User
 from bson import json_util
 from http import HTTPStatus
-from flask import abort
 
 
 class UserService(MainService):
@@ -13,7 +12,7 @@ class UserService(MainService):
         self.users = super().get_db().users
 
     def create_user(self, user: dict) -> tuple:
-        InputValidation('name', 'email', 'password', 'role', request_name="POST", body=user)
+        InputValidation('name', 'email', 'password', 'role', body=user)
         if self.users.find_one({'email': user['email']}) is not None:
             return {"Error": "User already exists"}, HTTPStatus.BAD_REQUEST
         new_user = User(user['name'], user['email'], user['password'], user['role'])
@@ -29,14 +28,11 @@ class UserService(MainService):
     def update_user(self, user_email: str, new_user: dict) -> tuple:
         if new_user is None:
             return {"Error": "New user is missing"}, HTTPStatus.BAD_REQUEST
-        if (new_user is None) or (new_user['role'] is None and new_user['name'] is None and new_user['email'] is None
-                                  and new_user['password'] is None):
-            return {"Error": "New user is missing"}, HTTPStatus.BAD_REQUEST
         user = self.users.find_one({'email': user_email})  # get user from database
-        if user is None:
-            abort(HTTPStatus.NOT_FOUND, "Can't find user with email: " + user_email)
-
-        InputValidation('name', 'email', 'password', 'role', request_name="PUT", body=new_user)
+        if (new_user is None) or (new_user['role'] is None and new_user['name'] is None and new_user['email'] is None):
+            return {"Error": "New user is missing"}, HTTPStatus.BAD_REQUEST
+        if new_user['role'] is not None:
+            return {"Error": "Can't Change User's role"}, HTTPStatus.BAD_REQUEST
         if new_user['name'] is not None:
             user['name'] = new_user['name']
         if new_user['email'] is not None:
