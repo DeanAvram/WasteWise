@@ -15,7 +15,7 @@
                 "type":"image",
                 "created_by":"bob",
                 "data":{
-                    "url":"http://www.google.com"
+                    "url":"https://www.google.com"
                 }
             },
             "status_code":201,
@@ -44,7 +44,7 @@
                 "type":"",
                 "created_by":"bob",
                 "data":{
-                    "url":"http://www.google.com"
+                    "url":"https://www.google.com"
                 }
             },
             "status_code":400,
