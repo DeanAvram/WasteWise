@@ -170,6 +170,7 @@ command_schema = {
     },
     "required":[
         "type",
-        "invoked_by"
+        "invoked_by",
+        "created_at"
     ]
 }
