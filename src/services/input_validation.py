@@ -51,11 +51,13 @@ object_schema = {
    "properties":{
         "type":{
             "description":"The type of the object",
-            "type":"string"
+            "type":"string",
+            "minLength": 1
         },
         "created_by":{
             "description":"The user that created the object",
-            "type":"string"
+            "type":"string",
+            "minLength": 1
         },
         "data":{
             "description":"The data of the object",
@@ -91,7 +93,8 @@ user_schema = {
     "properties":{
         "name":{
             "description":"The name of the user",
-            "type":"string"
+            "type":"string",
+            "minLength": 1
         },
         "email":{
             "description":"The email of the user",
@@ -107,7 +110,8 @@ user_schema = {
         },
         "role":{
             "description":"The role of the user",
-            "type":"string"
+            "type":"string",
+            "minLength": 1
         }
     },
     "required":[
@@ -125,7 +129,8 @@ user_schema_update = {
     "properties": {
         "name": {
             "description": "The name of the user",
-            "type": "string"
+            "type": "string",
+            "minLength": 1
         },
         "email": {
             "description": "The email of the user",
@@ -141,7 +146,8 @@ user_schema_update = {
         },
         "role": {
             "description": "The role of the user",
-            "type": "string"
+            "type": "string",
+            "minLength": 1
         }
     }
 }
@@ -153,11 +159,13 @@ command_schema = {
     "properties":{
         "type":{
             "description":"The type of the command",
-            "type":"string"
+            "type":"string",
+            "minLength": 1
         },
         "invoked_by":{
             "description":"The user that invoked the command",
-            "type":"string"
+            "type":"string",
+            "minLength": 1
         },
         "data":{
             "description":"The data of the command",
