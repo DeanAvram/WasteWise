@@ -1,0 +1,44 @@
+{
+    "tasks":[
+        {
+            "path":"/wastewise/objects",
+            "old_object":{
+                "type":"image",
+                "created_by":"daniel",
+                "active":true
+            },
+            "changes":{
+                "active":false
+            },
+            "new_object":{
+                "type":"image",
+                "created_by":"daniel",
+                "active":false
+            },
+            "status_code":204,
+            "explain":"This is a valid update of active",
+            "valid" : true
+        },
+        {
+            "path":"/wastewise/objects",
+            "old_object":{
+                "type":"image",
+                "created_by":"daniel",
+                "active":true
+            },
+            "changes":{
+                "created_by":"google"
+            },
+            "new_object":{
+                "type":"image",
+                "created_by":"google",
+                "active":false
+            },
+            "status_code":400,
+            "explain":"Cant change created_by",
+            "valid" : false
+        }
+
+        
+    ]
+}

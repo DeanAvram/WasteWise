@@ -49,6 +49,7 @@ class ObjectService(MainService):
         except Exception as e:
             return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
 
+        
         object = self.objects.find_one({'_id': object_id}) # get object from database
         object = json.loads(json_util.dumps(object)) # convert to json
 

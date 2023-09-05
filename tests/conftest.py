@@ -41,3 +41,13 @@ def get_test_data(filename) -> dict:
         data = json.load(file)
 
     return data
+
+def equal_dicts_exclude(d1, d2, *ignore_keys):
+    d1_filtered = {k:v for k,v in d1.items() if k not in ignore_keys}
+    d2_filtered = {k:v for k,v in d2.items() if k not in ignore_keys}
+    return d1_filtered == d2_filtered
+
+def equal_dicts_only(d1, d2, *keys):
+    d1_filtered = {k:v for k,v in d1.items() if k in keys}
+    d2_filtered = {k:v for k,v in d2.items() if k in keys}
+    return d1_filtered == d2_filtered

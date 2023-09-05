@@ -61,7 +61,8 @@ class Object:
             'data': self.data
         }
         
-    def update(self, object: dict):
+    def update(self, object: dict):    
+        
         if 'active' in object and object['active'] is not None:
             self.active = object['active']
         if 'data' in object and object['data'] is not None:

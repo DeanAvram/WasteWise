@@ -62,12 +62,17 @@ object_schema = {
         "data":{
             "description":"The data of the object",
             "type":"object",
+        },
+        "active":{
+            "description":"The active status of the object",
+            "type":"boolean"
         }
    },
    "required":[
       "type",
       "created_by"
-   ]
+   ],
+    "additionalProperties": False
 }
 
 object_schema_update = {
@@ -83,7 +88,8 @@ object_schema_update = {
             "description":"The data of the object",
             "type":"object",
         }
-    }
+    },
+    "additionalProperties": False
 }
 
 user_schema = {
@@ -119,7 +125,8 @@ user_schema = {
         "email",
         "password",
         "role"
-    ]
+    ],
+    "additionalProperties": False
 }
 
 user_schema_update = {
@@ -149,7 +156,8 @@ user_schema_update = {
             "type": "string",
             "minLength": 1
         }
-    }
+    },
+    "additionalProperties": False
 }
 
 command_schema = {
@@ -180,5 +188,6 @@ command_schema = {
         "type",
         "invoked_by",
         "created_at"
-    ]
+    ],
+    "additionalProperties": False
 }
