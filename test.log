@@ -1,0 +1,44 @@
+INFO:tests.conftest:Starting test_create_object
+INFO:tests.conftest:-- Got test data
+INFO:tests.conftest:-- Got 5 tasks
+INFO:tests.conftest:-- Starting loop
+
+INFO:tests.conftest:-- -- Starting loop 1
+INFO:tests.conftest:-- -- Posting {'type': 'image', 'created_by': 'daniel'} to /wastewise/objects
+INFO:tests.conftest:-- -- Got response <WrapperTestResponse streamed [201 CREATED]>
+INFO:tests.conftest:-- -- Answer is True
+INFO:tests.conftest:-- -- -- Comparing {'_id': '7cd56092-4c0b-11ee-979b-a58aaa124eb3', 'created_by': 'daniel', 'type': 'image'} to {'type': 'image', 'created_by': 'daniel'}
+INFO:tests.conftest:-- -- -- Answer is True
+INFO:tests.conftest:-- -- Loop 1 done
+
+INFO:tests.conftest:-- -- Starting loop 2
+INFO:tests.conftest:-- -- Posting {'type': 'image', 'created_by': 'bob', 'data': {'url': 'https://www.google.com'}} to /wastewise/objects
+INFO:tests.conftest:-- -- Got response <WrapperTestResponse streamed [201 CREATED]>
+INFO:tests.conftest:-- -- Answer is True
+INFO:tests.conftest:-- -- -- Comparing {'_id': '7cd56093-4c0b-11ee-979b-a58aaa124eb3', 'created_by': 'bob', 'data': {'url': 'https://www.google.com'}, 'type': 'image'} to {'type': 'image', 'created_by': 'bob', 'data': {'url': 'https://www.google.com'}}
+INFO:tests.conftest:-- -- -- Answer is True
+INFO:tests.conftest:-- -- -- -- Comparing {'_id': '7cd56093-4c0b-11ee-979b-a58aaa124eb3', 'created_by': 'bob', 'data': {'url': 'https://www.google.com'}, 'type': 'image'} to {'type': 'image', 'created_by': 'bob', 'data': {'url': 'https://www.google.com'}}
+INFO:tests.conftest:-- -- -- -- Answer is True
+INFO:tests.conftest:-- -- Loop 2 done
+
+INFO:tests.conftest:-- -- Starting loop 3
+INFO:tests.conftest:-- -- Posting {'type': 'image'} to /wastewise/objects
+INFO:tests.conftest:-- -- Got response <WrapperTestResponse streamed [400 BAD REQUEST]>
+INFO:tests.conftest:-- -- Answer is True
+INFO:tests.conftest:-- -- Loop 3 done
+
+INFO:tests.conftest:-- -- Starting loop 4
+INFO:tests.conftest:-- -- Posting {'created_by': 'bob'} to /wastewise/objects
+INFO:tests.conftest:-- -- Got response <WrapperTestResponse streamed [400 BAD REQUEST]>
+INFO:tests.conftest:-- -- Answer is True
+INFO:tests.conftest:-- -- Loop 4 done
+
+INFO:tests.conftest:-- -- Starting loop 5
+INFO:tests.conftest:-- -- Posting {'type': '', 'created_by': 'bob', 'data': {'url': 'https://www.google.com'}} to /wastewise/objects
+INFO:tests.conftest:-- -- Got response <WrapperTestResponse streamed [400 BAD REQUEST]>
+INFO:tests.conftest:-- -- Answer is True
+INFO:tests.conftest:-- -- Loop 5 done
+
+INFO:tests.conftest:Done test_create_object
+
+

@@ -7,7 +7,6 @@ from http import HTTPStatus
 from src.services.input_validation import object_schema, object_schema_update
 
 
-
 class ObjectService(MainService):
     def __init__(self):
         super().__init__()

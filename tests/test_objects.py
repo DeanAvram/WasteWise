@@ -1,28 +1,46 @@
 from pathlib import Path
 from http import HTTPStatus
-from tests.conftest import get_test_data, equal_dicts_exclude, equal_dicts_only
+from tests.conftest import get_test_data, equal_dicts_exclude, equal_dicts_only, LOGGER
 
 
 resource_path = Path(__file__).parent / 'resources'
 
     
 def test_create_object(client):
+    counter: int = 1
+    LOGGER.info('Starting test_create_object')
     data = get_test_data('create_object.json')
+    LOGGER.info('-- Got test data')
+    LOGGER.info(f'-- Got {len(data["tasks"])} tasks')
     
-    
+    LOGGER.info('-- Starting loop\n')
     for obj in data['tasks']:
+        LOGGER.info(f'-- -- Starting loop {counter}')
+        LOGGER.info(f'-- -- Posting {obj["object"]} to {obj["path"]}')
         response = client.post(
             obj['path'],
             json=obj['object']
         )
-        
-        assert response.status_code == obj['status_code']
+        LOGGER.info(f'-- -- Got response {response}')
+        answer = response.status_code == obj['status_code']
+        LOGGER.info(f'-- -- Answer is {answer}')
+        assert answer
         
         if response.status_code == HTTPStatus.CREATED:
-            assert equal_dicts_only(response.json, obj['object'], 'type', 'created_by')
+            LOGGER.info(f'-- -- -- Comparing {response.json} to {obj["object"]}')
+            answer = equal_dicts_only(response.json, obj['object'], 'type', 'created_by')
+            LOGGER.info(f'-- -- -- Answer is {answer}')
+            assert answer
             
             if 'data' in obj['object']:
-                assert equal_dicts_exclude(response.json, obj['object'], '_id')
+                LOGGER.info(f'-- -- -- -- Comparing {response.json} to {obj["object"]}')
+                answer = equal_dicts_exclude(response.json, obj['object'], '_id')
+                LOGGER.info(f'-- -- -- -- Answer is {answer}')
+                assert answer
+        LOGGER.info(f'-- -- Loop {counter} done\n')
+        counter += 1
+    LOGGER.info('Done test_create_object\n\n')
+            
     
 def test_get_object(client):
     data = get_test_data('get_object.json')

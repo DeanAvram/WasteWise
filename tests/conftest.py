@@ -2,12 +2,17 @@ from pathlib import Path
 import pytest
 import json
 import os
+import logging
 
 from src import create_app
 from src.services.object_service import ObjectService
 
 
 objectService = ObjectService()
+LOGGER = logging.getLogger(__name__)
+# write to file after clearing it
+open('test.log', 'w').close()
+logging.basicConfig(filename='test.log', level=logging.INFO)
 
 
 @pytest.fixture
@@ -32,6 +37,8 @@ def before_and_after_test():
     objectService.db.objects.delete_many({}) 
 
     yield
+    
+
 
 def get_test_data(filename) -> dict:
     folder_path = os.path.abspath(Path(os.path.dirname(__file__)))
@@ -51,3 +58,4 @@ def equal_dicts_only(d1, d2, *keys):
     d1_filtered = {k:v for k,v in d1.items() if k in keys}
     d2_filtered = {k:v for k,v in d2.items() if k in keys}
     return d1_filtered == d2_filtered
+
