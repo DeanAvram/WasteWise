@@ -1,8 +1,10 @@
+from jsonschema import ValidationError, validate
 from src.services.commands.command_invoker import CommandInvoker
 from src.services.main_service import MainService
 from src.data.command import Command
 import json
 from http import HTTPStatus
+from src.services.input_validation import command_schema
 
 
 class CommandService(MainService):
@@ -13,10 +15,14 @@ class CommandService(MainService):
         self.commandInvoker = None
 
     def create_command(self, args: dict) -> tuple:
-        if args['type'] is None:
-            return {"Error": "Type is missing"}, HTTPStatus.BAD_REQUEST
-        if args['invoked_by'] is None:
-            return {"Error": "Invoked by is missing"}, HTTPStatus.BAD_REQUEST
+        try:
+            validate(instance=args, schema=command_schema)
+        except ValidationError as e:
+            return {"Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
+        except Exception as e:
+            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
+
+        
         command = Command(args['type'], args['invoked_by'])
         # command.set_data(args['data'])
         self.commands.insert_one(json.loads(command.toJSON()))

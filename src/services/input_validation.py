@@ -145,3 +145,31 @@ user_schema_update = {
         }
     }
 }
+
+command_schema = {
+    "title":"Command",
+    "description":"A command request json",
+    "type":"object",
+    "properties":{
+        "type":{
+            "description":"The type of the command",
+            "type":"string"
+        },
+        "invoked_by":{
+            "description":"The user that invoked the command",
+            "type":"string"
+        },
+        "data":{
+            "description":"The data of the command",
+            "type":"object",
+        },
+        "created_at":{
+            "description":"The time the command was created",
+            "type":"number"
+        }
+    },
+    "required":[
+        "type",
+        "invoked_by"
+    ]
+}
