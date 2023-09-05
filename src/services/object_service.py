@@ -1,8 +1,12 @@
+from jsonschema import ValidationError, validate
 from src.services.main_service import MainService
 from bson import json_util
 import json
 from src.data.object import Object
 from http import HTTPStatus
+from src.services.input_validation import object_schema
+
+
 
 class ObjectService(MainService):
     def __init__(self):
@@ -10,23 +14,13 @@ class ObjectService(MainService):
         self.objects = super().get_db().objects
     
     def create_object(self, args: dict) -> tuple:
-        # check if args is None or empty
-        if 'type' not in args:
-            return {"Error": "Type is missing"}, HTTPStatus.BAD_REQUEST
-        
-        if 'created_by' not in args:
-            return {"Error": "Created by is missing"}, HTTPStatus.BAD_REQUEST        
-        
-        if args['type'] is None:
-            return {"Error": "Type is missing"}, HTTPStatus.BAD_REQUEST
-        if args['created_by'] is None:
-            return {"Error": "Created by is missing"}, HTTPStatus.BAD_REQUEST
-        
-        if args['type'] == '':
-            return {"Error": "Type is empty"}, HTTPStatus.BAD_REQUEST
-        if args['created_by'] == '':
-            return {"Error": "Created by is empty"}, HTTPStatus.BAD_REQUEST        
-        
+        try:
+            validate(instance=args, schema=object_schema)
+        except ValidationError as e:
+            return {"Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
+        except Exception as e:
+            return {"Error": "Unknown error", "Exception": str(e)}, HTTPStatus.BAD_REQUEST
+
         # create object
         object = Object(args['type'], args['created_by'])
         

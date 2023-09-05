@@ -1,6 +1,7 @@
 from flask import abort
 from http import HTTPStatus
 import re
+from jsonschema import validate
 
 
 class InputValidation:
@@ -40,3 +41,29 @@ class InputValidation:
         if not re.match(pattern, mail):
             abort(HTTPStatus.BAD_REQUEST, "Invalid mail")
         return True
+
+
+
+object_schema = {
+   "title":"Object",
+   "description":"A object request json",
+   "type":"object",
+   "properties":{
+        "type":{
+            "description":"The type of the object",
+            "type":"string"
+        },
+        "created_by":{
+            "description":"The user that created the object",
+            "type":"string"
+        },
+        "data":{
+            "description":"The data of the object",
+            "type":"object",
+        }
+   },
+   "required":[
+      "type",
+      "created_by"
+   ]
+}
