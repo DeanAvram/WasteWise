@@ -4,7 +4,7 @@ from bson import json_util
 import json
 from src.data.object import Object
 from http import HTTPStatus
-from src.services.input_validation import object_schema
+from src.services.input_validation import object_schema, object_schema_update
 
 
 
@@ -19,7 +19,7 @@ class ObjectService(MainService):
         except ValidationError as e:
             return {"Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
         except Exception as e:
-            return {"Error": "Unknown error", "Exception": str(e)}, HTTPStatus.BAD_REQUEST
+            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
 
         # create object
         object = Object(args['type'], args['created_by'])
@@ -42,23 +42,17 @@ class ObjectService(MainService):
     
     def update_object(self, object_id: str, args: dict) -> tuple:
         # FIXME: Working, but not good, the data is been overwritten
-        if args is None:
-            return {"Error": "New object is missing"}, HTTPStatus.BAD_REQUEST
+        try:
+            validate(instance=args, schema=object_schema_update)
+        except ValidationError as e:
+            return {"Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
+        except Exception as e:
+            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
 
         object = self.objects.find_one({'_id': object_id}) # get object from database
         object = json.loads(json_util.dumps(object)) # convert to json
 
-        if args['type'] is not None:
-            return {"Error": "Can't Change Object's type"}, HTTPStatus.BAD_REQUEST
-    
-        if args['created_by'] is not None:
-            return {"Error": "Can't Change Object's created_by"}, HTTPStatus.BAD_REQUEST
-
-        if args['active'] is not None:
-            object['active'] = args['active']
-
-        if args['data'] is not None:
-            object['data'] = args['data']
-
+        object.update(args) # update object with args
+        
         self.objects.update_one({'_id': object_id}, {'$set': object}) # update object in database
         return '', HTTPStatus.NO_CONTENT

@@ -67,3 +67,19 @@ object_schema = {
       "created_by"
    ]
 }
+
+object_schema_update = {
+    "title":"Object",
+    "description":"A object request json",
+    "type":"object",
+    "properties":{
+        "active":{
+            "description":"The active status of the object",
+            "type":"boolean"
+        },
+        "data":{
+            "description":"The data of the object",
+            "type":"object",
+        }
+    }
+}

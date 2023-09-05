@@ -11,7 +11,6 @@ class Object:
     active: bool
     data: dict
 
-
     def __init__(self, type: str, created_by: str):
         self._id = str(uuid.uuid1())
         self.type = type
@@ -61,3 +60,10 @@ class Object:
             'active': self.active,
             'data': self.data
         }
+        
+    def update(self, object: dict):
+        if 'active' in object and object['active'] is not None:
+            self.active = object['active']
+        if 'data' in object and object['data'] is not None:
+            self.data = object['data']
+        return self
