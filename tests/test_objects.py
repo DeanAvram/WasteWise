@@ -8,95 +8,151 @@ resource_path = Path(__file__).parent / 'resources'
     
 def test_create_object(client):
     counter: int = 1
+
     LOGGER.info('Starting test_create_object')
     data = get_test_data('create_object.json')
-    LOGGER.info('-- Got test data')
-    LOGGER.info(f'-- Got {len(data["tasks"])} tasks')
-    
-    LOGGER.info('-- Starting loop\n')
+    LOGGER.info('1) Got test data')
+    LOGGER.info(f'2) Got {len(data["tasks"])} tasks')
+
+    LOGGER.info('3) Starting loop\n')
     for obj in data['tasks']:
-        LOGGER.info(f'-- -- Starting loop {counter}')
-        LOGGER.info(f'-- -- Posting {obj["object"]} to {obj["path"]}')
+        LOGGER.info(f'3.1) Starting Test {counter}')
+        LOGGER.info(f'3.2) Posting {obj["object"]} to {obj["path"]}')
         response = client.post(
             obj['path'],
             json=obj['object']
         )
-        LOGGER.info(f'-- -- Got response {response}')
+        LOGGER.info(f'3.3) Got response {response}')
         answer = response.status_code == obj['status_code']
-        LOGGER.info(f'-- -- Answer is {answer}')
+        LOGGER.info(f'3.4) comparison is {answer}')
         assert answer
-        
+
+        LOGGER.info(f'3.5) Checking if test {counter} is valid')
         if response.status_code == HTTPStatus.CREATED:
-            LOGGER.info(f'-- -- -- Comparing {response.json} to {obj["object"]}')
+            LOGGER.info(f'3.5.1) Comparing {response.json} to {obj["object"]}')
             answer = equal_dicts_only(response.json, obj['object'], 'type', 'created_by')
-            LOGGER.info(f'-- -- -- Answer is {answer}')
+            LOGGER.info(f'3.5.2) comparison is {answer}')
             assert answer
-            
+
+            LOGGER.info(f'3.5.3) Checking if test {counter} has data')
             if 'data' in obj['object']:
-                LOGGER.info(f'-- -- -- -- Comparing {response.json} to {obj["object"]}')
+                LOGGER.info(f'3.5.3.1) Comparing {response.json} to {obj["object"]}')
                 answer = equal_dicts_exclude(response.json, obj['object'], '_id')
-                LOGGER.info(f'-- -- -- -- Answer is {answer}')
+                LOGGER.info(f'3.5.3.1) comparison is {answer}')
                 assert answer
-        LOGGER.info(f'-- -- Loop {counter} done\n')
+        LOGGER.info(f'3.6 Loop {counter} done\n')
         counter += 1
-    LOGGER.info('Done test_create_object\n\n')
+    LOGGER.info('4) Done test_create_object\n\n')
             
     
 def test_get_object(client):
+    counter: int = 1
+    LOGGER.info('1) Starting test_get_object')
     data = get_test_data('get_object.json')
-    
+    LOGGER.info('2) Got test data')
+    LOGGER.info(f'3) Got {len(data["tasks"])} tasks')
+
+    LOGGER.info('4 Starting loop\n')
     for obj in data['tasks']:
+        LOGGER.info(f'4.1) Starting Test {counter}')
+        LOGGER.info(f'4.2) Posting {obj["object"]} to {obj["path"]}')
         response = client.post(
             obj['path'],
             json=obj['object']
         )
-        assert response.status_code == HTTPStatus.CREATED
+        LOGGER.info(f'4.3) Got response {response}')
+        answer = response.status_code == HTTPStatus.CREATED
+        LOGGER.info(f'4.4) comparison is {answer}')
+        assert answer
 
-        id: str = response.json['_id']
+        temp_id: str = response.json['_id']
+        LOGGER.info(f'4.5) Got id {temp_id}')
+        LOGGER.info(f'4.6) Checking if test {counter} is valid')
         if not obj['valid']:
-            id = obj['id']
-        
-        path = f'{obj["path"]}/{id}'
+            LOGGER.info(f'4.6.1) Test {counter} is invalid')
+            LOGGER.info(f'4.6.2) temp_id is {temp_id} = {obj["id"]} obj["id"]')
+            temp_id = obj['id']
+
+        LOGGER.info(f'4.7) Getting {obj["path"]}/{temp_id}')
+        path = f'{obj["path"]}/{temp_id}'
         response = client.get(
             path
         )
-        assert response.status_code == obj['status_code']
+        LOGGER.info(f'4.8) Got response {response}')
+        answer = response.status_code == obj['status_code']
+        LOGGER.info(f'4.9) comparison is {answer}')
+        assert answer
+
+        LOGGER.info(f'4.10) Checking if test {counter} is valid')
         if not obj['valid']:
+            LOGGER.info(f'4.10.1) Test {counter} is invalid')
+            LOGGER.info(f'4.10.2) Loop {counter} done\n')
             continue
-        
-        assert equal_dicts_only(response.json, obj['object'], 'type')
-        
+
+        LOGGER.info(f'4.11) Comparing {response.json} to {obj["object"]}')
+        answer = equal_dicts_only(response.json, obj['object'], 'type')
+        LOGGER.info(f'4.12) comparison is {answer}')
+        assert answer
+
+        LOGGER.info(f'4.13) Checking if test {counter} has data')
         if 'data' in obj['object']:
-            assert equal_dicts_only(response.json, obj['object'], 'type', 'data')
-            
+            LOGGER.info(f'4.13.1) Test {counter} has data')
+            LOGGER.info(f'4.13.2) Comparing {response.json} to {obj["object"]}')
+            answer = equal_dicts_only(response.json, obj['object'], 'type', 'data')
+            LOGGER.info(f'4.13.3) comparison is {answer}')
+            assert answer
+        LOGGER.info(f'4.14) Loop {counter} done\n')
+        counter += 1
+    LOGGER.info('5) Done test_get_object\n\n')
+
+
 def test_update_object(client):
+    counter: int = 1
+    LOGGER.info('1) Starting test_update_object')
+    LOGGER.info('2) Getting test data')
     data = get_test_data('update_object.json')
-    
+
+    LOGGER.info('3) Starting loop\n')
     for obj in data['tasks']:
+        LOGGER.info(f'3.1) Starting Test {counter}')
+        LOGGER.info(f'3.2) Posting {obj["old_object"]} to {obj["path"]}')
         # Post object
         response = client.post(
             obj['path'],
             json=obj['old_object']
         )
+        LOGGER.info(f'3.3) Got response {response}')
         assert response.status_code == HTTPStatus.CREATED 
-        
+
         # Put object
+        LOGGER.info(f'3.4) Putting {obj["changes"]} to {obj["path"]}/{response.json["_id"]}')
         path = f'{obj["path"]}/{response.json["_id"]}'
         response = client.put(
             path,
             json=obj['changes']
         )
-        
+        LOGGER.info(f'3.5) Got response {response}')
+        LOGGER.info(f'3.6) Comparing response status code {response.status_code} to {HTTPStatus.NO_CONTENT}')
         if response.status_code != HTTPStatus.NO_CONTENT:
+            LOGGER.info(f'3.6.1) Test {counter} is invalid')
             continue
 
-        assert response.status_code == obj['status_code']
+        LOGGER.info(f'3.7) Checking if test status code is {obj["status_code"]}')
+        answer = response.status_code == obj['status_code']
+        LOGGER.info(f'3.8) comparison is {answer}')
+        assert answer
         
         # Get Updated object
+        LOGGER.info(f'3.9) Getting {path}')
         response = client.get(
             path
         )
-        
+
+        LOGGER.info(f'3.10) Got response {response}')
         assert response.status_code == HTTPStatus.OK
+        LOGGER.info(f'3.11) Comparing {response.json} to {obj["new_object"]}')
         assert equal_dicts_exclude(response.json, obj['new_object'], '_id')
+        LOGGER.info(f'3.12) Loop {counter} done\n')
+        counter += 1
+    LOGGER.info('4) Done test_update_object\n\n')
         
