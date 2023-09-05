@@ -83,3 +83,65 @@ object_schema_update = {
         }
     }
 }
+
+user_schema = {
+    "title":"User",
+    "description":"A user request json",
+    "type":"object",
+    "properties":{
+        "name":{
+            "description":"The name of the user",
+            "type":"string"
+        },
+        "email":{
+            "description":"The email of the user",
+            "type":"string",
+            "format":"email"
+        },
+        "password":{
+            "description":"The password of the user",
+            "type":"string",
+            "minLength": 8,
+            "maxLength": 16,
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+        },
+        "role":{
+            "description":"The role of the user",
+            "type":"string"
+        }
+    },
+    "required":[
+        "name",
+        "email",
+        "password",
+        "role"
+    ]
+}
+
+user_schema_update = {
+    "title": "User",
+    "description": "A user request json",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "The name of the user",
+            "type": "string"
+        },
+        "email": {
+            "description": "The email of the user",
+            "type": "string",
+            "format": "email"
+        },
+        "password": {
+            "description": "The password of the user",
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 16,
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+        },
+        "role": {
+            "description": "The role of the user",
+            "type": "string"
+        }
+    }
+}

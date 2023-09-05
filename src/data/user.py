@@ -42,3 +42,13 @@ class User:
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__,
                           sort_keys=True, indent=4)
+
+    def update(self, usr: dict):
+        if 'name' in usr and usr['name'] is not None:
+            self.name = usr['name']
+        if 'email' in usr and usr['email'] is not None:
+            self.email = usr['email']
+        if 'password' in usr and usr['password'] is not None:
+            self.password = usr['password']
+        if 'role' in usr and usr['role'] is not None:
+            self.role = usr['role']
