@@ -36,3 +36,36 @@ def test_create_user(client):
         LOGGER.info(f'3.6 Loop {counter} done\n')
         counter += 1
     LOGGER.info('4) Done test_create_user\n\n')
+
+
+def test_get_user(client):
+    counter: int = 1
+    LOGGER.info('Starting test_get_user')
+    data = get_test_data('get_user.json')
+    LOGGER.info('1) Got test data')
+    LOGGER.info(f'2) Got {len(data["tasks"])} tasks')
+
+    LOGGER.info('3) Starting loop\n')
+    for usr in data['tasks']:
+        LOGGER.info(f'3.1) Starting get user Test {counter}')
+        LOGGER.info(f'3.2) Posting {usr["user"]} to {usr["path"]}')
+        response = client.post(
+            usr['path'],
+            json=usr['user']
+        )
+        LOGGER.info(f'3.3) Got response {response}')
+
+        # get user
+        LOGGER.info(f'3.4) Getting user {usr["user"]["email"]}')
+        path: str = usr['path'] + '/' + usr['user']['email']
+        response = client.get(
+            path
+        )
+        LOGGER.info(f'3.5) Got response {response}')
+        LOGGER.info(f'3.6) Got response {response.json}')
+        answer = response.status_code == usr['status_code']
+        LOGGER.info(f'3.7) comparison is {answer}')
+        assert answer
+        LOGGER.info(f'3.8) Loop {counter} done\n')
+        counter += 1
+    LOGGER.info('4) Done test_create_user\n\n')
