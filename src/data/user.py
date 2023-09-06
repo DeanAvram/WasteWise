@@ -3,17 +3,15 @@ import uuid
 from src.data.role import Role
 import json
 
+
 @dataclass
 class User:
-    
     _id: str
     name: str
     email: str
     password: str
     role: Role
-    
-    
-    
+
     def __init__(self, name: str, email: str, password: str, role: Role):
         self._id = str(uuid.uuid1())
         self.name = name

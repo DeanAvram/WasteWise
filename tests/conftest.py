@@ -6,8 +6,11 @@ import logging
 
 from src import create_app
 from src.services.rest.object_service import ObjectService
+from src.services.rest.user_service import UserService
 
 objectService = ObjectService()
+userService = UserService()
+
 LOGGER = logging.getLogger(__name__)
 # write to file after clearing it
 open('test.log', 'w').close()
@@ -33,7 +36,8 @@ def client(app):
 @pytest.fixture(autouse=True)
 def before_and_after_test():
     # clear database before each test
-    objectService.db.objects.delete_many({}) 
+    objectService.db.objects.delete_many({})
+    userService.db.users.delete_many({})
 
     yield
     

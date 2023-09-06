@@ -1,0 +1,136 @@
+{
+    "tasks":[
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"test",
+                "email":"test@gmail.com",
+                "password":"Testing193!",
+                "role":"USER"
+            },
+            "status_code":201,
+            "explain":"This is a valid object"
+        },
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"test",
+                "email":"test@gmail.com",
+                "password":"",
+                "role":"USER"
+            },
+            "status_code":400,
+            "explain":"This is an invalid object - password is empty"
+        },
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"test",
+                "email":"test@gmail.com",
+                "password":null,
+                "role":"USER"
+            },
+            "status_code":400,
+            "explain":"This is an invalid object - password is null"
+        },
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"test",
+                "email":"test@gmail.com",
+                "password":"Testing193!",
+                "role":""
+            },
+            "status_code":400,
+            "explain":"This is a invalid object - role is empty"
+        },
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"test",
+                "email":"test@gmail.com",
+                "password":"Testing193!",
+                "role":null
+            },
+            "status_code":400,
+            "explain":"This is a invalid object - role is null"
+        },
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"",
+                "email":"test@gmail.com",
+                "password":"Testing193!",
+                "role":"USER"
+            },
+            "status_code":400,
+            "explain":"This is a invalid object - name is empty"
+        },
+                {
+            "path":"/wastewise/users",
+            "user":{
+                "name":null,
+                "email":"test@gmail.com",
+                "password":"Testing193!",
+                "role":"USER"
+            },
+            "status_code":400,
+            "explain":"This is a invalid object - name is null"
+        },
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"test",
+                "email":"",
+                "password":"Testing193!",
+                "role":"USER"
+            },
+            "status_code":400,
+            "explain":"This is a invalid object - email is empty"
+        },
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"test",
+                "email":null,
+                "password":"Testing193!",
+                "role":"USER"
+            },
+            "status_code":400,
+            "explain":"This is a invalid object - email is null"
+        },
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"test",
+                "email":"test",
+                "password":"Testing193!",
+                "role":"USER"
+            },
+            "status_code":400,
+            "explain":"This is a invalid object - email is not valid"
+        },
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"test",
+                "email":"test@gmail",
+                "password":"Testing193!",
+                "role":"USER"
+            },
+            "status_code":400,
+            "explain":"This is a invalid object - email is not valid"
+        },
+        {
+            "path":"/wastewise/users",
+            "user":{
+                "name":"test",
+                "email":"test",
+                "password":"!",
+                "role":"USER"
+            },
+            "status_code":400,
+            "explain":"This is a invalid object - password is not valid"
+        }
+    ]
+}

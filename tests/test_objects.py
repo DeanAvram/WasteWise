@@ -16,13 +16,14 @@ def test_create_object(client):
 
     LOGGER.info('3) Starting loop\n')
     for obj in data['tasks']:
-        LOGGER.info(f'3.1) Starting Test {counter}')
+        LOGGER.info(f'3.1) Starting create object Test {counter}')
         LOGGER.info(f'3.2) Posting {obj["object"]} to {obj["path"]}')
         response = client.post(
             obj['path'],
             json=obj['object']
         )
         LOGGER.info(f'3.3) Got response {response}')
+        LOGGER.info(f'3.3) Got response {response.json}')
         answer = response.status_code == obj['status_code']
         LOGGER.info(f'3.4) comparison is {answer}')
         assert answer
@@ -61,6 +62,7 @@ def test_get_object(client):
             json=obj['object']
         )
         LOGGER.info(f'4.3) Got response {response}')
+        LOGGER.info(f'4.3) Got response {response.json}')
         answer = response.status_code == HTTPStatus.CREATED
         LOGGER.info(f'4.4) comparison is {answer}')
         assert answer
@@ -79,6 +81,7 @@ def test_get_object(client):
             path
         )
         LOGGER.info(f'4.8) Got response {response}')
+        LOGGER.info(f'4.8) Got response {response.json}')
         answer = response.status_code == obj['status_code']
         LOGGER.info(f'4.9) comparison is {answer}')
         assert answer
@@ -122,6 +125,7 @@ def test_update_object(client):
             json=obj['old_object']
         )
         LOGGER.info(f'3.3) Got response {response}')
+        LOGGER.info(f'3.3) Got response {response.json}')
         assert response.status_code == HTTPStatus.CREATED 
 
         # Put object
@@ -132,6 +136,7 @@ def test_update_object(client):
             json=obj['changes']
         )
         LOGGER.info(f'3.5) Got response {response}')
+        LOGGER.info(f'3.5) Got response {response.json}')
         LOGGER.info(f'3.6) Comparing response status code {response.status_code} to {HTTPStatus.NO_CONTENT}')
         if response.status_code != HTTPStatus.NO_CONTENT:
             LOGGER.info(f'3.6.1) Test {counter} is invalid')
@@ -149,6 +154,7 @@ def test_update_object(client):
         )
 
         LOGGER.info(f'3.10) Got response {response}')
+        LOGGER.info(f'3.10) Got response {response.json}')
         assert response.status_code == HTTPStatus.OK
         LOGGER.info(f'3.11) Comparing {response.json} to {obj["new_object"]}')
         assert equal_dicts_exclude(response.json, obj['new_object'], '_id')
