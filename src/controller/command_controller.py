@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import request
 
-from src.services.command_service import CommandService
+from src.services.rest.command_service import CommandService
 
 commands = Blueprint('commands', __name__, url_prefix='/wastewise/commands')
 

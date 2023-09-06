@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import request
 
-from src.services.object_service import ObjectService
+from src.services.rest.object_service import ObjectService
 
 objects = Blueprint('objects', __name__, url_prefix='/wastewise/objects')
 

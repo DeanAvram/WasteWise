@@ -1,4 +1,4 @@
-from src.services.main_service import MainService
+from src.services.rest.main_service import MainService
 from http import HTTPStatus
 import torch
 from src.services import Network

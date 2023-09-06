@@ -5,8 +5,7 @@ import os
 import logging
 
 from src import create_app
-from src.services.object_service import ObjectService
-
+from src.services.rest.object_service import ObjectService
 
 objectService = ObjectService()
 LOGGER = logging.getLogger(__name__)
@@ -23,9 +22,9 @@ def app():
             'TESTING': True,
         }
     )
-    
     yield app
-    
+
+
 @pytest.fixture
 def client(app):
     return app.test_client()
@@ -39,7 +38,6 @@ def before_and_after_test():
     yield
     
 
-
 def get_test_data(filename) -> dict:
     folder_path = os.path.abspath(Path(os.path.dirname(__file__)))
     folder = os.path.join(folder_path, 'test_data')
@@ -49,10 +47,12 @@ def get_test_data(filename) -> dict:
 
     return data
 
+
 def equal_dicts_exclude(d1, d2, *ignore_keys):
     d1_filtered = {k:v for k,v in d1.items() if k not in ignore_keys}
     d2_filtered = {k:v for k,v in d2.items() if k not in ignore_keys}
     return d1_filtered == d2_filtered
+
 
 def equal_dicts_only(d1, d2, *keys):
     d1_filtered = {k:v for k,v in d1.items() if k in keys}

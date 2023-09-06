@@ -1,7 +1,7 @@
 from PIL import Image
 from flask import Blueprint
 from flask import request
-from src.services.predict_service import PredictService
+from src.services.rest.predict_service import PredictService
 import io
 
 predict = Blueprint('predict', __name__, url_prefix='/wastewise/predict')

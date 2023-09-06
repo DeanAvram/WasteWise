@@ -1,5 +1,5 @@
 from jsonschema import ValidationError, validate
-from src.services.main_service import MainService
+from src.services.rest.main_service import MainService
 from bson import json_util
 import json
 from src.data.object import Object
