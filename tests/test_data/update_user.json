@@ -1,0 +1,26 @@
+{
+    "tasks":[
+        {
+            "path":"/wastewise/users",
+            "old_user":{
+                "name":"test",
+                "email":"test@gmail.com",
+                "password":"Testing193!",
+                "role":"USER"
+            },
+            "changes": {
+                "name": "new_name"
+            },
+            "new_user": {
+                "name": "new_name",
+                "email": "test@gmail.com",
+                "password": "Testing193!",
+                "role": "USER"
+            },
+
+            "status_code":204,
+            "explain":"This is a valid object"
+        }
+
+    ]
+}
