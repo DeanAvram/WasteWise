@@ -96,11 +96,6 @@ user_schema_update = {
             "type": "string",
             "minLength": 1
         },
-        "email": {
-            "description": "The email of the user",
-            "type": "string",
-            "pattern": email_regex
-        },
         "password": {
             "description": "The password of the user",
             "type": "string",

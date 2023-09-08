@@ -101,8 +101,15 @@ def test_update_user(client):
         LOGGER.info(f'3.7) comparison is {answer}')
         assert answer
 
-        if response.status_code == HTTPStatus.OK:
-            LOGGER.info(f'3.8.1) Comparing {response.json} to {usr["new_user"]}')
+        if response.status_code == HTTPStatus.NO_CONTENT:
+            # get user
+            LOGGER.info(f'3.8.1) Getting user {usr["old_user"]["email"]}')
+            path: str = usr['path'] + '/' + usr['old_user']['email']
+            response = client.get(
+                path
+            )
+
+            LOGGER.info(f'3.8.2) Comparing {response.json} to {usr["new_user"]}')
             answer = equal_dicts_exclude(response.json, usr['new_user'], '_id')
-            LOGGER.info(f'3.8.2) comparison is {answer}')
+            LOGGER.info(f'3.8.3) comparison is {answer}')
             assert answer
