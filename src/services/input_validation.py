@@ -130,16 +130,11 @@ command_schema = {
         "data": {
             "description": "The data of the command",
             "type": "object",
-        },
-        "created_at": {
-            "description": "The time the command was created",
-            "type": "number"
         }
     },
     "required": [
         "type",
         "invoked_by",
-        "created_at"
     ],
     "additionalProperties": False
 }

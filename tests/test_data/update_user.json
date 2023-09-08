@@ -4,7 +4,7 @@
             "path":"/wastewise/users",
             "old_user":{
                 "name":"test",
-                "email":"test@gmail.com",
+                "email":"test1@gmail.com",
                 "password":"Testing193!",
                 "role":"USER"
             },
@@ -13,14 +13,61 @@
             },
             "new_user": {
                 "name": "new_name",
-                "email": "test@gmail.com",
+                "email": "test1@gmail.com",
                 "password": "Testing193!",
                 "role": "USER"
             },
 
             "status_code":204,
             "explain":"This is a valid object"
+        },
+        {
+            "path": "/wastewise/users",
+            "old_user": {
+                "name": "test",
+                "email": "test2@gmail.com",
+                "password": "Testing193!",
+                "role": "USER"
+            },
+            "changes": {
+                "email": "email"
+            },
+            "status_code": 400,
+            "explain": "This is not a valid object - cant change email"
+        },
+        {
+            "path": "/wastewise/users",
+            "old_user": {
+                "name": "test",
+                "email": "test3@gmail.com",
+                "password": "Testing193!",
+                "role": "USER"
+            },
+            "changes": {
+                "_id": "new id"
+            },
+            "status_code": 400,
+            "explain": "This is not a valid object - cant change id"
+        },
+{
+            "path": "/wastewise/users",
+            "old_user": {
+                "name": "test",
+                "email": "test4@gmail.com",
+                "password": "Testing193!",
+                "role": "USER"
+            },
+            "changes": {
+                "password": "Testing192!"
+            },
+            "new_user": {
+                "name": "test",
+                "email": "test4@gmail.com",
+                "password": "Testing192!",
+                "role": "USER"
+            },
+            "status_code": 204,
+            "explain": "This is a valid object"
         }
-
     ]
 }

@@ -113,3 +113,7 @@ def test_update_user(client):
             answer = equal_dicts_exclude(response.json, usr['new_user'], '_id')
             LOGGER.info(f'3.8.3) comparison is {answer}')
             assert answer
+
+        LOGGER.info(f'3.9) Loop {counter} done\n')
+        counter += 1
+    LOGGER.info('4) Done test_update_user\n\n')

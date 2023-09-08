@@ -12,9 +12,9 @@ class Command:
     data: dict
     created_at: int
 
-    def __init__(self, type: str, invoked_by: str):
+    def __init__(self, _type: str, invoked_by: str):
         self._id = str(uuid.uuid1())
-        self.type = type
+        self.type = _type
         self.invoked_by = invoked_by
         self.created_at = int(round(time() * 1000))
 

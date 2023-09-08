@@ -1,0 +1,22 @@
+{
+    "tasks":[
+        {
+            "path": "/wastewise/commands",
+            "command": {
+                "type": "command_1",
+                "invoked_by": "python"
+            },
+            "status_code": 201,
+            "explain": "valid command"
+        },
+        {
+            "path": "/wastewise/commands",
+            "command": {
+                "type": "not_a_command",
+                "invoked_by": "python"
+            },
+            "status_code": 400,
+            "explain": "invalid command"
+        }
+    ]
+}

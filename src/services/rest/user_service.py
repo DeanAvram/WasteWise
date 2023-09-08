@@ -6,19 +6,19 @@ from http import HTTPStatus
 from jsonschema import ValidationError, validate
 from src.services.input_validation import user_schema, user_schema_update
 
+
 class UserService(MainService):
     def __init__(self):
         super().__init__()
         self.users = super().get_db().users
 
     def create_user(self, user: dict) -> tuple:
-        '''
+        """
         Create user
-        
+
         Params:
             user: dict
-        
-        '''
+        """
         try:
             validate(instance=user, schema=user_schema)
         except ValidationError as e:
