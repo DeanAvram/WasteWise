@@ -1,0 +1,21 @@
+{
+    "tasks":[
+        {
+            "path":"/wastewise/objects",
+            "object":{
+                "type":"image",
+                "created_by":"daniel"
+            }
+        },
+        {
+            "path":"/wastewise/objects",
+            "object":{
+                "type":"image",
+                "created_by":"bob",
+                "data":{
+                    "url":"https://www.google.com"
+                }
+            }
+        }
+    ]
+}

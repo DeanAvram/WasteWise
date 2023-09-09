@@ -66,5 +66,6 @@ class Object:
         if 'active' in object and object['active'] is not None:
             self.active = object['active']
         if 'data' in object and object['data'] is not None:
+            # TODO: Insert or edit by key
             self.data = object['data']
         return self
