@@ -28,5 +28,9 @@ def delete_objects():
 def get_all_commands():
     return adminService.get_all_commands()
 
+@admin.delete('/commands')
+def delete_commands():
+    return adminService.delete_commands()
+
 
 
