@@ -1,5 +1,8 @@
 from src.services.rest.main_service import MainService
 from http import HTTPStatus
+import pymongo
+from pymongo import ASCENDING
+from pymongo import DESCENDING
 
 
 class AdminService(MainService):
@@ -13,19 +16,22 @@ class AdminService(MainService):
         self.users.delete_many({})
         return '', HTTPStatus.NO_CONTENT
 
-    def get_all_users(self) -> tuple:
-        return list(self.users.find({})), HTTPStatus.OK
+    def get_all_users(self, page: int, limit: int) -> tuple:
+        to_skip = (page - 1) * limit  # calculate number of documents to skip
+        return list(self.users.find({}).sort("name", ASCENDING).skip(to_skip).limit(limit)), HTTPStatus.OK
 
     def delete_objects(self) -> tuple:
         self.objects.delete_many({})
         return '', HTTPStatus.NO_CONTENT
 
-    def get_all_objects(self) -> tuple:
-        return list(self.objects.find({})), HTTPStatus.OK
+    def get_all_objects(self, page: int, limit: int) -> tuple:
+        to_skip = (page - 1) * limit  # calculate number of documents to skip
+        return list(self.objects.find({}).sort("type", ASCENDING).skip(to_skip).limit(limit)), HTTPStatus.OK
 
     def delete_commands(self) -> tuple:
         self.commands.delete_many({})
         return '', HTTPStatus.NO_CONTENT
 
-    def get_all_commands(self) -> tuple:
-        return list(self.commands.find({})), HTTPStatus.OK
+    def get_all_commands(self, page: int, limit: int) -> tuple:
+        to_skip = (page - 1) * limit  # calculate number of documents to skip
+        return list(self.commands.find({}).sort("type", ASCENDING).skip(to_skip).limit(limit)), HTTPStatus.OK
