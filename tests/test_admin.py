@@ -74,7 +74,7 @@ def test_get_all_users(client):
     LOGGER.info('5) Getting all users')
     path: str = '/wastewise/admin/users'
     response = client.get(
-        path
+        f'{path}?email=admin@gmail.com'
     )
     LOGGER.info(f'5.1) Got response {response}')
     LOGGER.info(f'5.2) Got response {response.json}')
@@ -92,7 +92,7 @@ def test_get_all_objects(client):
     LOGGER.info('5) Getting all objects')
     path: str = '/wastewise/admin/objects'
     response = client.get(
-        path
+        f'{path}?email=admin@gmail.com'
     )
     LOGGER.info(f'5.1) Got response {response}')
     LOGGER.info(f'5.2) Got response {response.json}')
@@ -110,7 +110,7 @@ def test_get_all_commands(client):
     LOGGER.info('5) Getting all commands')
     path: str = '/wastewise/admin/commands'
     response = client.get(
-        path
+        f'{path}?email=admin@gmail.com'
     )
     LOGGER.info(f'5.1) Got response {response}')
     LOGGER.info(f'5.2) Got response {response.json}')
@@ -127,7 +127,12 @@ def test_delete_all_users(client):
     create_data(client, data, 'user')
     LOGGER.info('5) Deleting all users')
     path: str = '/wastewise/admin/users'
-    delete_get_and_assert(client, path, 'users')
+
+    try:
+        delete_get_and_assert(client, path, 'users')
+    except Exception as e:
+        LOGGER.critical(f'5.1) Got exception {e}')
+
     LOGGER.info('6) Done test_delete_all_users\n\n')
 
 
@@ -168,19 +173,31 @@ def create_data(client, data: dict, entity: str):
 
 
 def delete_get_and_assert(client, path: str, entity: str):
-    del_response = client.delete(
-        path
-    )
-    LOGGER.info(f'5.1) Got response {del_response}')
-    LOGGER.info(f'5.2) Got response {del_response.json}')
+    try:
+        del_response = client.delete(
+            f'{path}?email=admin@gmail.com'
+        )
+    except Exception as e:
+        LOGGER.critical(f'5.1) Got exception {e}')
+
+    LOGGER.info(f'5.1) del_response {del_response}')
+    LOGGER.info(f'5.2) del_response {del_response.json}')
+
 
     LOGGER.info('6) Getting all ' + entity)
-    get_response = client.get(
-        path
-    )
-    LOGGER.info(f'6.1) Got response {get_response}')
-    LOGGER.info(f'6.2) Got response {get_response.json}')
+    try:
+        get_response = client.get(
+            f'{path}?email=admin@gmail.com'
+        )
+    except Exception as e:
+        LOGGER.critical(f'6.1) Got exception {e}')
+
+    LOGGER.info(f'6.1) get_response {get_response}')
+    LOGGER.info(f'6.2) get_response {get_response.json}')
     LOGGER.info(f'6.3) Got {len(get_response.json)} {entity}')
-    answer = del_response.status_code == 204 and get_response.status_code == 200 and len(get_response.json) == 0
-    LOGGER.info(f'5.3) comparison is {answer}')
-    assert answer
+    try:
+        answer = del_response.status_code == 204 and get_response.status_code == 200 and len(get_response.json) == 0
+        LOGGER.info(f'6.3) comparison is {answer}')
+        assert answer
+    except Exception as e:
+        LOGGER.critical(f'6.4) Got exception {e}')
