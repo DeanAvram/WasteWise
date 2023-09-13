@@ -1,4 +1,8 @@
+from http import HTTPStatus
+
 from pymongo import MongoClient
+
+from src.data.role import Role
 
 
 class MainService:
@@ -8,3 +12,10 @@ class MainService:
 
     def get_db(self):
         return self.db
+
+    def check_permissions(self, _type: Role, _mail: str) -> bool:
+        print(_type.name)
+        # check permissions
+        if self.db.users.find_one({'email': _mail, 'role': _type.name}) is None:
+            return False
+        return True

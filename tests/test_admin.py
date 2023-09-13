@@ -79,7 +79,7 @@ def test_get_all_users(client):
     LOGGER.info(f'5.1) Got response {response}')
     LOGGER.info(f'5.2) Got response {response.json}')
     LOGGER.info(f'5.3) Got {len(response.json)} users')
-    answer = response.status_code == 200 and len(response.json) == len(data['tasks'])
+    answer = response.status_code == 200 and len(response.json) == len(data['tasks']) + 2  # +1 for admin user +1 for user
     LOGGER.info(f'5.3) comparison is {answer}')
     assert answer
     LOGGER.info('6) Done test_get_all_users\n\n')

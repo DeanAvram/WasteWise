@@ -1,4 +1,6 @@
 import json
+
+from src.data.role import Role
 from src.services.rest.main_service import MainService
 from src.data.user import User
 from bson import json_util
@@ -33,19 +35,23 @@ class UserService(MainService):
         self.users.insert_one(json.loads(new_user.toJSON()))
         return json.loads(json_util.dumps(user)), HTTPStatus.CREATED
 
-    def get_user(self, user_email: str) -> tuple:
-        '''
+    def get_user(self, mail: str, user_email: str) -> tuple:
+        """
         Get user by email
-        
+
         Params:
             user_email: str -> The email of the user to get
-        '''
+        """
+
+        if not super().check_permissions(Role.USER, mail):
+            return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
+
         data = self.users.find_one({'email': user_email})
         if data is None:
             return {"Error": "Can't find user with email: " + user_email}, HTTPStatus.NOT_FOUND
         return json.loads(json_util.dumps(data)), HTTPStatus.OK
 
-    def update_user(self, user_email: str, new_user: dict) -> tuple:
+    def update_user(self,  mail: str, user_email: str, new_user: dict) -> tuple:
         '''
         Update user by email
         
@@ -53,6 +59,9 @@ class UserService(MainService):
             user_email: str -> The email of the user to update
             new_user: dict  -> The new user data
         '''
+        if not super().check_permissions(Role.USER, mail):
+            return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
+
         try:
             validate(instance=new_user, schema=user_schema_update)
         except ValidationError as e:
@@ -64,7 +73,7 @@ class UserService(MainService):
             return {"Error": "New user is missing"}, HTTPStatus.BAD_REQUEST
         
         user = self.users.find_one({'email': user_email})  # get user from database
-        user = json.loads(json_util.dumps(user)) # convert to json
+        user = json.loads(json_util.dumps(user))  # convert to json
 
         user.update(new_user)  # update user with new_user
         

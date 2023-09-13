@@ -42,8 +42,31 @@ def before_and_after_test():
     userService.db.users.delete_many({})
     commandService.db.commands.delete_many({})
 
+    # add admin user
+    create_admin_user()
+    create_user()
+
     yield
 
+
+def create_admin_user():
+    user = {
+        "name": "Admin",
+        "email": "admin@gmail.com",
+        "password": "Testing193!",
+        "role": "ADMIN"
+    }
+    userService.create_user(user)
+
+
+def create_user():
+    user = {
+        "name": "User",
+        "email": "user@gmail.com",
+        "password": "Testing193!",
+        "role": "USER"
+    }
+    userService.create_user(user)
 
 def get_test_data(filename) -> dict:
     folder_path = os.path.abspath(Path(os.path.dirname(__file__)))

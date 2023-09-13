@@ -59,7 +59,7 @@ def test_get_user(client):
         LOGGER.info(f'3.4) Getting user {usr["user"]["email"]}')
         path: str = usr['path'] + '/' + usr['user']['email']
         response = client.get(
-            path
+            f'{path}?email=user@gmail.com'
         )
         LOGGER.info(f'3.5) Got response {response}')
         LOGGER.info(f'3.6) Got response {response.json}')
@@ -92,7 +92,7 @@ def test_update_user(client):
         LOGGER.info(f'3.4) Updating user {usr["old_user"]["email"]}')
         path: str = usr['path'] + '/' + usr['old_user']['email']
         response = client.put(
-            path,
+            f'{path}?email=user@gmail.com',
             json=usr['changes']
         )
         LOGGER.info(f'3.5) Got response {response}')
@@ -106,7 +106,7 @@ def test_update_user(client):
             LOGGER.info(f'3.8.1) Getting user {usr["old_user"]["email"]}')
             path: str = usr['path'] + '/' + usr['old_user']['email']
             response = client.get(
-                path
+                f'{path}?email=user@gmail.com'
             )
 
             LOGGER.info(f'3.8.2) Comparing {response.json} to {usr["new_user"]}')
