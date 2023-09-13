@@ -50,11 +50,7 @@ def _get_limit(req):
 def _get_page(req):
     # get query param page, if not present, default to 1
     if req.args.get('page') is None:
-        page = 1
+        page = 0
     else:
         page = int(req.args.get('page'))
     return page
-
-
-
-

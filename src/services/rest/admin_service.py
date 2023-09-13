@@ -5,6 +5,10 @@ from pymongo import ASCENDING
 from pymongo import DESCENDING
 
 
+def calc_to_skip(page: int, limit: int) -> int:
+    return page * limit
+
+
 class AdminService(MainService):
     def __init__(self):
         super().__init__()
@@ -17,7 +21,7 @@ class AdminService(MainService):
         return '', HTTPStatus.NO_CONTENT
 
     def get_all_users(self, page: int, limit: int) -> tuple:
-        to_skip = (page - 1) * limit  # calculate number of documents to skip
+        to_skip = calc_to_skip(page, limit)
         return list(self.users.find({}).sort("name", ASCENDING).skip(to_skip).limit(limit)), HTTPStatus.OK
 
     def delete_objects(self) -> tuple:
@@ -25,7 +29,7 @@ class AdminService(MainService):
         return '', HTTPStatus.NO_CONTENT
 
     def get_all_objects(self, page: int, limit: int) -> tuple:
-        to_skip = (page - 1) * limit  # calculate number of documents to skip
+        to_skip = calc_to_skip(page, limit)
         return list(self.objects.find({}).sort("type", ASCENDING).skip(to_skip).limit(limit)), HTTPStatus.OK
 
     def delete_commands(self) -> tuple:
@@ -33,5 +37,5 @@ class AdminService(MainService):
         return '', HTTPStatus.NO_CONTENT
 
     def get_all_commands(self, page: int, limit: int) -> tuple:
-        to_skip = (page - 1) * limit  # calculate number of documents to skip
+        to_skip = calc_to_skip(page, limit)
         return list(self.commands.find({}).sort("type", ASCENDING).skip(to_skip).limit(limit)), HTTPStatus.OK
