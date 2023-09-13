@@ -1,4 +1,11 @@
 from src.services.commands.command_interface import ICommand
+from enum import Enum
+
+
+class Commands(Enum):
+    COMMAND_1 = 0,
+    COMMAND_2 = 1,
+    PREDICT = 2
 
 
 class Command1(ICommand):

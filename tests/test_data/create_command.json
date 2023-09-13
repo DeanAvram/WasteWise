@@ -3,7 +3,7 @@
         {
             "path": "/wastewise/commands",
             "command": {
-                "type": "command_1",
+                "type": "COMMAND_1",
                 "invoked_by": "python"
             },
             "status_code": 201,

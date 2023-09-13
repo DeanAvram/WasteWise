@@ -18,13 +18,13 @@ class CommandInvoker:
     command = None
 
     def set_command(self, _type: str) -> None:
-        if _type == "command_1":
+        if _type == "COMMAND_1":
             self.command = Command1()
 
-        elif _type == "command_2":
+        elif _type == "COMMAND_2":
             self.command = Command2()
 
-        elif _type == "predict":
+        elif _type == "PREDICT":
             pass
 
         else:

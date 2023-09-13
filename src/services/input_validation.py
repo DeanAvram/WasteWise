@@ -1,3 +1,6 @@
+from src.data.role import Role
+from src.services.commands.commands import Commands
+
 email_regex = "[A-Za-z]*[A-Za-z0-9]@([\w-]+\.)+[\w-]{2,4}$"
 password_regex = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
 
@@ -74,7 +77,10 @@ user_schema = {
         "role": {
             "description": "The role of the user",
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "axis": {
+                "enum": Role
+            }
         }
     },
     "required": [
@@ -106,7 +112,10 @@ user_schema_update = {
         "role": {
             "description": "The role of the user",
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "axis": {
+                "enum": Role
+            }
         }
     },
     "additionalProperties": False
@@ -120,7 +129,10 @@ command_schema = {
         "type": {
             "description": "The type of the command",
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "axis": {
+                "enum": Commands
+            }
         },
         "invoked_by": {
             "description": "The user that invoked the command",
