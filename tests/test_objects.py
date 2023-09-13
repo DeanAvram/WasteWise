@@ -18,8 +18,9 @@ def test_create_object(client):
     for obj in data['tasks']:
         LOGGER.info(f'3.1) Starting create object Test {counter}')
         LOGGER.info(f'3.2) Posting {obj["object"]} to {obj["path"]}')
+        path = obj['path']
         response = client.post(
-            obj['path'],
+            f'{path}?email=user@gmail.com',
             json=obj['object']
         )
         LOGGER.info(f'3.3) Got response {response}')
@@ -57,8 +58,9 @@ def test_get_object(client):
     for obj in data['tasks']:
         LOGGER.info(f'4.1) Starting Test {counter}')
         LOGGER.info(f'4.2) Posting {obj["object"]} to {obj["path"]}')
+        path = obj['path']
         response = client.post(
-            obj['path'],
+            f'{path}?email=user@gmail.com',
             json=obj['object']
         )
         LOGGER.info(f'4.3) Got response {response}')
@@ -78,7 +80,7 @@ def test_get_object(client):
         LOGGER.info(f'4.7) Getting {obj["path"]}/{temp_id}')
         path = f'{obj["path"]}/{temp_id}'
         response = client.get(
-            path
+            f'{path}?email=user@gmail.com',
         )
         LOGGER.info(f'4.8) Got response {response}')
         LOGGER.info(f'4.8) Got response {response.json}')
@@ -120,8 +122,9 @@ def test_update_object(client):
         LOGGER.info(f'3.1) Starting Test {counter}')
         LOGGER.info(f'3.2) Posting {obj["old_object"]} to {obj["path"]}')
         # Post object
+        path = obj['path']
         response = client.post(
-            obj['path'],
+            f'{path}?email=user@gmail.com',
             json=obj['old_object']
         )
         LOGGER.info(f'3.3) Got response {response}')
@@ -132,7 +135,7 @@ def test_update_object(client):
         LOGGER.info(f'3.4) Putting {obj["changes"]} to {obj["path"]}/{response.json["_id"]}')
         path = f'{obj["path"]}/{response.json["_id"]}'
         response = client.put(
-            path,
+            f'{path}?email=user@gmail.com',
             json=obj['changes']
         )
         LOGGER.info(f'3.5) Got response {response}')
@@ -150,7 +153,7 @@ def test_update_object(client):
         # Get Updated object
         LOGGER.info(f'3.9) Getting {path}')
         response = client.get(
-            path
+            f'{path}?email=user@gmail.com',
         )
 
         LOGGER.info(f'3.10) Got response {response}')

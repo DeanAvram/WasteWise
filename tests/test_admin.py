@@ -159,8 +159,9 @@ def create_data(client, data: dict, entity: str):
     for i, ent in enumerate(data['tasks']):
         LOGGER.info(f'3.1) Starting Test {i + 1}')
         LOGGER.info(f'3.2) Posting {ent[entity]} to {ent["path"]}')
+        path = ent['path']
         client.post(
-            ent['path'],
+            f'{path}?email=user@gmail.com',
             json=ent[entity]
         )
     LOGGER.info(f'4) Done posting {len(data["tasks"])} {entity}\n')

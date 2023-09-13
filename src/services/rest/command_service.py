@@ -1,4 +1,6 @@
 from jsonschema import ValidationError, validate
+
+from src.data.role import Role
 from src.services.commands.command_invoker import CommandInvoker
 from src.services.rest.main_service import MainService
 from src.data.command import Command
@@ -15,7 +17,11 @@ class CommandService(MainService):
         self.commands = super().get_db().commands
         self.commandInvoker = None
 
-    def create_command(self, args: dict) -> tuple:
+    def create_command(self, email: str, args: dict) -> tuple:
+
+        if not super().check_permissions(Role.USER, email):
+            return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
+
         try:
             validate(instance=args, schema=command_schema)
         except ValidationError as e:
