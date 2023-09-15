@@ -27,6 +27,9 @@ class CommandInvoker:
         elif _type == "PREDICT":
             pass
 
+        elif _type == "DIRECT":
+            pass
+
         else:
             self.command = CommandNotFound()
 
