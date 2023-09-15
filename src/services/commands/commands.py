@@ -5,7 +5,8 @@ from enum import Enum
 class Commands(Enum):
     COMMAND_1 = 0,
     COMMAND_2 = 1,
-    PREDICT = 2
+    PREDICT = 2,
+    DIRECT = 3,
 
 
 class Command1(ICommand):
@@ -28,6 +29,12 @@ class Predict(ICommand):
             "message": "Predict executed"
         }
 
+
+class Direct(ICommand):
+    def execute(self) -> dict:
+        return {
+            "message": "Direct executed"
+        }
 
 class CommandNotFound(ICommand):
     def execute(self) -> dict:
