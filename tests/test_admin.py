@@ -1,5 +1,6 @@
 from pathlib import Path
 from tests.conftest import LOGGER
+from http import HTTPStatus
 
 resource_path = Path(__file__).parent / 'resources'
 
@@ -75,7 +76,7 @@ def test_get_all_users(client):
     LOGGER.info(f'5.1) Got response {response}')
     LOGGER.info(f'5.2) Got response {response.json}')
     LOGGER.info(f'5.3) Got {len(response.json)} users')
-    answer = response.status_code == 200 and len(response.json) == len(data['tasks']) + 2  # +1 for admin user +1 for user
+    answer = response.status_code == HTTPStatus.OK and len(response.json) == len(data['tasks']) + 2  # +1 for admin user +1 for user
     LOGGER.info(f'5.3) comparison is {answer}')
     assert answer
     LOGGER.info('6) Done test_get_all_users\n\n')
@@ -93,7 +94,7 @@ def test_get_all_objects(client):
     LOGGER.info(f'5.1) Got response {response}')
     LOGGER.info(f'5.2) Got response {response.json}')
     LOGGER.info(f'5.3) Got {len(response.json)} objects')
-    answer = response.status_code == 200 and len(response.json) == len(data['tasks'])
+    answer = response.status_code == HTTPStatus.OK and len(response.json) == len(data['tasks'])
     LOGGER.info(f'5.3) comparison is {answer}')
     assert answer
     LOGGER.info('6) Done test_get_all_objects\n\n')
@@ -111,7 +112,7 @@ def test_get_all_commands(client):
     LOGGER.info(f'5.1) Got response {response}')
     LOGGER.info(f'5.2) Got response {response.json}')
     LOGGER.info(f'5.3) Got {len(response.json)} objects')
-    answer = response.status_code == 200 and len(response.json) == len(data['tasks'])
+    answer = response.status_code == HTTPStatus.OK and len(response.json) == len(data['tasks'])
     LOGGER.info(f'5.3) comparison is {answer}')
     assert answer
     LOGGER.info('6) Done test_get_all_commands\n\n')
@@ -181,7 +182,6 @@ def delete_get_and_assert(client, path: str, entity: str):
     LOGGER.info(f'5.1) del_response {del_response}')
     LOGGER.info(f'5.2) del_response {del_response.json}')
 
-
     LOGGER.info('6) Getting all ' + entity)
     try:
         get_response = client.get(
@@ -194,7 +194,8 @@ def delete_get_and_assert(client, path: str, entity: str):
     LOGGER.info(f'6.2) get_response {get_response.json}')
     LOGGER.info(f'6.3) Got {len(get_response.json)} {entity}')
     try:
-        answer = del_response.status_code == 204 and get_response.status_code == 200 and len(get_response.json) == 0
+        answer = del_response.status_code == HTTPStatus.NO_CONTENT and get_response.status_code == HTTPStatus.OK and\
+                 len(get_response.json) == 0
         LOGGER.info(f'6.3) comparison is {answer}')
         assert answer
     except Exception as e:
