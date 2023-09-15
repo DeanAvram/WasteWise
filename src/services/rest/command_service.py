@@ -15,6 +15,7 @@ class CommandService(MainService):
         super().__init__()
         # get the commands collection
         self.commands = super().get_db().commands
+        self.users = super().get_db().users
         self.commandInvoker = None
 
     def create_command(self, email: str, args: dict) -> tuple:
@@ -30,7 +31,7 @@ class CommandService(MainService):
         except Exception as e:
             return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
 
-        command = Command(args['type'], args['invoked_by'])
+        command = Command(args['type'], email)
         # command.set_data(args['data'])
         self.commands.insert_one(json.loads(command.toJSON()))
 

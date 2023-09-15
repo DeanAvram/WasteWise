@@ -3,8 +3,7 @@
         {
             "path":"/wastewise/objects",
             "object":{
-                "type":"image",
-                "created_by":"daniel"
+                "type":"image"
             },
             "status_code":201,
             "explain":"This is a valid object"
@@ -13,27 +12,17 @@
             "path":"/wastewise/objects",
             "object":{
                 "type":"image",
-                "created_by":"bob",
                 "data":{
                     "url":"https://www.google.com"
                 }
             },
             "status_code":201,
             "explain":"This is a valid object"
-        },
-        {
-            "path":"/wastewise/objects",
-            "object":{
-                "type":"image"
-            },
-            "status_code":400,
-            "explain":"Missing created_by"
         }
         ,
         {
             "path":"/wastewise/objects",
             "object":{
-                "created_by":"bob"
             },
             "status_code":400,
             "explain":"Missing type"
@@ -42,7 +31,6 @@
             "path":"/wastewise/objects",
             "object":{
                 "type":"",
-                "created_by":"bob",
                 "data":{
                     "url":"https://www.google.com"
                 }

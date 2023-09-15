@@ -31,14 +31,12 @@ object_data = {
                 "path": "/wastewise/objects",
                 "object": {
                     "type": "image",
-                    "created_by": "daniel"
                 }
             },
             {
                 "path": "/wastewise/objects",
                 "object": {
                     "type": "image",
-                    "created_by": "bob",
                     "data": {
                         "url": "https://www.google.com"
                     }
@@ -52,15 +50,13 @@ command_data = {
             {
                 "path": "/wastewise/commands",
                 "command": {
-                    "type": "command_1",
-                    "invoked_by": "python"
+                    "type": "command_1"
                 }
             },
             {
                 "path": "/wastewise/commands",
                 "command": {
-                    "type": "command_2",
-                    "invoked_by": "python"
+                    "type": "command_2"
                 }
             }
         ]
@@ -165,10 +161,12 @@ def create_data(client, data: dict, entity: str):
         LOGGER.info(f'3.1) Starting Test {i + 1}')
         LOGGER.info(f'3.2) Posting {ent[entity]} to {ent["path"]}')
         path = ent['path']
-        client.post(
+        res = client.post(
             f'{path}?email=user@gmail.com',
             json=ent[entity]
         )
+        LOGGER.info(f'3.3) Got response {res}')
+        LOGGER.info(f'3.4) Got response {res.json}')
     LOGGER.info(f'4) Done posting {len(data["tasks"])} {entity}\n')
 
 

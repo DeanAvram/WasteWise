@@ -28,7 +28,7 @@ class ObjectService(MainService):
             return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
 
         # create object
-        _object = Object(args['type'], args['created_by'])
+        _object = Object(args['type'], mail)
 
         # check if args['data'] exists
         if 'data' in args:

@@ -32,14 +32,14 @@ def test_create_object(client):
         LOGGER.info(f'3.5) Checking if test {counter} is valid')
         if response.status_code == HTTPStatus.CREATED:
             LOGGER.info(f'3.5.1) Comparing {response.json} to {obj["object"]}')
-            answer = equal_dicts_only(response.json, obj['object'], 'type', 'created_by')
+            answer = equal_dicts_only(response.json, obj['object'], 'type')
             LOGGER.info(f'3.5.2) comparison is {answer}')
             assert answer
 
             LOGGER.info(f'3.5.3) Checking if test {counter} has data')
             if 'data' in obj['object']:
                 LOGGER.info(f'3.5.3.1) Comparing {response.json} to {obj["object"]}')
-                answer = equal_dicts_exclude(response.json, obj['object'], '_id')
+                answer = equal_dicts_exclude(response.json, obj['object'], '_id', 'created_by')
                 LOGGER.info(f'3.5.3.1) comparison is {answer}')
                 assert answer
         LOGGER.info(f'3.6 Loop {counter} done\n')
@@ -160,7 +160,7 @@ def test_update_object(client):
         LOGGER.info(f'3.10) Got response {response.json}')
         assert response.status_code == HTTPStatus.OK
         LOGGER.info(f'3.11) Comparing {response.json} to {obj["new_object"]}')
-        assert equal_dicts_exclude(response.json, obj['new_object'], '_id')
+        assert equal_dicts_exclude(response.json, obj['new_object'], '_id', 'created_by')
         LOGGER.info(f'3.12) Loop {counter} done\n')
         counter += 1
     LOGGER.info('4) Done test_update_object\n\n')

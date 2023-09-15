@@ -4,7 +4,6 @@
             "path":"/wastewise/objects",
             "old_object":{
                 "type":"image",
-                "created_by":"daniel",
                 "active":true
             },
             "changes":{
@@ -12,7 +11,6 @@
             },
             "new_object":{
                 "type":"image",
-                "created_by":"daniel",
                 "active":false
             },
             "status_code":204,
@@ -23,7 +21,6 @@
             "path":"/wastewise/objects",
             "old_object":{
                 "type":"image",
-                "created_by":"daniel",
                 "active":true
             },
             "changes":{

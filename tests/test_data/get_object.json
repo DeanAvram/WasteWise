@@ -3,8 +3,7 @@
         {
             "path":"/wastewise/objects",
             "object":{
-                "type":"image",
-                "created_by":"daniel"
+                "type":"image"
             },
             "status_code":200,
             "explain":"This is a valid object",
@@ -14,7 +13,6 @@
             "path":"/wastewise/objects",
             "object":{
                 "type":"image",
-                "created_by":"bob",
                 "data":{
                     "url":"https://www.google.com"
                 }
@@ -27,7 +25,6 @@
             "path":"/wastewise/objects",
             "object":{
                 "type":"image",
-                "created_by":"bob",
                 "data":{
                     "url":"https://www.google.com"
                 }

@@ -14,11 +14,6 @@ object_schema = {
             "type": "string",
             "minLength": 1
         },
-        "created_by": {
-            "description": "The user that created the object",
-            "type": "string",
-            "minLength": 1
-        },
         "data": {
             "description": "The data of the object",
             "type": "object",
@@ -30,7 +25,6 @@ object_schema = {
     },
     "required": [
         "type",
-        "created_by"
     ],
     "additionalProperties": False
 }
@@ -134,11 +128,6 @@ command_schema = {
                 "enum": Commands
             }
         },
-        "invoked_by": {
-            "description": "The user that invoked the command",
-            "type": "string",
-            "minLength": 1
-        },
         "data": {
             "description": "The data of the command",
             "type": "object",
@@ -146,7 +135,6 @@ command_schema = {
     },
     "required": [
         "type",
-        "invoked_by",
     ],
     "additionalProperties": False
 }
