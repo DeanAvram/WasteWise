@@ -36,6 +36,29 @@ class Direct(ICommand):
             "message": "Direct executed"
         }
 
+
+class History(ICommand):
+    def execute(self) -> dict:
+        return {
+            "message": "History executed"
+        }
+
+
+class Places(ICommand):
+    def execute(self) -> dict:
+        return {
+            "message": "Places executed"
+        }
+
+
+class AddPlace(ICommand):
+    def execute(self) -> dict:
+        return {
+            "message": "Add place executed"
+        }
+
+
+
 class CommandNotFound(ICommand):
     def execute(self) -> dict:
         return {
