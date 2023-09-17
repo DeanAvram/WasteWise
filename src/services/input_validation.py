@@ -135,6 +135,7 @@ command_schema = {
     },
     "required": [
         "type",
+        "data"
     ],
     "additionalProperties": False
 }

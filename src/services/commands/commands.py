@@ -1,5 +1,8 @@
+from flask import abort, Response
 from src.services.commands.command_interface import ICommand
 from enum import Enum
+from src.services.rest.main_service import MainService
+from http import HTTPStatus
 
 
 class Commands(Enum):
@@ -31,10 +34,39 @@ class Predict(ICommand):
 
 
 class Direct(ICommand):
-    def execute(self) -> dict:
-        return {
-            "message": "Direct executed"
+    def execute(self, data: dict):
+        if data.get("location") is None:
+            return {"Error": "location is required "}, HTTPStatus.BAD_REQUEST
+        if data.get("location").get("lat") is None:
+            return {"Error": "latitude (lat) is required "}, HTTPStatus.BAD_REQUEST
+        if data.get("location").get("lng") is None:
+            return {"Error": "longitude (lng) is required "}, HTTPStatus.BAD_REQUEST
+        lat = data.get("location").get("lat")
+        lng = data.get("location").get("lng")
+        reference_location = {
+            "type": "Point",
+            "coordinates": [lat, lng]
         }
+        # Use the aggregation framework to find the nearest object
+        pipeline = [
+            {
+                "$geoNear": {
+                    "near": reference_location,
+                    "distanceField": "distance",
+                    "spherical": True,
+                    "key": "data.location.coordinates"
+                }
+            },
+            {
+                "$limit": 1  # Limit the result to one document
+            }
+        ]
+
+        result = list(MainService().get_db().objects.aggregate(pipeline))
+        if len(result) == 0:
+            return {"Error": "No objects found"}, HTTPStatus.NOT_FOUND
+        return result[0], HTTPStatus.OK
+
 
 
 class History(ICommand):
@@ -56,7 +88,6 @@ class AddPlace(ICommand):
         return {
             "message": "Add place executed"
         }
-
 
 
 class CommandNotFound(ICommand):

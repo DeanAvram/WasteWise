@@ -1,5 +1,4 @@
-from http import HTTPStatus
-
+from pymongo import GEOSPHERE
 from pymongo import MongoClient
 
 from src.data.role import Role
@@ -9,6 +8,8 @@ class MainService:
     def __init__(self):
         self.client = MongoClient('localhost', 27017)
         self.db = self.client.wastewise
+        # Create a 2dsphere index on the "data.location.coordinates" field
+        self.db.objects.create_index([("data.location.coordinates", "2dsphere")])
 
     def get_db(self):
         return self.db

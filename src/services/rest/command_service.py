@@ -31,7 +31,7 @@ class CommandService(MainService):
         except Exception as e:
             return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
 
-        command = Command(args['type'], email)
+        command = Command(args['type'], email, args['data'])
         # command.set_data(args['data'])
         self.commands.insert_one(json.loads(command.toJSON()))
 
@@ -41,4 +41,4 @@ class CommandService(MainService):
         if isinstance(commandInvoker.command, CommandNotFound):
             return {"Error": "Command not found"}, HTTPStatus.BAD_REQUEST
 
-        return commandInvoker.execute_command(), HTTPStatus.CREATED
+        return commandInvoker.execute_command(command.data)
