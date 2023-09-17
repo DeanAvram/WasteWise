@@ -1,5 +1,4 @@
 from jsonschema import ValidationError, validate
-
 from src.data.role import Role
 from src.services.commands.command_invoker import CommandInvoker
 from src.services.rest.main_service import MainService
@@ -7,7 +6,7 @@ from src.data.command import Command
 import json
 from http import HTTPStatus
 from src.services.input_validation import command_schema
-from src.services.commands.commands import CommandNotFound
+from src.services.commands.commands_exec import CommandNotFound
 
 
 class CommandService(MainService):
@@ -41,4 +40,4 @@ class CommandService(MainService):
         if isinstance(commandInvoker.command, CommandNotFound):
             return {"Error": "Command not found"}, HTTPStatus.BAD_REQUEST
 
-        return commandInvoker.execute_command(command.data)
+        return commandInvoker.execute_command(args)
