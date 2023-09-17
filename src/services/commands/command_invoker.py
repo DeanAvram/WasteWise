@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from src.services.commands.command_interface import ICommand
-from src.services.commands.commands import Command1, Command2, Direct, History, Places, AddPlace, CommandNotFound
+from src.services.commands.commands import Direct, History, Places, AddPlace, CommandNotFound
 
 
 class CommandInvoker:
@@ -18,12 +18,7 @@ class CommandInvoker:
     command = None
 
     def set_command(self, _type: str) -> None:
-        if _type == "COMMAND_1":
-            self.command = Command1()
-
-        elif _type == "COMMAND_2":
-            self.command = Command2()
-        elif _type == "DIRECT":
+        if _type == "DIRECT":
             self.command = Direct()
         elif _type == "HISTORY":
             self.command = History()

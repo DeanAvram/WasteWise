@@ -1,5 +1,5 @@
-from pymongo import GEOSPHERE
 from pymongo import MongoClient
+from flask import abort, make_response, jsonify
 
 from src.data.role import Role
 
@@ -16,7 +16,7 @@ class MainService:
 
     def check_permissions(self, _type: Role, _mail: str) -> bool:
         if self.db.users.find_one({'email': _mail}) is None:
-            raise Exception('User not found')
+            abort(make_response(jsonify(message="email is missing"), 400))
 
         # check permissions
         if self.db.users.find_one({'email': _mail, 'role': _type.name}) is None:

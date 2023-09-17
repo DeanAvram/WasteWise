@@ -12,27 +12,6 @@ class Commands(Enum):
     DIRECT = 3,
 
 
-class Command1(ICommand):
-    def execute(self) -> dict:
-        return {
-            "message": "Command 1 executed"
-        }
-
-
-class Command2(ICommand):
-    def execute(self) -> dict:
-        return {
-            "message": "Command 2 executed"
-        }
-
-
-class Predict(ICommand):
-    def execute(self, data: dict) -> dict:
-        return {
-            "message": "Predict executed"
-        }
-
-
 class Direct(ICommand):
     def execute(self, data: dict):
         if data.get("location") is None:
@@ -66,7 +45,6 @@ class Direct(ICommand):
         if len(result) == 0:
             return {"Error": "No objects found"}, HTTPStatus.NOT_FOUND
         return result[0], HTTPStatus.OK
-
 
 
 class History(ICommand):
