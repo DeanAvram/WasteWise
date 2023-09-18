@@ -3,6 +3,7 @@ import pytest
 import json
 import os
 import logging
+from http import HTTPStatus
 
 from src import create_app
 from src.services.rest.object_service import ObjectService
@@ -120,6 +121,9 @@ def end_loop(counter, success):
     LOGGER.info(f' End Subtest {counter}\n')
     success += 1
     counter += 1
+    objectService.db.objects.delete_many({})
+    # userService.db.users.delete_many({})
+    commandService.db.commands.delete_many({})
     return counter, success
 
 
@@ -127,22 +131,22 @@ def end_test(success, length):
     LOGGER.info(f' Succeeded: {success} of {length}\n\n')
 
 
-def post_everything(client, path: str, data: list, need_user: bool, email: str) -> int:
+def post_everything(client, path: str, data: list):
     LOGGER.info(f' Posting {len(data)} objects to {path}')
-    full_path = f'{path}?email={email}' if need_user else path
-    counter: int = 0
+    counter: int = 1
 
     for i in data:
+        response = client.post(
+            path,
+            json=i
+        )
+        LOGGER.info(f' Posted {counter} : {i}')
+        LOGGER.info(f' Got response {counter} : {response.json}')
+
         try:
-            response = client.post(
-                full_path,
-                json=i
-            )
-            LOGGER.info(f' Posted {counter} : {i}')
-            LOGGER.info(f' Got response {counter} : {response}')
-        except Exception as e:
-            LOGGER.error(f' Failing in post object {counter} -> {e}')
+            assert response.status_code == HTTPStatus.CREATED
+        except AssertionError as e:
             continue
+
         counter += 1
 
-    return counter

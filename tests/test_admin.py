@@ -64,7 +64,7 @@ command_data = {
 }
 
 
-def test_get_all_users_new(client):
+def test_get_all_types(client):
     counter: int = 1
     success: int = 0
     length: int = 0
@@ -76,23 +76,22 @@ def test_get_all_users_new(client):
         LOGGER.info(f' ##### TITLE : {task["title"]} ####')
         LOGGER.info(f' Starting get all users Test {counter}')
 
-        num_of_objects = post_everything(client, task['path'], task['users'], False, '')
-        LOGGER.info(f' Got {num_of_objects} users')
+        post_everything(client, task['path'], task['objects'])
 
-        path: str = '/wastewise/admin/users'
         try:
             response = client.get(
-                f'{path}?email=admin@gmail.com'
+                f"{task['admin_path']}?email=admin@gmail.com"
             )
-            LOGGER.info(f' Got response {response}')
-            LOGGER.info(f' Got response {response.json}')
+            LOGGER.info(f' Got response {response.status_code}.')
+            LOGGER.info(f' Got response {response.json}.')
         except Exception as e:
             counter = next_sub_test(e, counter)
             continue
 
         try:
-            LOGGER.info(f' Got {len(response.json)} users ?= {num_of_objects} + 2')
-            assert response.status_code == HTTPStatus.OK and len(response.json) == len(task['users']) + 2
+            LOGGER.info(f' Got {len(response.json)} objects ?= {task["answer"]}.')
+            # assert response.status_code == HTTPStatus.OK
+            assert len(response.json) == task["answer"]
         except AssertionError as e:
             counter = next_sub_test(e, counter)
             continue

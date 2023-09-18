@@ -1,9 +1,11 @@
 {
-    "tasks": [
+    "tasks":
+    [
         {
-            "title": "get 2 users",
+            "title": "get 3 users",
+            "admin_path": "/wastewise/admin/users",
             "path": "/wastewise/users",
-            "users" :
+            "objects" :
             [
                  {
                     "name": "test",
@@ -23,7 +25,64 @@
                     "password": "Daniel123!",
                     "role": "USER"
                 }
-            ]
+            ],
+            "answer": 5
+        },
+        {
+          "title": "get 1 objects",
+            "admin_path": "/wastewise/admin/objects",
+            "path": "/wastewise/objects?email=user@gmail.com",
+            "objects" :
+            [
+              {
+                "type": "image",
+                "data": {
+                  "url": "https://www.google.com"
+                }
+              }
+            ],
+            "answer": 1
+        },
+        {
+          "title": "get 3 objects",
+            "admin_path": "/wastewise/admin/objects",
+            "path": "/wastewise/objects?email=user@gmail.com",
+            "objects" :
+            [
+              {
+                "type": "image",
+                "data": {
+                  "url": "https://www.google.com"
+                }
+              },
+              {
+                "type": "image",
+                "data": {
+                  "url": "https://www.google.com"
+                }
+              },
+              {
+                "type": "image",
+                "data": {
+                  "url": "https://www.google.com"
+                }
+              }
+            ],
+            "answer": 3
+        },
+        {
+          "title": "get 0 objects",
+            "admin_path": "/wastewise/admin/objects",
+            "path": "/wastewise/objects?email=user@gmail.com",
+            "objects" :
+            [
+              {
+                "data": {
+                  "url": "https://www.google.com"
+                }
+              }
+            ],
+            "answer": 0
         }
     ]
 }
