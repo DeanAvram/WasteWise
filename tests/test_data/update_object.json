@@ -14,7 +14,7 @@
                 "active":false
             },
             "status_code":204,
-            "explain":"This is a valid update of active",
+            "title":"This is a valid update of active",
             "valid" : true
         },
         {
@@ -32,7 +32,7 @@
                 "active":false
             },
             "status_code":400,
-            "explain":"Cant change created_by",
+            "title":"Cant change created_by",
             "valid" : false
         }
 

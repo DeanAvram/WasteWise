@@ -6,7 +6,7 @@
                 "type":"image"
             },
             "status_code":201,
-            "explain":"This is a valid object"
+            "title":"This is a valid object"
         },
         {
             "path":"/wastewise/objects",
@@ -17,15 +17,32 @@
                 }
             },
             "status_code":201,
-            "explain":"This is a valid object"
+            "title":"This is a valid object"
         }
-        ,
+        ,{
+            "path":"/wastewise/objects",
+            "object":{
+                "type":"image",
+                "data":{
+                }
+            },
+            "status_code":201,
+            "title":"This is a valid object"
+        },
         {
             "path":"/wastewise/objects",
             "object":{
             },
             "status_code":400,
-            "explain":"Missing type"
+            "title":"Missing type"
+        },
+        {
+            "path":"/wastewise/objects",
+            "object":{
+                "type": null
+            },
+            "status_code":400,
+            "title":"Type is Null"
         },
         {
             "path":"/wastewise/objects",
@@ -36,7 +53,7 @@
                 }
             },
             "status_code":400,
-            "explain":"Empty type"
+            "title":"Empty type"
         }
     ]
 }

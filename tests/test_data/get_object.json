@@ -6,7 +6,7 @@
                 "type":"image"
             },
             "status_code":200,
-            "explain":"This is a valid object",
+            "title":"This is a valid object",
             "valid" : true
         },
         {
@@ -18,7 +18,7 @@
                 }
             },
             "status_code":200,
-            "explain":"This is a valid object",
+            "title":"This is a valid object",
             "valid" : true
         },
         {
@@ -31,7 +31,7 @@
             },
             "status_code":404,
             "id":"unknown",
-            "explain":"This is a valid object, but the test enter worng _id",
+            "title":"This is a valid object, but the test enter worng _id",
             "valid" : false
         }
         

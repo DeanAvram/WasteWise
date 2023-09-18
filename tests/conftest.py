@@ -68,6 +68,7 @@ def create_user():
     }
     userService.create_user(user)
 
+
 def get_test_data(filename) -> dict:
     folder_path = os.path.abspath(Path(os.path.dirname(__file__)))
     folder = os.path.join(folder_path, 'test_data')
@@ -88,3 +89,35 @@ def equal_dicts_only(d1, d2, *keys):
     d1_filtered = {k: v for k, v in d1.items() if k in keys}
     d2_filtered = {k: v for k, v in d2.items() if k in keys}
     return d1_filtered == d2_filtered
+
+
+def start_test(data, length, file, name):
+    LOGGER.info(f' Starting: {name}')
+
+    try:
+        data = get_test_data(file)
+        LOGGER.info(' Got test data')
+    except Exception as e:
+        LOGGER.error(f' Failing in get test data Got exception {e}')
+        return
+
+    length = len(data['tasks'])
+
+    LOGGER.info(f' Got {length} tasks')
+
+    LOGGER.info('')
+    return data, length
+
+
+def next_sub_test(e, counter):
+    LOGGER.error(f' Failing in put object -> {e}')
+    LOGGER.error(f' Failing test {counter}')
+    counter += 1
+    return counter
+
+
+def end_loop(counter, success):
+    LOGGER.info(f' End {counter}')
+    success += 1
+    counter += 1
+    return counter, success
