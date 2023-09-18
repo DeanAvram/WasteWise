@@ -2,7 +2,8 @@ from enum import Enum
 
 
 class Commands(Enum):
-    DIRECT = 0,
-    HISTORY = 1,
-    PLACES = 2,
-    ADD_PLACE = 3
+    TEST = 0,
+    DIRECT = 1,
+    HISTORY = 2,
+    PLACES = 3,
+    ADD_PLACE = 4

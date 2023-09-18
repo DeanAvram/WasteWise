@@ -3,10 +3,12 @@
         {
             "path": "/wastewise/commands",
             "command": {
-                "type": "COMMAND_1"
+                "type": "COMMAND_1",
+                "data": {
+                }
             },
             "status_code": 201,
-            "explain": "valid command"
+            "title": "valid command"
         },
         {
             "path": "/wastewise/commands",
@@ -14,7 +16,7 @@
                 "type": "not_a_command"
             },
             "status_code": 400,
-            "explain": "invalid command"
+            "title": "invalid command"
         }
     ]
 }

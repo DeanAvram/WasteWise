@@ -54,7 +54,7 @@ def test_create_user(client):
                 counter += 1
                 continue
 
-        LOGGER.info(f' Test {counter} of {length}\n')
+        LOGGER.info(f' succeeded {counter} of {length}\n')
         success += 1
         counter += 1
 
@@ -112,7 +112,7 @@ def test_get_user(client):
             counter += 1
             continue
 
-        LOGGER.info(f' Test {counter} of {length}\n')
+        LOGGER.info(f' succeeded {counter} of {length}\n')
 
         counter += 1
         success += 1
@@ -144,10 +144,10 @@ def test_update_user(client):
             LOGGER.error(f'Failing test {counter}\n')
             counter += 1
             continue
-        LOGGER.info(f'3.3) Got response {response}')
+        LOGGER.info(f' 3) Got response {response}')
 
         # update user
-        LOGGER.info(f'3.4) Updating user {usr["old_user"]["email"]}')
+        LOGGER.info(f' 4) Updating user {usr["old_user"]["email"]}')
         path: str = usr['path'] + '/' + usr['old_user']['email']
         try:
             response = client.put(
@@ -160,10 +160,10 @@ def test_update_user(client):
             counter += 1
             continue
 
-        LOGGER.info(f'3.5) Got response {response}')
-        LOGGER.info(f'3.6) Got response {response.json}')
+        LOGGER.info(f' 5) Got response {response}')
+        LOGGER.info(f' 6) Got response {response.json}')
         answer = response.status_code == usr['status_code']
-        LOGGER.info(f'3.7) comparison is {answer}')
+        LOGGER.info(f' 7) comparison is {answer} -> {response.status_code} == {usr["status_code"]}')
         try:
             assert answer
         except AssertionError as e:
@@ -174,7 +174,7 @@ def test_update_user(client):
 
         if response.status_code == HTTPStatus.NO_CONTENT:
             # get user
-            LOGGER.info(f'3.8.1) Getting user {usr["old_user"]["email"]}')
+            LOGGER.info(f' 8) Getting user {usr["old_user"]["email"]}')
             path: str = usr['path'] + '/' + usr['old_user']['email']
             try:
                 response = client.get(
@@ -186,9 +186,9 @@ def test_update_user(client):
                 counter += 1
                 continue
 
-            LOGGER.info(f'3.8.2) Comparing {response.json} to {usr["new_user"]}')
+            LOGGER.info(f' 9) Comparing: \n\t{response.json} to \n\t{usr["new_user"]}')
             answer = equal_dicts_exclude(response.json, usr['new_user'], '_id')
-            LOGGER.info(f'3.8.3) comparison is {answer}')
+            LOGGER.info(f' 10) comparison is {answer}')
             try:
                 assert answer
             except AssertionError as e:
@@ -197,7 +197,7 @@ def test_update_user(client):
                 counter += 1
                 continue
 
-        LOGGER.info(f'3.9) Test {counter} of {length}\n')
+        LOGGER.info(f' succeeded {counter} of {length}\n')
         counter += 1
         success += 1
-    LOGGER.info(f' Succeeded: {success} of {length}')
+    LOGGER.info(f' Succeeded: {success} of {length} \n\n')

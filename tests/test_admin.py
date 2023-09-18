@@ -65,7 +65,7 @@ command_data = {
 
 
 def test_get_all_users(client):
-    LOGGER.info('Starting test_get_all_users')
+    LOGGER.info(' Starting test : test_get_all_users')
     data = user_data
     create_data(client, data, 'user')
     LOGGER.info('5) Getting all users')
