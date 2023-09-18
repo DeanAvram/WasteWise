@@ -19,7 +19,7 @@
             },
 
             "status_code":204,
-            "explain":"This is a valid object"
+            "title":"This is a valid object"
         },
         {
             "path": "/wastewise/users",
@@ -33,7 +33,7 @@
                 "email": "email"
             },
             "status_code": 400,
-            "explain": "This is not a valid object - cant change email"
+            "title": "This is not a valid object - cant change email"
         },
         {
             "path": "/wastewise/users",
@@ -47,7 +47,7 @@
                 "_id": "new id"
             },
             "status_code": 400,
-            "explain": "This is not a valid object - cant change id"
+            "title": "This is not a valid object - cant change id"
         },
 {
             "path": "/wastewise/users",
@@ -67,7 +67,7 @@
                 "role": "USER"
             },
             "status_code": 204,
-            "explain": "This is a valid object"
+            "title": "This is a valid object"
         }
     ]
 }

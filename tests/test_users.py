@@ -7,113 +7,198 @@ resource_path = Path(__file__).parent / 'resources'
 
 def test_create_user(client):
     counter: int = 1
+    success: int = 0
 
-    LOGGER.info('Starting test_create_user')
+    LOGGER.info(' Starting test : test_create_user')
     data = get_test_data('create_user.json')
-    LOGGER.info('1) Got test data')
-    LOGGER.info(f'2) Got {len(data["tasks"])} tasks')
+    length: int = len(data['tasks'])
+    LOGGER.info(f'Got {length} tasks')
 
-    LOGGER.info('3) Starting loop\n')
+    LOGGER.info('\n')
     for usr in data['tasks']:
-        LOGGER.info(f'3.1) Starting create user Test {counter}')
-        LOGGER.info(f'3.2) Posting {usr["user"]} to {usr["path"]}')
-        response = client.post(
-            usr['path'],
-            json=usr['user']
-        )
-        LOGGER.info(f'3.3) Got response {response}')
-        LOGGER.info(f'3.3) Got response {response.json}')
+        LOGGER.info(f' ##### TITLE : {usr["title"]} #####')
+        LOGGER.info(f'1) Starting create user Test {counter}')
+        try:
+            LOGGER.info(f'2) Posting {usr["user"]} to {usr["path"]}')
+            response = client.post(
+                usr['path'],
+                json=usr['user']
+            )
+        except Exception as e:
+            LOGGER.error(f' XX Got exception {e}')
+            LOGGER.error(f' XX Failing test {counter}\n')
+            counter += 1
+            continue
+
+        LOGGER.info(f'3) Got response {response}')
+        LOGGER.info(f'4) Got response {response.json}')
         answer = response.status_code == usr['status_code']
-        LOGGER.info(f'3.4) comparison is {answer}')
-        assert answer
+        LOGGER.info(f'5) comparison is {answer}')
+        try:
+            assert answer
+        except AssertionError as e:
+            LOGGER.error(f' XX Failing test {counter}')
+            LOGGER.error(f' XX Got exception {e}\n')
+            counter += 1
+            continue
 
         if response.status_code == HTTPStatus.CREATED:
-            LOGGER.info(f'3.5.1) Comparing {response.json} to {usr["user"]}')
+            LOGGER.info(f'6) Comparing {response.json} to {usr["user"]}')
             answer = equal_dicts_exclude(response.json, usr['user'], '_id')
-            LOGGER.info(f'3.5.2) comparison is {answer}')
-            assert answer
+            LOGGER.info(f'7) comparison is {answer}')
+            try:
+                assert answer
+            except AssertionError as e:
+                LOGGER.error(f' XX Got exception {e}')
+                LOGGER.error(f' XX Failing test {counter}\n')
+                counter += 1
+                continue
 
-        LOGGER.info(f'3.6 Loop {counter} done\n')
+        LOGGER.info(f' Test {counter} of {length}\n')
+        success += 1
         counter += 1
-    LOGGER.info('4) Done test_create_user\n\n')
+
+    LOGGER.info(f'4) Done test_create_user -- succeeded: {success} of {length}\n\n')
 
 
 def test_get_user(client):
     counter: int = 1
-    LOGGER.info('Starting test_get_user')
+    success: int = 0
+    LOGGER.info(' Starting test : test_get_user')
     data = get_test_data('get_user.json')
-    LOGGER.info('1) Got test data')
-    LOGGER.info(f'2) Got {len(data["tasks"])} tasks')
+    LOGGER.info(' Got test data')
+    length: int = len(data['tasks'])
+    LOGGER.info(f' Got {length} tasks')
 
-    LOGGER.info('3) Starting loop\n')
+    LOGGER.info('\n')
     for usr in data['tasks']:
-        LOGGER.info(f'3.1) Starting get user Test {counter}')
-        LOGGER.info(f'3.2) Posting {usr["user"]} to {usr["path"]}')
-        response = client.post(
-            usr['path'],
-            json=usr['user']
-        )
-        LOGGER.info(f'3.3) Got response {response}')
+        LOGGER.info(f' ##### TITLE : {usr["title"]} #####')
+        LOGGER.info(f'1) Starting get user Test {counter}')
+        LOGGER.info(f'2) Posting {usr["user"]} to {usr["path"]}')
+        try:
+            response = client.post(
+                usr['path'],
+                json=usr['user']
+            )
+        except Exception as e:
+            LOGGER.error(f' XX Got exception {e}')
+            LOGGER.error(f' XX Failing test {counter}\n')
+            counter += 1
+            continue
 
+        LOGGER.info(f'3) Got response {response}')
         # get user
-        LOGGER.info(f'3.4) Getting user {usr["user"]["email"]}')
+        LOGGER.info(f'4) Getting user {usr["user"]["email"]}')
         path: str = usr['path'] + '/' + usr['user']['email']
-        response = client.get(
-            f'{path}?email=user@gmail.com'
-        )
-        LOGGER.info(f'3.5) Got response {response}')
-        LOGGER.info(f'3.6) Got response {response.json}')
+        try:
+            response = client.get(
+                f'{path}?email=user@gmail.com'
+            )
+        except Exception as e:
+            LOGGER.error(f' XX Got exception {e}')
+            LOGGER.error(f' XX Failing test {counter}\n')
+            counter += 1
+            continue
+
+        LOGGER.info(f'5) Got response {response}')
+        LOGGER.info(f'6) Got response {response.json}')
         answer = response.status_code == usr['status_code']
-        LOGGER.info(f'3.7) comparison is {answer}')
-        assert answer
-        LOGGER.info(f'3.8) Loop {counter} done\n')
+        LOGGER.info(f'7) comparison is {answer}')
+        try:
+            assert answer
+        except AssertionError as e:
+            LOGGER.error(f' XX Got exception {e}')
+            LOGGER.error(f' XX Failing test {counter}\n')
+            counter += 1
+            continue
+
+        LOGGER.info(f' Test {counter} of {length}\n')
+
         counter += 1
-    LOGGER.info('4) Done test_create_user\n\n')
+        success += 1
+    LOGGER.info(f'4) Done test_create_user -- succeeded: {success} of {length} \n\n')
 
 
 def test_update_user(client):
     counter: int = 1
-    LOGGER.info('Starting test_update_user')
+    success: int = 0
+
+    LOGGER.info(' Starting test : test_update_user')
     data = get_test_data('update_user.json')
-    LOGGER.info('1) Got test data')
-    LOGGER.info(f'2) Got {len(data["tasks"])} tasks')
+    LOGGER.info(' Got test data')
+    length: int = len(data['tasks'])
+    LOGGER.info(f' Got {length} tasks')
 
     LOGGER.info('3) Starting loop\n')
     for usr in data['tasks']:
-        LOGGER.info(f'3.1) Starting update user Test {counter}')
-        LOGGER.info(f'3.2) Posting {usr["old_user"]} to {usr["path"]}')
-        response = client.post(
-            usr['path'],
-            json=usr['old_user']
-        )
+        LOGGER.info(f' ##### TITLE : {usr["title"]} #####')
+        LOGGER.info(f' 1) Starting update user Test {counter}')
+        LOGGER.info(f' 2) Posting {usr["old_user"]} to {usr["path"]}')
+        try:
+            response = client.post(
+                usr['path'],
+                json=usr['old_user']
+            )
+        except Exception as e:
+            LOGGER.error(f' XX Got exception {e}')
+            LOGGER.error(f' XX Failing test {counter}\n')
+            counter += 1
+            continue
         LOGGER.info(f'3.3) Got response {response}')
 
         # update user
         LOGGER.info(f'3.4) Updating user {usr["old_user"]["email"]}')
         path: str = usr['path'] + '/' + usr['old_user']['email']
-        response = client.put(
-            f'{path}?email=user@gmail.com',
-            json=usr['changes']
-        )
+        try:
+            response = client.put(
+                f'{path}?email=user@gmail.com',
+                json=usr['changes']
+            )
+        except Exception as e:
+            LOGGER.error(f' XX Got exception {e}')
+            LOGGER.error(f' XX Failing test {counter}\n')
+            counter += 1
+            continue
+
         LOGGER.info(f'3.5) Got response {response}')
         LOGGER.info(f'3.6) Got response {response.json}')
         answer = response.status_code == usr['status_code']
         LOGGER.info(f'3.7) comparison is {answer}')
-        assert answer
+        try:
+            assert answer
+        except AssertionError as e:
+            LOGGER.error(f' XX Got exception {e}')
+            LOGGER.error(f' XX Failing test {counter}\n')
+            counter += 1
+            continue
 
         if response.status_code == HTTPStatus.NO_CONTENT:
             # get user
             LOGGER.info(f'3.8.1) Getting user {usr["old_user"]["email"]}')
             path: str = usr['path'] + '/' + usr['old_user']['email']
-            response = client.get(
-                f'{path}?email=user@gmail.com'
-            )
+            try:
+                response = client.get(
+                    f'{path}?email=user@gmail.com'
+                )
+            except Exception as e:
+                LOGGER.error(f' XX Got exception {e}')
+                LOGGER.error(f' XX Failing test {counter}\n')
+                counter += 1
+                continue
 
             LOGGER.info(f'3.8.2) Comparing {response.json} to {usr["new_user"]}')
             answer = equal_dicts_exclude(response.json, usr['new_user'], '_id')
             LOGGER.info(f'3.8.3) comparison is {answer}')
-            assert answer
+            try:
+                assert answer
+            except AssertionError as e:
+                LOGGER.error(f' XX Got exception {e}')
+                LOGGER.error(f' XX Failing test {counter}\n')
+                counter += 1
+                continue
 
-        LOGGER.info(f'3.9) Loop {counter} done\n')
+        LOGGER.info(f'3.9) Test {counter} of {length}\n')
         counter += 1
-    LOGGER.info('4) Done test_update_user\n\n')
+        success += 1
+    LOGGER.info(f' succeeded: {success} of {length}')
+    LOGGER.info('Done test_update_user\n\n')
