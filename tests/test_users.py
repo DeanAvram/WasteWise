@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from pathlib import Path
-from tests.conftest import get_test_data, LOGGER, equal_dicts_exclude, start_test, end_loop, next_sub_test
+from tests.conftest import get_test_data, LOGGER, equal_dicts_exclude, start_test, end_loop, next_sub_test,end_test
 
 resource_path = Path(__file__).parent / 'resources'
 
@@ -47,8 +47,7 @@ def test_create_user(client):
                 continue
 
         counter, success = end_loop(counter, success)
-
-    LOGGER.info(f' Succeeded: {success} of {length}')
+    end_test(success, length)
 
 
 def test_get_user(client):
@@ -97,7 +96,7 @@ def test_get_user(client):
             continue
 
         counter, success = end_loop(counter, success)
-    LOGGER.info(f' Succeeded: {success} of {length} ')
+    end_test(success, length)
 
 
 def test_update_user(client):
@@ -169,4 +168,4 @@ def test_update_user(client):
                 continue
 
         counter, success = end_loop(counter, success)
-    LOGGER.info(f' Succeeded: {success} of {length} ')
+    end_test(success, length)

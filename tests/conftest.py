@@ -111,13 +111,17 @@ def start_test(data, length, file, name):
 
 def next_sub_test(e, counter):
     LOGGER.error(f' Failing in put object -> {e}')
-    LOGGER.error(f' Failing test {counter}')
+    LOGGER.error(f' Failing test {counter}\n')
     counter += 1
     return counter
 
 
 def end_loop(counter, success):
-    LOGGER.info(f' End {counter}')
+    LOGGER.info(f' End sub test{counter}\n')
     success += 1
     counter += 1
     return counter, success
+
+
+def end_test(success, length):
+    LOGGER.info(f' Succeeded: {success} of {length}\n\n')

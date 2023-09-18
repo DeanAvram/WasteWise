@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from pathlib import Path
-from tests.conftest import get_test_data, LOGGER
+from tests.conftest import get_test_data, LOGGER, start_test, next_sub_test, end_loop, end_test
 
 resource_path = Path(__file__).parent / 'resources'
 
@@ -8,14 +8,11 @@ resource_path = Path(__file__).parent / 'resources'
 def test_create_command(client):
     counter: int = 1
     success: int = 0
+    length: int = 0
+    data: dict = {}
 
-    LOGGER.info(' Starting test : test_create_command')
-    data = get_test_data('create_command.json')
-    LOGGER.info(' Got test data')
-    length = len(data['tasks'])
-    LOGGER.info(f' Got {length} tasks')
+    data, length = start_test(data, length, 'create_command.json', 'test_create_command')
 
-    LOGGER.info('\n')
     for cmd in data['tasks']:
         LOGGER.info(f' ##### TITLE : {cmd["title"]} ####')
         LOGGER.info(f' 1) Starting create command Test {counter}')
@@ -28,9 +25,7 @@ def test_create_command(client):
                 json=cmd['command']
             )
         except Exception as e:
-            LOGGER.error(f' Failing in post commnad Got exception {e}')
-            LOGGER.error(f' Failing test {counter}\n')
-            counter += 1
+            counter = next_sub_test(e, counter)
             continue
 
         LOGGER.info(f' 5) Got response {response}')
@@ -40,15 +35,11 @@ def test_create_command(client):
         try:
             assert answer
         except Exception as e:
-            LOGGER.error(f' Failing in comparison Got exception {e}')
-            LOGGER.error(f' Failing test {counter}\n')
-            counter += 1
+            counter = next_sub_test(e, counter)
             continue
 
-        LOGGER.info(f' succeeded {counter}\n')
-        counter += 1
-        success += 1
-    LOGGER.info(f' Succeeded: {success} of {length} \n\n')
+        counter, success = end_loop(counter, success)
+    end_test(success, length)
 
 
 
