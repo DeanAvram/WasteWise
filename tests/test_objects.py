@@ -7,8 +7,6 @@ from tests.conftest import (get_test_data, equal_dicts_exclude, equal_dicts_only
 resource_path = Path(__file__).parent / 'resources'
 
 
-
-
 def test_create_object(client):
     counter: int = 1
     success: int = 0
@@ -18,7 +16,8 @@ def test_create_object(client):
     data, length = start_test(data, length, 'create_object.json', 'test_create_object')
     for obj in data['tasks']:
         LOGGER.info(f' ##### TITLE : {obj["title"]} ####')
-        LOGGER.info(f' 1) Posting \t{obj["object"]} \tto \t{obj["path"]}')
+        
+        LOGGER.info(f' 1) Posting {obj["object"]} to {obj["path"]}')
         path = obj['path']
         try:
             response = client.post(
@@ -42,7 +41,7 @@ def test_create_object(client):
 
         LOGGER.info(f' 5) Checking if test {counter} is valid')
         if response.status_code == HTTPStatus.CREATED:
-            LOGGER.info(f' 6) Comparing :\t{response.json} \tto \t{obj["object"]}')
+            LOGGER.info(f' 6) Comparing :{response.json} to {obj["object"]}')
             answer = equal_dicts_only(response.json, obj['object'], 'type')
             LOGGER.info(f' 7) comparison is {answer}')
 

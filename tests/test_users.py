@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from pathlib import Path
-from tests.conftest import get_test_data, LOGGER, equal_dicts_exclude
+from tests.conftest import get_test_data, LOGGER, equal_dicts_exclude, start_test, end_loop, next_sub_test
 
 resource_path = Path(__file__).parent / 'resources'
 
@@ -8,13 +8,11 @@ resource_path = Path(__file__).parent / 'resources'
 def test_create_user(client):
     counter: int = 1
     success: int = 0
+    length: int = 0
+    data: dict = {}
 
-    LOGGER.info(' Starting: test_create_user')
-    data = get_test_data('create_user.json')
-    length: int = len(data['tasks'])
-    LOGGER.info(f' Got {length} tasks')
+    data, length = start_test(data, length, 'create_user.json', 'test_create_user')
 
-    LOGGER.info('')
     for usr in data['tasks']:
         LOGGER.info(f' ##### TITLE : {usr["title"]} #####')
         LOGGER.info(f' 1) Starting create user Test {counter}')
@@ -25,9 +23,7 @@ def test_create_user(client):
                 json=usr['user']
             )
         except Exception as e:
-            LOGGER.error(f' Got exception {e}')
-            LOGGER.error(f' Failing test {counter}')
-            counter += 1
+            counter = next_sub_test(e, counter)
             continue
 
         LOGGER.info(f' 3) Got response {response}')
@@ -37,9 +33,7 @@ def test_create_user(client):
         try:
             assert answer
         except AssertionError as e:
-            LOGGER.error(f' Failing test {counter}')
-            LOGGER.error(f' Got exception {e}')
-            counter += 1
+            counter = next_sub_test(e, counter)
             continue
 
         if response.status_code == HTTPStatus.CREATED:
@@ -49,14 +43,10 @@ def test_create_user(client):
             try:
                 assert answer
             except AssertionError as e:
-                LOGGER.error(f' Got exception {e}')
-                LOGGER.error(f' Failing test {counter}')
-                counter += 1
+                counter = next_sub_test(e, counter)
                 continue
 
-        LOGGER.info(f' succeeded {counter} of {length}')
-        success += 1
-        counter += 1
+        counter, success = end_loop(counter, success)
 
     LOGGER.info(f' Succeeded: {success} of {length}')
 
@@ -81,9 +71,7 @@ def test_get_user(client):
                 json=usr['user']
             )
         except Exception as e:
-            LOGGER.error(f' Got exception {e}')
-            LOGGER.error(f' Failing test {counter}')
-            counter += 1
+            counter = next_sub_test(e, counter)
             continue
 
         LOGGER.info(f' 3) Got response {response}')
@@ -95,9 +83,7 @@ def test_get_user(client):
                 f'{path}?email=user@gmail.com'
             )
         except Exception as e:
-            LOGGER.error(f' Got exception {e}')
-            LOGGER.error(f' Failing test {counter}')
-            counter += 1
+            counter = next_sub_test(e, counter)
             continue
 
         LOGGER.info(f' 5) Got response {response}')
@@ -107,15 +93,10 @@ def test_get_user(client):
         try:
             assert answer
         except AssertionError as e:
-            LOGGER.error(f' Got exception {e}')
-            LOGGER.error(f' Failing test {counter}')
-            counter += 1
+            counter = next_sub_test(e, counter)
             continue
 
-        LOGGER.info(f' succeeded {counter} of {length}')
-
-        counter += 1
-        success += 1
+        counter, success = end_loop(counter, success)
     LOGGER.info(f' Succeeded: {success} of {length} ')
 
 
@@ -140,9 +121,7 @@ def test_update_user(client):
                 json=usr['old_user']
             )
         except Exception as e:
-            LOGGER.error(f'Got exception {e}')
-            LOGGER.error(f'Failing test {counter}')
-            counter += 1
+            counter = next_sub_test(e, counter)
             continue
         LOGGER.info(f' 3) Got response {response}')
 
@@ -155,9 +134,7 @@ def test_update_user(client):
                 json=usr['changes']
             )
         except Exception as e:
-            LOGGER.error(f'Got exception {e}')
-            LOGGER.error(f'Failing test {counter}')
-            counter += 1
+            counter = next_sub_test(e, counter)
             continue
 
         LOGGER.info(f' 5) Got response {response}')
@@ -167,9 +144,7 @@ def test_update_user(client):
         try:
             assert answer
         except AssertionError as e:
-            LOGGER.error(f'Got exception {e}')
-            LOGGER.error(f'Failing test {counter}')
-            counter += 1
+            counter = next_sub_test(e, counter)
             continue
 
         if response.status_code == HTTPStatus.NO_CONTENT:
@@ -181,9 +156,7 @@ def test_update_user(client):
                     f'{path}?email=user@gmail.com'
                 )
             except Exception as e:
-                LOGGER.error(f' Got exception {e}')
-                LOGGER.error(f' Failing test {counter}')
-                counter += 1
+                counter = next_sub_test(e, counter)
                 continue
 
             LOGGER.info(f' 9) Comparing: \t{response.json} to \t{usr["new_user"]}')
@@ -192,12 +165,8 @@ def test_update_user(client):
             try:
                 assert answer
             except AssertionError as e:
-                LOGGER.error(f' Got exception {e}')
-                LOGGER.error(f' Failing test {counter}')
-                counter += 1
+                counter = next_sub_test(e, counter)
                 continue
 
-        LOGGER.info(f' succeeded {counter}')
-        counter += 1
-        success += 1
+        counter, success = end_loop(counter, success)
     LOGGER.info(f' Succeeded: {success} of {length} ')
