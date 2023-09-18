@@ -1,0 +1,19 @@
+{
+    "tasks": [
+        {
+            "path": "/wastewise/objects",
+            "object": {
+                "type": "image"
+            }
+        },
+        {
+            "path": "/wastewise/objects",
+            "object": {
+                "type": "image",
+                "data": {
+                    "url": "https://www.google.com"
+                }
+            }
+        }
+    ]
+}

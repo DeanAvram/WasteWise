@@ -1,0 +1,29 @@
+{
+    "tasks": [
+        {
+            "title": "get 2 users",
+            "path": "/wastewise/users",
+            "users" :
+            [
+                 {
+                    "name": "test",
+                    "email": "dean@gmail.com",
+                    "password": "Dean123!!",
+                    "role": "USER"
+                },
+                {
+                    "name": "test",
+                    "email": "daniel@gmail.com",
+                    "password": "Daniel123!",
+                    "role": "USER"
+                },
+                {
+                    "name": "test",
+                    "email": "dani@gmail.com",
+                    "password": "Daniel123!",
+                    "role": "USER"
+                }
+            ]
+        }
+    ]
+}
