@@ -15,7 +15,7 @@ def test_create_command(client):
     length = len(data['tasks'])
     LOGGER.info(f' Got {length} tasks')
 
-    LOGGER.info('3) Starting loop\n')
+    LOGGER.info('\n')
     for cmd in data['tasks']:
         LOGGER.info(f' ##### TITLE : {cmd["title"]} ####')
         LOGGER.info(f' 1) Starting create command Test {counter}')
@@ -45,7 +45,7 @@ def test_create_command(client):
             counter += 1
             continue
 
-        LOGGER.info(f'3.6 Loop {counter} done\n')
+        LOGGER.info(f' succeeded {counter}\n')
         counter += 1
         success += 1
     LOGGER.info(f' Succeeded: {success} of {length} \n\n')

@@ -3,7 +3,7 @@
         {
             "path": "/wastewise/commands",
             "command": {
-                "type": "COMMAND_1",
+                "type": "TEST",
                 "data": {
                 }
             },
