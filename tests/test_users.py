@@ -25,8 +25,8 @@ def test_create_user(client):
                 json=usr['user']
             )
         except Exception as e:
-            LOGGER.error(f' XX Got exception {e}')
-            LOGGER.error(f' XX Failing test {counter}\n')
+            LOGGER.error(f'Got exception {e}')
+            LOGGER.error(f'Failing test {counter}\n')
             counter += 1
             continue
 
@@ -37,8 +37,8 @@ def test_create_user(client):
         try:
             assert answer
         except AssertionError as e:
-            LOGGER.error(f' XX Failing test {counter}')
-            LOGGER.error(f' XX Got exception {e}\n')
+            LOGGER.error(f'Failing test {counter}')
+            LOGGER.error(f'Got exception {e}\n')
             counter += 1
             continue
 
@@ -49,8 +49,8 @@ def test_create_user(client):
             try:
                 assert answer
             except AssertionError as e:
-                LOGGER.error(f' XX Got exception {e}')
-                LOGGER.error(f' XX Failing test {counter}\n')
+                LOGGER.error(f'Got exception {e}')
+                LOGGER.error(f'Failing test {counter}\n')
                 counter += 1
                 continue
 
@@ -58,7 +58,7 @@ def test_create_user(client):
         success += 1
         counter += 1
 
-    LOGGER.info(f'4) Done test_create_user -- succeeded: {success} of {length}\n\n')
+    LOGGER.info(f' Succeeded: {success} of {length}\n\n')
 
 
 def test_get_user(client):
@@ -81,8 +81,8 @@ def test_get_user(client):
                 json=usr['user']
             )
         except Exception as e:
-            LOGGER.error(f' XX Got exception {e}')
-            LOGGER.error(f' XX Failing test {counter}\n')
+            LOGGER.error(f'Got exception {e}')
+            LOGGER.error(f'Failing test {counter}\n')
             counter += 1
             continue
 
@@ -95,8 +95,8 @@ def test_get_user(client):
                 f'{path}?email=user@gmail.com'
             )
         except Exception as e:
-            LOGGER.error(f' XX Got exception {e}')
-            LOGGER.error(f' XX Failing test {counter}\n')
+            LOGGER.error(f'Got exception {e}')
+            LOGGER.error(f'Failing test {counter}\n')
             counter += 1
             continue
 
@@ -107,8 +107,8 @@ def test_get_user(client):
         try:
             assert answer
         except AssertionError as e:
-            LOGGER.error(f' XX Got exception {e}')
-            LOGGER.error(f' XX Failing test {counter}\n')
+            LOGGER.error(f'Got exception {e}')
+            LOGGER.error(f'Failing test {counter}\n')
             counter += 1
             continue
 
@@ -116,7 +116,7 @@ def test_get_user(client):
 
         counter += 1
         success += 1
-    LOGGER.info(f'4) Done test_create_user -- succeeded: {success} of {length} \n\n')
+    LOGGER.info(f' Succeeded: {success} of {length} \n\n')
 
 
 def test_update_user(client):
@@ -140,8 +140,8 @@ def test_update_user(client):
                 json=usr['old_user']
             )
         except Exception as e:
-            LOGGER.error(f' XX Got exception {e}')
-            LOGGER.error(f' XX Failing test {counter}\n')
+            LOGGER.error(f'Got exception {e}')
+            LOGGER.error(f'Failing test {counter}\n')
             counter += 1
             continue
         LOGGER.info(f'3.3) Got response {response}')
@@ -155,8 +155,8 @@ def test_update_user(client):
                 json=usr['changes']
             )
         except Exception as e:
-            LOGGER.error(f' XX Got exception {e}')
-            LOGGER.error(f' XX Failing test {counter}\n')
+            LOGGER.error(f'Got exception {e}')
+            LOGGER.error(f'Failing test {counter}\n')
             counter += 1
             continue
 
@@ -167,8 +167,8 @@ def test_update_user(client):
         try:
             assert answer
         except AssertionError as e:
-            LOGGER.error(f' XX Got exception {e}')
-            LOGGER.error(f' XX Failing test {counter}\n')
+            LOGGER.error(f'Got exception {e}')
+            LOGGER.error(f'Failing test {counter}\n')
             counter += 1
             continue
 
@@ -181,8 +181,8 @@ def test_update_user(client):
                     f'{path}?email=user@gmail.com'
                 )
             except Exception as e:
-                LOGGER.error(f' XX Got exception {e}')
-                LOGGER.error(f' XX Failing test {counter}\n')
+                LOGGER.error(f'Got exception {e}')
+                LOGGER.error(f'Failing test {counter}\n')
                 counter += 1
                 continue
 
@@ -192,13 +192,12 @@ def test_update_user(client):
             try:
                 assert answer
             except AssertionError as e:
-                LOGGER.error(f' XX Got exception {e}')
-                LOGGER.error(f' XX Failing test {counter}\n')
+                LOGGER.error(f'Got exception {e}')
+                LOGGER.error(f'Failing test {counter}\n')
                 counter += 1
                 continue
 
         LOGGER.info(f'3.9) Test {counter} of {length}\n')
         counter += 1
         success += 1
-    LOGGER.info(f' succeeded: {success} of {length}')
-    LOGGER.info('Done test_update_user\n\n')
+    LOGGER.info(f' Succeeded: {success} of {length}')
