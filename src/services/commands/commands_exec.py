@@ -41,7 +41,7 @@ class Direct(ICommand):
 
 
 class History(ICommand):
-    def execute(self) -> dict:
+    def execute(self, data: dict) -> dict:
         return {
             "message": "History executed"
         }

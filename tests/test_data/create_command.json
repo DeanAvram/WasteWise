@@ -3,11 +3,11 @@
         {
             "path": "/wastewise/commands",
             "command": {
-                "type": "TEST",
+                "type": "HISTORY",
                 "data": {
                 }
             },
-            "status_code": 201,
+            "status_code": 200,
             "title": "valid command"
         },
         {

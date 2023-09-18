@@ -28,7 +28,7 @@ def test_create_command(client):
                 json=cmd['command']
             )
         except Exception as e:
-            LOGGER.error(f' Got exception {e}')
+            LOGGER.error(f' Failing in post commnad Got exception {e}')
             LOGGER.error(f' Failing test {counter}\n')
             counter += 1
             continue
@@ -36,11 +36,11 @@ def test_create_command(client):
         LOGGER.info(f' 5) Got response {response}')
         LOGGER.info(f' 6) Got response {response.json}')
         answer = response.status_code == cmd['status_code']
-        LOGGER.info(f' 7) comparison is {answer}')
+        LOGGER.info(f' 7) comparison is {answer} - {response.status_code} == {cmd["status_code"]}')
         try:
             assert answer
         except Exception as e:
-            LOGGER.error(f' Got exception {e}')
+            LOGGER.error(f' Failing in comparison Got exception {e}')
             LOGGER.error(f' Failing test {counter}\n')
             counter += 1
             continue
