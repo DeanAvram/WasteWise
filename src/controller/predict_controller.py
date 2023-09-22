@@ -12,11 +12,12 @@ def get_prediction():
     data = request.get_data()  # Get data
     stream = io.BytesIO(data)
     image = Image.open(stream)
-    return predictService.get_prediction(_get_user_email(data), image)
+    return predictService.get_prediction(_get_user_email(request), image)
 
 
 def _get_user_email(req):
     # get query param user_id
+    print(req)
     if req.args.get('email') is None:
         return {}, 400
     else:
