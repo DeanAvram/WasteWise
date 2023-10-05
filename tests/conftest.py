@@ -49,8 +49,12 @@ def before_and_after_test():
 
     yield
 
+    objectService.db.objects.delete_many({})
+    userService.db.users.delete_many({})
+    commandService.db.commands.delete_many({})
 
-def create_admin_user():
+
+def create_admin_user() -> dict:
     user = {
         "name": "Admin",
         "email": "admin@gmail.com",
@@ -58,9 +62,10 @@ def create_admin_user():
         "role": "ADMIN"
     }
     userService.create_user(user)
+    return user
 
 
-def create_user():
+def create_user() -> dict:
     user = {
         "name": "User",
         "email": "user@gmail.com",
@@ -68,6 +73,7 @@ def create_user():
         "role": "USER"
     }
     userService.create_user(user)
+    return user
 
 
 def get_test_data(filename) -> dict:
