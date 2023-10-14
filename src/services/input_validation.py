@@ -194,3 +194,39 @@ history_command_schema = {
     "required": ["type"],
     "additionalProperties": False
 }
+
+
+add_place_command_schema = {
+    "title": "Create Place",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "object",
+                    "properties": {
+                        "lat": {
+                            "type": "number"
+                        },
+                        "lng": {
+                            "type": "number"
+                        }
+                    },
+                    "required": ["lat", "lng"],
+                    "additionalProperties": False
+                }
+            },
+            "required": ["name", "location"],
+            "additionalProperties": False
+        }
+    },
+    "required": ["type", "data"],
+    "additionalProperties": False
+}
