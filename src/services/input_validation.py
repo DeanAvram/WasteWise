@@ -1,3 +1,4 @@
+from src.data.objects import Object
 from src.data.role import Role
 from src.services.commands.commands import Commands
 
@@ -12,9 +13,12 @@ object_schema = {
     "type": "object",
     "properties": {
         "type": {
-            "description": "The type of the object",
+            "description": "The type of the user",
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "axis": {
+                "enum": Object
+            }
         },
         "data": {
             "description": "The data of the object",
