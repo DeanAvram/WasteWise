@@ -39,8 +39,31 @@ def test_get_object_1(client):
 def test_get_object_2(client):
     """
     Create an object:
-    Valid: yes
-    Explain: get object
+    Valid: no
+    Explain: not found object
     """
 
-    #
+    # create user
+    user = create_user()
+
+    # create object
+    response = client.post(
+        f'/wastewise/objects?email={user["email"]}',
+        json={
+            "type": "image",
+            "data": {
+                "url": "https://www.google.com"
+            }
+        }
+    )
+    _id: str = "some_id"
+
+    # get
+    response = client.get(
+        f'/wastewise/objects/{_id}?email={user["email"]}'
+    )
+
+    # validate
+    assert response.status_code == HTTPStatus.NOT_FOUND
+
+
