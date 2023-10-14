@@ -1,8 +1,11 @@
+import json
+
+from src.data.object import Object
 from src.services.commands.command_interface import ICommand
 from src.services.rest.main_service import MainService
 from http import HTTPStatus
 from jsonschema import ValidationError, validate
-from src.services.input_validation import direct_command_schema, history_command_schema
+from src.services.input_validation import direct_command_schema, history_command_schema, add_place_command_schema
 from datetime import datetime, timedelta
 from src.services.commands.commands import Period
 
@@ -91,10 +94,30 @@ class Places(ICommand):
 
 
 class AddPlace(ICommand):
-    def execute(self) -> dict:
-        return {
-            "message": "Add place executed"
+    def execute(self, data: dict, email: str):
+        try:
+            validate(instance=data, schema=add_place_command_schema)
+        except ValidationError as e:
+            return {
+                "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
+        except Exception as e:
+            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
+        # Extract the location from the request
+        lat = data.get("data").get("location").get("lat")
+        lng = data.get("data").get("location").get("lng")
+        # Create a GeoJSON object
+
+        # Create a new object
+        obj = Object("place", email)
+        obj.data = {
+            "name": data.get("data").get("name"),
+            "location": {
+                "coordinates": [lat, lng]
+            }
         }
+        # Insert the object into the database
+        MainService().get_db().objects.insert_one(json.loads(obj.toJSON()))
+        return json.loads(obj.toJSON()), HTTPStatus.CREATED
 
 
 class CommandNotFound(ICommand):
