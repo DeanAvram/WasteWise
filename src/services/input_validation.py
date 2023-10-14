@@ -1,10 +1,8 @@
 from src.data.role import Role
-from src.services.commands.commands import Commands
-
+from src.services.commands.commands import Commands, Period
 
 email_regex = "[A-Za-z]*[A-Za-z0-9]@([\w-]+\.)+[\w-]{2,4}$"
 password_regex = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
-
 
 object_schema = {
     "title": "Object",
@@ -171,5 +169,30 @@ direct_command_schema = {
         }
     },
     "required": ["type", "data"],
+    "additionalProperties": False
+}
+
+history_command_schema = {
+    "title": "History Command",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "period": {
+                    "type": "string",
+                    "axis": {
+                        "enum": Period
+                    }
+                }
+            },
+            "required": ["period"],
+            "additionalProperties": False
+        }
+    },
+    "required": ["type"],
     "additionalProperties": False
 }

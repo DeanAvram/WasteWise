@@ -31,6 +31,6 @@ class CommandInvoker:
         else:
             self.command = CommandNotFound()
 
-    def execute_command(self, data: dict):
+    def execute_command(self, data: dict, email: str):
         if isinstance(self.command, ICommand):
-            return self.command.execute(data)
+            return self.command.execute(data, email)

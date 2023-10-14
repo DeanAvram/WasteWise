@@ -11,10 +11,11 @@ class Object:
     active: bool
     data: dict
 
-    def __init__(self, type: str, created_by: str):
+    def __init__(self, type: str, created_by: str, active=True):
         self._id = str(uuid.uuid1())
         self.type = type
         self.created_by = created_by
+        self.active = active
 
     def get_id(self):
         return self._id

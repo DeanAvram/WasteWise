@@ -20,17 +20,16 @@ class PredictService(MainService):
     def get_prediction(self, email, image) -> tuple:
         if not super().check_permissions(Role.USER, email):
             return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
+        current_datetime = datetime.now()
         pred = Network.predict_external_image(self.model, image)
         d = {'prediction': pred}
         prediction_data = {
             'prediction': pred,
-            'prediction_time': str(datetime.now())
+            'prediction_time': current_datetime
         }
-
         prediction_obj = Object("prediction", email)
-        prediction_obj.data = prediction_data
-        print(prediction_obj.toJSON())
+        prediction_obj.set_data(prediction_data)
 
         # insert prediction object into database
-        MainService().get_db().objects.insert_one(json.loads(prediction_obj.toJSON()))
+        MainService().get_db().objects.insert_one(prediction_obj.toDict())
         return d, HTTPStatus.OK

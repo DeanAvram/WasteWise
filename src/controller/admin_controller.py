@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import request
 from src.services.rest.admin_service import AdminService
+from flask import abort, make_response, jsonify
 
 
 admin = Blueprint('admin', __name__, url_prefix='/wastewise/admin')
@@ -59,7 +60,7 @@ def _get_page(req):
 def _get_user_email(req):
     # get query param user_id
     if req.args.get('email') is None:
-        return {}, 400
+        abort(make_response(jsonify(message="Email is missing"), 400))
     else:
         user_id = req.args.get('email')
     return user_id

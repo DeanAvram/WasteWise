@@ -17,7 +17,6 @@ def get_prediction():
 
 def _get_user_email(req):
     # get query param user_id
-    print(req)
     if req.args.get('email') is None:
         return {}, 400
     else:

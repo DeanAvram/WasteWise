@@ -2,15 +2,18 @@ from src.services.commands.command_interface import ICommand
 from src.services.rest.main_service import MainService
 from http import HTTPStatus
 from jsonschema import ValidationError, validate
-from src.services.input_validation import direct_command_schema
+from src.services.input_validation import direct_command_schema, history_command_schema
+from datetime import datetime, timedelta
+from src.services.commands.commands import Period
 
 
 class Direct(ICommand):
-    def execute(self, data: dict):
+    def execute(self, data: dict, email: str):
         try:
             validate(instance=data, schema=direct_command_schema)
         except ValidationError as e:
-            return {"Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
+            return {
+                "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
         except Exception as e:
             return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
         lat = data.get("data").get("location").get("lat")
@@ -37,14 +40,47 @@ class Direct(ICommand):
         result = list(MainService().get_db().objects.aggregate(pipeline))
         if len(result) == 0:
             return {"Error": "No objects found"}, HTTPStatus.NOT_FOUND
-        return result[0], HTTPStatus.OK
+        return result[0], HTTPStatus.CREATED
 
 
 class History(ICommand):
-    def execute(self, data: dict) -> dict:
-        return {
-            "message": "History executed"
-        }
+    def execute(self, data: dict, email: str):
+        # TODO: check why validation on enum doesn't work
+        try:
+            validate(instance=data, schema=history_command_schema)
+        except ValidationError as e:
+            return {
+                "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
+        except Exception as e:
+            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
+        # return all objects of type prediction for the user in the relevant time frame
+        result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email}))
+        today = datetime.now()
+        last_week = today - timedelta(weeks=1)
+        last_month = today - timedelta(days=30)
+        last_year = today - timedelta(days=365)
+        if data.get("data").get("period") == Period.WEEK.name:
+            print("week")
+            result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email,
+                                                               "data.prediction_time": {
+                                                                   "$gte": last_week
+                                                               }}))
+        elif data.get("data").get("period") == Period.MONTH.name:
+            result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email,
+                                                               "data.prediction_time": {
+                                                                   "$gte": last_month
+                                                               }}))
+        elif data.get("data").get("period") == Period.YEAR.name:
+            result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email,
+                                                               "data.prediction_time": {
+                                                                   "$gte": last_year
+                                                               }}))
+        elif data.get("data").get("period") == Period.ALL.name:
+            result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email}))
+        else:
+            return {"Error": "Period not found"}, HTTPStatus.BAD_REQUEST
+
+        return result, HTTPStatus.CREATED
 
 
 class Places(ICommand):

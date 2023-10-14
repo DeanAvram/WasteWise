@@ -39,5 +39,4 @@ class CommandService(MainService):
 
         if isinstance(commandInvoker.command, CommandNotFound):
             return {"Error": "Command not found"}, HTTPStatus.BAD_REQUEST
-
-        return commandInvoker.execute_command(args)
+        return commandInvoker.execute_command(args, email)
