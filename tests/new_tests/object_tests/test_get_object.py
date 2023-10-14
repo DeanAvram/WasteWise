@@ -23,6 +23,7 @@ def test_get_object_1(client):
         }
     )
 
+
     # get
     response = client.get(
         f'/wastewise/objects/{user["email"]}?email={user["email"]}'

@@ -127,6 +127,7 @@ def test_create_object_6(client):
         json={
         }
     )
+
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
 

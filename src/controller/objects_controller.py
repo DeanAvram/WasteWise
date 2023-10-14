@@ -19,6 +19,7 @@ def get_object(object_id: str):
     return objectService.get_object(_get_user_email(request), object_id)
 
 
+
 @objects.put('/<object_id>')
 def update_object(object_id: str):
     data = request.get_json()
