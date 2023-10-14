@@ -1,5 +1,8 @@
 from http import HTTPStatus
 from pathlib import Path
+
+from fontTools.designspaceLib.split import LOGGER
+
 from tests.conftest import create_user, create_admin_user
 
 resource_path = Path(__file__).parent / 'resources'
@@ -19,12 +22,13 @@ def test_create_object_1(client):
     response = client.post(
         f'/wastewise/objects?email={user["email"]}',
         json={
-            "type": "image",
+            "type": "IMAGE",
             "data": {
                 "url": "https://www.google.com"
             }
         }
     )
+    LOGGER.error(response.response)
     assert response.status_code == HTTPStatus.CREATED
 
 
@@ -148,4 +152,5 @@ def test_create_object_7(client):
             'type': 'BDHBDIBDI'
         }
     )
+    LOGGER.info(response.json)
     assert response.status_code == HTTPStatus.BAD_REQUEST

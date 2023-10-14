@@ -1,4 +1,4 @@
-from src.data.objects import Object
+from src.data.enum_object import EnumObject
 from src.data.role import Role
 from src.services.commands.commands import Commands, Period
 
@@ -11,12 +11,10 @@ object_schema = {
     "type": "object",
     "properties": {
         "type": {
-            "description": "The type of the user",
+            "description": "The object of the user",
             "type": "string",
             "minLength": 1,
-            "axis": {
-                "enum": Object
-            }
+            "enum": [str(t.name) for t in EnumObject]
         },
         "data": {
             "description": "The data of the object",
@@ -76,10 +74,8 @@ user_schema = {
             "description": "The role of the user",
             "type": "string",
             "minLength": 1,
-            "axis": {
-                "enum": Role
-            }
-        }
+            "enum": [str(t.name) for t in Role]
+        },
     },
     "required": [
         "name",
@@ -111,10 +107,8 @@ user_schema_update = {
             "description": "The role of the user",
             "type": "string",
             "minLength": 1,
-            "axis": {
-                "enum": Role
-            }
-        }
+            "enum": [str(t.name) for t in Role]
+        },
     },
     "additionalProperties": False
 }

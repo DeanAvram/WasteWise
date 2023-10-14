@@ -19,7 +19,7 @@ def test_get_object_1(client):
     response = client.post(
         f'/wastewise/objects?email={user["email"]}',
         json={
-            "type": "image",
+            "type": "IMAGE",
             "data": {
                 "url": "https://www.google.com"
             }

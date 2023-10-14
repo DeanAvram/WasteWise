@@ -15,22 +15,18 @@ class UserService(MainService):
         self.users = super().get_db().users
 
     def create_user(self, user: dict) -> tuple:
-        """
-        Create user
-
-        Params:
-            user: dict
-        """
         try:
             validate(instance=user, schema=user_schema)
         except ValidationError as e:
-            return {"Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
+            return ({"Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)},
+                    HTTPStatus.BAD_REQUEST)
         except Exception as e:
             return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
-        
+
         if self.users.find_one({'email': user['email']}) is not None:
+            print("User already exists")
             return {"Error": "User already exists"}, HTTPStatus.BAD_REQUEST
-        
+
         new_user = User(user['name'], user['email'], user['password'], user['role'])
         self.users.insert_one(json.loads(new_user.toJSON()))
         return json.loads(json_util.dumps(user)), HTTPStatus.CREATED

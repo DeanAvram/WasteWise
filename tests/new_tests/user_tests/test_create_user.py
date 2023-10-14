@@ -1,6 +1,8 @@
 from http import HTTPStatus
 from pathlib import Path
 
+from tests.conftest import LOGGER
+
 resource_path = Path(__file__).parent / 'resources'
 
 
@@ -174,7 +176,7 @@ def test_create_user_10(client):
     Problem: username already exists
     """
 
-    client.post(
+    response = client.post(
         '/wastewise/users',
         json={
             "name": "test",
@@ -183,6 +185,7 @@ def test_create_user_10(client):
             "role": "USER"
         }
     )
+
 
     response = client.post(
         '/wastewise/users',
@@ -203,7 +206,7 @@ def test_create_user_11(client):
     Problem: email already exists
     """
 
-    client.post(
+    response = client.post(
         '/wastewise/users',
         json={
             "name": "test",
@@ -212,6 +215,7 @@ def test_create_user_11(client):
             "role": "USER"
         }
     )
+    LOGGER.info(response)
 
     response = client.post(
         '/wastewise/users',
@@ -225,3 +229,21 @@ def test_create_user_11(client):
 
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
+
+def test_create_user_12(client):
+    """
+    Create a user:
+    Valid: no
+    Problem: wrong role
+    """
+
+    response = client.post(
+        '/wastewise/users',
+        json={
+            "name": "test",
+            "email": "test@gmail.com",
+            "password": "Testing193!",
+            "role": "not role"
+        }
+    )
+    assert response.status_code == HTTPStatus.BAD_REQUEST

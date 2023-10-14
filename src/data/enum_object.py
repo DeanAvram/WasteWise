@@ -1,9 +1,10 @@
 from enum import Enum
 
 
-class Role(Enum):
-    USER = 0,
-    ADMIN = 1
+class EnumObject(Enum):
+    OTHER = -1,
+    IMAGE = 0
 
     def __str__(self):
         return self.name
+
