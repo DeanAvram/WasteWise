@@ -7,6 +7,7 @@ resource_path = Path(__file__).parent / 'resources'
 
 
 def test_update_user_1(client):
+
     """
     Update a user:
     Valid: yes

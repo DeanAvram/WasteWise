@@ -101,6 +101,7 @@ def equal_dicts_only(d1, d2, *keys):
 def start_test(data, length, file, name):
     LOGGER.info(f' Starting: {name}')
 
+
     try:
         data = get_test_data(file)
         LOGGER.info(' Got test data')
