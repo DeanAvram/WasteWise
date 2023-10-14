@@ -16,19 +16,31 @@ def test_get_object_1(client):
     user = create_user()
 
     # create object
-    objectService.create_object(
-        user['email'],
-        {
-            "type": "IMAGE"
+    response = client.post(
+        f'/wastewise/objects?email={user["email"]}',
+        json={
+            "type": "image",
+            "data": {
+                "url": "https://www.google.com"
+            }
         }
     )
-
+    _id: str = response.json['_id']
 
     # get
     response = client.get(
-        f'/wastewise/objects/{user["email"]}?email={user["email"]}'
+        f'/wastewise/objects/{_id}?email={user["email"]}'
     )
 
     # validate
     assert response.status_code == HTTPStatus.OK
 
+
+def test_get_object_2(client):
+    """
+    Create an object:
+    Valid: yes
+    Explain: get object
+    """
+
+    #
