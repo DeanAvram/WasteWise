@@ -10,6 +10,7 @@ def test_get_user_1(client):
     Get a user:
     Valid: yes
     """
+
     usr = create_user()
     response = client.get(
         f'/wastewise/users/{usr["email"]}?email={usr["email"]}'

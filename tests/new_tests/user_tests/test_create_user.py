@@ -166,6 +166,7 @@ def test_create_user_9(client):
 
 
 def test_create_user_10(client):
+
     # FIXME: this test is not working
     """
     Create a user:
