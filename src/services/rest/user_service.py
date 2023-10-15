@@ -23,9 +23,13 @@ class UserService(MainService):
         except Exception as e:
             return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
 
+        # check if mail is already exists
         if self.users.find_one({'email': user['email']}) is not None:
-            print("User already exists")
-            return {"Error": "User already exists"}, HTTPStatus.BAD_REQUEST
+            return {"Error": "User email already exists"}, HTTPStatus.BAD_REQUEST
+
+        # check if name is already exists
+        if self.users.find_one({'name': user['name']}) is not None:
+            return {"Error": "User name already exists"}, HTTPStatus.BAD_REQUEST
 
         new_user = User(user['name'], user['email'], user['password'], user['role'])
         self.users.insert_one(json.loads(new_user.toJSON()))

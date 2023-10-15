@@ -186,7 +186,6 @@ def test_create_user_10(client):
         }
     )
 
-
     response = client.post(
         '/wastewise/users',
         json={
