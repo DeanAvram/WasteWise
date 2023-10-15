@@ -15,7 +15,7 @@ def test_update_object_1(client):
     user: dict = create_user()
 
     # create object
-    obj: dict = dict(type="image", data={
+    obj: dict = dict(type="IMAGE", data={
         "url": "https://www.google.com"
     })
     response_post = client.post(
@@ -62,7 +62,7 @@ def test_update_object_2(client):
     user: dict = create_user()
 
     # create object
-    obj: dict = dict(type="image", data={
+    obj: dict = dict(type="IMAGE", data={
         "url": "https://www.google.com"
     })
     response_post = client.post(
@@ -107,7 +107,7 @@ def test_update_object_3(client):
     user: dict = create_user()
 
     # create object
-    obj: dict = dict(type="image", data={
+    obj: dict = dict(type="IMAGE", data={
         "url": "https://www.google.com"
     })
     response_post = client.post(
@@ -152,7 +152,7 @@ def test_update_object_4(client):
     user: dict = create_user()
 
     # create object
-    obj: dict = dict(type="image", data={
+    obj: dict = dict(type="IMAGE", data={
         "url": "https://www.google.com"
     })
     response_post = client.post(
