@@ -195,7 +195,6 @@ history_command_schema = {
     "additionalProperties": False
 }
 
-
 add_place_command_schema = {
     "title": "Create Place",
     "type": "object",

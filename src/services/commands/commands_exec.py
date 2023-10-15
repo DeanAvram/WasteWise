@@ -125,3 +125,11 @@ class CommandNotFound(ICommand):
         return {
             "message": "Command not found"
         }
+
+class General(ICommand):
+    def execute(self, data: dict, email: str):
+        return {
+            "email":email,
+            "data": data
+            
+        }

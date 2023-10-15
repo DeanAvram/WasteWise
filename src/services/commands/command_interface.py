@@ -7,3 +7,5 @@ class ICommand(ABC):
     @abstractmethod
     def execute(self, data: dict, email: str) -> None:
         pass
+
+

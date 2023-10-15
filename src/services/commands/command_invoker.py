@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from src.services.commands.command_interface import ICommand
-from src.services.commands.commands_exec import Direct, History, Places, AddPlace, CommandNotFound
+from src.services.commands.commands_exec import Direct, History, Places, AddPlace, CommandNotFound, General
 from enum import Enum
 
 
@@ -28,6 +28,8 @@ class CommandInvoker:
             self.command = Places()
         elif _type == "ADD_PLACE":
             self.command = AddPlace()
+        elif _type == "GENERAL":
+            self.command = General()
         else:
             self.command = CommandNotFound()
 

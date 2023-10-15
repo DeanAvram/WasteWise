@@ -5,7 +5,8 @@ class Commands(Enum):
     DIRECT = 0,
     HISTORY = 1,
     PLACES = 2,
-    ADD_PLACE = 3
+    ADD_PLACE = 3,
+    GENERAL = 4
 
 
 class Period(Enum):
