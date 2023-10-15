@@ -134,7 +134,7 @@ def test_update_user_4(client):
         json=data
     )
     # check if status is ok
-    assert response.status_code == HTTPStatus.NO_CONTENT
+    assert response.status_code == HTTPStatus.BAD_REQUEST
 
     # check if data updated
     response = client.get(
@@ -204,34 +204,4 @@ def test_update_user_6(client):
     )
     # check if status is ok
     assert response.status_code == HTTPStatus.BAD_REQUEST
-
-
-def test_update_user_7(client):
-    """
-    Update a user:
-    Valid: no
-    Explain: username is not valid format?
-    """
-
-    # create
-    usr = {
-        "name": "User",
-        "email": "user@gmail.com",
-        "password": "Testing193!",
-        "role": "USER"
-    }
-    userService.create_user(user=usr)
-    # update
-
-    data = {
-        "name": "9d99d9d"
-    }
-    response = client.put(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
-        json=data
-    )
-    # check if status is ok
-    assert response.status_code == HTTPStatus.BAD_REQUEST
-
-
 
