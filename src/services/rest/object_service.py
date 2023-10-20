@@ -1,6 +1,6 @@
 from jsonschema import ValidationError, validate
 
-from src.data.role import Role
+from src.data.enum_role import EnumRole
 from src.services.rest.main_service import MainService
 from bson import json_util
 import json
@@ -16,7 +16,7 @@ class ObjectService(MainService):
 
     def create_object(self, mail: str, args: dict) -> tuple:
 
-        if not super().check_permissions(Role.USER, mail):
+        if not super().check_permissions(EnumRole.USER, mail):
             return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
 
         try:
@@ -42,7 +42,7 @@ class ObjectService(MainService):
 
     def get_object(self, mail: str, object_id: str) -> tuple:
 
-        if not super().check_permissions(Role.USER, mail):
+        if not super().check_permissions(EnumRole.USER, mail):
             return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
 
         data = self.objects.find_one({'_id': object_id})
@@ -53,7 +53,7 @@ class ObjectService(MainService):
     def update_object(self, mail: str, object_id: str, args: dict) -> tuple:
         # FIXME: Working, but not good, the data is been overwritten
 
-        if not super().check_permissions(Role.USER, mail):
+        if not super().check_permissions(EnumRole.USER, mail):
             return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
 
         try:

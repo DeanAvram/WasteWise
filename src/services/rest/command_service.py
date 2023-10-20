@@ -1,5 +1,5 @@
 from jsonschema import ValidationError, validate
-from src.data.role import Role
+from src.data.enum_role import EnumRole
 from src.services.commands.command_invoker import CommandInvoker
 from src.services.rest.main_service import MainService
 from src.data.command import Command
@@ -19,7 +19,7 @@ class CommandService(MainService):
 
     def create_command(self, email: str, args: dict) -> tuple:
 
-        if not super().check_permissions(Role.USER, email):
+        if not super().check_permissions(EnumRole.USER, email):
             return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
 
         try:

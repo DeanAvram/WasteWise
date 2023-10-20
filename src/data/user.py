@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import uuid
-from src.data.role import Role
+from src.data.enum_role import EnumRole
 import json
 
 
@@ -10,9 +10,9 @@ class User:
     name: str
     email: str
     password: str
-    role: Role
+    role: EnumRole
 
-    def __init__(self, name: str, email: str, password: str, role: Role):
+    def __init__(self, name: str, email: str, password: str, role: EnumRole):
         self._id = str(uuid.uuid1())
         self.name = name
         self.email = email

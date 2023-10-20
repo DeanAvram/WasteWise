@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from flask import abort, make_response, jsonify
 
-from src.data.role import Role
+from src.data.enum_role import EnumRole
 
 
 class MainService:
@@ -14,7 +14,7 @@ class MainService:
     def get_db(self):
         return self.db
 
-    def check_permissions(self, _type: Role, _mail: str) -> bool:
+    def check_permissions(self, _type: EnumRole, _mail: str) -> bool:
         if self.db.users.find_one({'email': _mail}) is None:
             abort(make_response(jsonify(message="There is no user with this email"), 400))
 

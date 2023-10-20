@@ -1,6 +1,7 @@
 from src.data.enum_object import EnumObject
-from src.data.role import Role
-from src.services.commands.commands import Commands, Period
+from src.data.enum_role import EnumRole
+from src.data.enum_commands import EnumCommands
+from src.data.enum_periods import EnumPeriod
 
 email_regex = "[A-Za-z]*[A-Za-z0-9]@([\w-]+\.)+[\w-]{2,4}$"
 password_regex = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
@@ -74,7 +75,7 @@ user_schema = {
             "description": "The role of the user",
             "type": "string",
             "minLength": 1,
-            "enum": [str(t.name) for t in Role]
+            "enum": [str(t.name) for t in EnumRole]
         },
     },
     "required": [
@@ -107,7 +108,7 @@ user_schema_update = {
             "description": "The role of the user",
             "type": "string",
             "minLength": 1,
-            "enum": [str(t.name) for t in Role]
+            "enum": [str(t.name) for t in EnumRole]
         },
     },
     "additionalProperties": False
@@ -123,7 +124,7 @@ command_schema = {
             "type": "string",
             "minLength": 1,
             "axis": {
-                "enum": Commands
+                "enum": [str(t.name) for t in EnumCommands]
             }
         },
         "data": {
@@ -183,7 +184,7 @@ history_command_schema = {
                 "period": {
                     "type": "string",
                     "axis": {
-                        "enum": Period
+                        "enum": [str(t.name) for t in EnumPeriod]
                     }
                 }
             },

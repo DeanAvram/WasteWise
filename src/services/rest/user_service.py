@@ -1,6 +1,6 @@
 import json
 
-from src.data.role import Role
+from src.data.enum_role import EnumRole
 from src.services.rest.main_service import MainService
 from src.data.user import User
 from bson import json_util
@@ -43,7 +43,7 @@ class UserService(MainService):
             user_email: str -> The email of the user to get
         """
 
-        if not super().check_permissions(Role.USER, mail):
+        if not super().check_permissions(EnumRole.USER, mail):
             return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
 
         data = self.users.find_one({'email': user_email})
@@ -59,7 +59,7 @@ class UserService(MainService):
             user_email: str -> The email of the user to update
             new_user: dict  -> The new user data
         '''
-        if not super().check_permissions(Role.USER, mail):
+        if not super().check_permissions(EnumRole.USER, mail):
             return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
 
         try:

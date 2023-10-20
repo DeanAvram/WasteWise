@@ -1,4 +1,4 @@
-from src.data.role import Role
+from src.data.enum_role import EnumRole
 from src.services.rest.main_service import MainService
 from http import HTTPStatus
 import torch
@@ -18,7 +18,7 @@ class PredictService(MainService):
         self.model.eval()
 
     def get_prediction(self, email, image) -> tuple:
-        if not super().check_permissions(Role.USER, email):
+        if not super().check_permissions(EnumRole.USER, email):
             return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
         current_datetime = datetime.now()
         pred = Network.predict_external_image(self.model, image)

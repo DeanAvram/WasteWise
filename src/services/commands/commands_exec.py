@@ -7,7 +7,7 @@ from http import HTTPStatus
 from jsonschema import ValidationError, validate
 from src.services.input_validation import direct_command_schema, history_command_schema, add_place_command_schema
 from datetime import datetime, timedelta
-from src.services.commands.commands import Period
+from src.data.enum_periods import EnumPeriod
 
 
 class Direct(ICommand):
@@ -36,7 +36,7 @@ class Direct(ICommand):
                 }
             },
             {
-                "$limit": 1  # Limit the result to one document
+                "$limit": 1  # Limit the result to one document - the closest one
             }
         ]
 
@@ -62,37 +62,59 @@ class History(ICommand):
         last_week = today - timedelta(weeks=1)
         last_month = today - timedelta(days=30)
         last_year = today - timedelta(days=365)
-        if data.get("data").get("period") == Period.WEEK.name:
+        if data.get("data").get("period") == EnumPeriod.WEEK.name:
             print("week")
             result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email,
                                                                "data.prediction_time": {
                                                                    "$gte": last_week
                                                                }}))
-        elif data.get("data").get("period") == Period.MONTH.name:
+        elif data.get("data").get("period") == EnumPeriod.MONTH.name:
             result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email,
                                                                "data.prediction_time": {
                                                                    "$gte": last_month
                                                                }}))
-        elif data.get("data").get("period") == Period.YEAR.name:
+        elif data.get("data").get("period") == EnumPeriod.YEAR.name:
             result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email,
                                                                "data.prediction_time": {
                                                                    "$gte": last_year
                                                                }}))
-        elif data.get("data").get("period") == Period.ALL.name:
+        elif data.get("data").get("period") == EnumPeriod.ALL.name:
             result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email}))
         else:
             return {"Error": "Period not found"}, HTTPStatus.BAD_REQUEST
 
         return result, HTTPStatus.CREATED
 
-
+'''
 class Places(ICommand):
-    def execute(self) -> dict:
+    def execute(self, data: dict, email: str):
+        try:
+            validate(instance=data, schema=places_command_schema)
+        except ValidationError as e:
+            return {
+                "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
+        except Exception as e:
+            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
+        # Extract the max distance from the request
+        radius = data.get("data").get("radius")
+        query = {
+            "location": {
+                "$geoWithin": {
+                    "$centerSphere": [center_point["coordinates"], max_distance / 6371]  # Radius in radians
+                }
+            },
+            "type": "place"
+        }
+
+        # Perform the query
+        results = collection.find(query)
+        all_places = MainService().get_db().objects.aggregate([{$geoNear: {near: [LON, LAT], distanceField: "distance", maxDistance: radius, spherical: true}}])
+
         return {
             "message": "Places executed"
         }
 
-
+'''
 class AddPlace(ICommand):
     def execute(self, data: dict, email: str):
         try:
@@ -129,7 +151,7 @@ class CommandNotFound(ICommand):
 class General(ICommand):
     def execute(self, data: dict, email: str):
         return {
-            "email":email,
+            "email": email,
             "data": data
             
         }
