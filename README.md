@@ -16,7 +16,9 @@ The app is connecting to many APIs and maps to find the closest relevant recycli
 ### Direct
 
 Execute this command to find the closest recycling facility to the user
+
 Returns the closest recycling facilities
+
 Required body:
     
 ```json
@@ -34,8 +36,11 @@ Required body:
 ### History
 
 Execute this command to find the history of the user's predictions
+
 Returns a list of predictions of a user in a specific period of time
+
 The user's email is extracted from the query parameter
+
 Required body:
     
 ```json
@@ -48,8 +53,11 @@ Required body:
 ```
 
 ### Add Place
+
 Execute this command to add a new recycling facility to the database
+
 Returns the new recycling facility and add it to the database
+
 Required body:
 ```json
 {
@@ -65,8 +73,11 @@ Required body:
 ```
 
 ### Get Places
+
 Execute this command to get all the recycling facilities in a specific radius
+
 Returns a list of recycling facilities in a specific radius
+
 Required body:
 ```json
 {
