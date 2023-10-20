@@ -152,14 +152,14 @@ direct_command_schema = {
                 "location": {
                     "type": "object",
                     "properties": {
-                        "lat": {
+                        "lng": {
                             "type": "number"
                         },
-                        "lng": {
+                        "lat": {
                             "type": "number"
                         }
                     },
-                    "required": ["lat", "lng"],
+                    "required": ["lng", "lat"],
                     "additionalProperties": False
                 }
             },
@@ -212,14 +212,14 @@ add_place_command_schema = {
                 "location": {
                     "type": "object",
                     "properties": {
-                        "lat": {
+                        "lng": {
                             "type": "number"
                         },
-                        "lng": {
+                        "lat": {
                             "type": "number"
                         }
                     },
-                    "required": ["lat", "lng"],
+                    "required": ["lng", "lat"],
                     "additionalProperties": False
                 }
             },
@@ -230,3 +230,40 @@ add_place_command_schema = {
     "required": ["type", "data"],
     "additionalProperties": False
 }
+
+
+get_places_command_schema = {
+    "title": "Places Command",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "type": "object",
+                    "properties": {
+                        "lng": {
+                            "type": "number"
+                        },
+                        "lat": {
+                            "type": "number"
+                        },
+                    },
+                    "required": ["lng", "lat"],
+                    "additionalProperties": False
+                },
+                "radius": {
+                    "type": "number"
+                }
+            },
+            "required": ["location", "radius"],
+            "additionalProperties": False
+        }
+    },
+    "required": ["type", "data"],
+    "additionalProperties": False
+}
+
