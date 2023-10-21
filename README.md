@@ -12,7 +12,9 @@ The app is connecting to many APIs and maps to find the closest relevant recycli
 
 
 ## Commands
-
+```
+/wastewise/commands?email=<USER_EMAIL>
+```
 ### Direct
 
 Execute this command to find the closest recycling facility to the user
