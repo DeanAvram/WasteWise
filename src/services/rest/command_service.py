@@ -17,26 +17,16 @@ class CommandService(MainService):
         self.users = super().get_db().users
         self.commandInvoker = None
 
-    def create_command(self, email: str, args: dict) -> tuple:
-
-        if not super().check_permissions(EnumRole.USER, email):
-            return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
-
-        try:
-            validate(instance=args, schema=command_schema)
-        except ValidationError as e:
-            return {
-                "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
-        except Exception as e:
-            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
-
+    def create_command(self, email: str, password: str, args: dict) -> tuple:
+        super().check_permissions(EnumRole.USER, email, password)
+        MainService.validate_schema(args)
         command = Command(args['type'], email, args['data'])
         # command.set_data(args['data'])
         self.commands.insert_one(json.loads(command.toJSON()))
 
-        commandInvoker = CommandInvoker.instance()
-        commandInvoker.set_command(args['type'])
+        command_invoker = CommandInvoker.instance()
+        command_invoker.set_command(args['type'])
 
-        if isinstance(commandInvoker.command, CommandNotFound):
+        if isinstance(command_invoker.command, CommandNotFound):
             return {"Error": "Command not found"}, HTTPStatus.BAD_REQUEST
-        return commandInvoker.execute_command(args, email)
+        return command_invoker.execute_command(args, email)
