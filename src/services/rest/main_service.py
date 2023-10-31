@@ -3,7 +3,6 @@ from flask import abort, make_response, jsonify
 from http import HTTPStatus
 from src.data.enum_role import EnumRole
 from jsonschema import ValidationError, validate
-from src.services.input_validation import command_schema
 
 
 class MainService:
@@ -26,9 +25,9 @@ class MainService:
             abort(make_response(jsonify(message="User doesn't have permissions"), HTTPStatus.FORBIDDEN))
 
     @staticmethod
-    def validate_schema(args):
+    def validate_schema(args, schema):
         try:
-            validate(instance=args, schema=command_schema)
+            validate(instance=args, schema=schema)
         except ValidationError as e:
             return {
                 "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST

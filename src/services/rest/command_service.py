@@ -1,4 +1,3 @@
-from jsonschema import ValidationError, validate
 from src.data.enum_role import EnumRole
 from src.services.commands.command_invoker import CommandInvoker
 from src.services.rest.main_service import MainService
@@ -19,7 +18,7 @@ class CommandService(MainService):
 
     def create_command(self, email: str, password: str, args: dict) -> tuple:
         super().check_permissions(EnumRole.USER, email, password)
-        MainService.validate_schema(args)
+        MainService.validate_schema(args, command_schema)
         command = Command(args['type'], email, args['data'])
         # command.set_data(args['data'])
         self.commands.insert_one(json.loads(command.toJSON()))
