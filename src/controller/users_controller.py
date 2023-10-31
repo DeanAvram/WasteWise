@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask import request
-
+from src.controller.main_controller import MainController
 from src.services.rest.user_service import UserService
 
 users = Blueprint('users', __name__, url_prefix='/wastewise/users')
@@ -14,21 +14,14 @@ def create_user():
     return userService.create_user(data)
 
 
-@users.get('/<object_id>')
-def get_user(object_id: str):
-    return userService.get_user(_get_user_email(request), object_id)
+@users.get('/<user_id>')
+def get_user(user_id: str):
+    return userService.get_user(MainController.get_user_email(request),
+                                MainController.get_user_password(request), user_id)
 
 
-@users.put('/<object_id>')
-def update_user(object_id: str):
+@users.put('/<user_id>')
+def update_user(user_id: str):
     data = request.get_json()
-    return userService.update_user(_get_user_email(request), object_id, data)
-
-
-def _get_user_email(req):
-    # get query param user_id
-    if req.args.get('email') is None:
-        return {}, 400
-    else:
-        user_id = req.args.get('email')
-    return user_id
+    return userService.update_user(MainController.get_user_email(request),
+                                   MainController.get_user_password(request), user_id, data)
