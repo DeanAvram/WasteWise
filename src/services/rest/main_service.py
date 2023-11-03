@@ -29,7 +29,8 @@ class MainService:
         try:
             validate(instance=args, schema=schema)
         except ValidationError as e:
-            return {
-                "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
+            abort(make_response(jsonify(message=str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)),
+                                HTTPStatus.BAD_REQUEST))
         except Exception as e:
-            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
+            abort(make_response(jsonify(message=str(e)), HTTPStatus.BAD_REQUEST))
+

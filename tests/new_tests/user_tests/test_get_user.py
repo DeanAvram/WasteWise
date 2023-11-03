@@ -13,7 +13,7 @@ def test_get_user_1(client):
 
     usr = create_user()
     response = client.get(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}'
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}'
     )
 
     assert response.status_code == HTTPStatus.OK
@@ -60,8 +60,8 @@ def test_get_user_4(client):
     admin = create_admin_user()
 
     response = client.get(
-        f'/wastewise/users/{usr["email"]}?email={admin["email"]}'
+        f'/wastewise/users/{usr["email"]}?email={admin["email"]}&password={admin["password"]}'
     )
 
-    assert response.status_code == HTTPStatus.UNAUTHORIZED
+    assert response.status_code == HTTPStatus.FORBIDDEN
 

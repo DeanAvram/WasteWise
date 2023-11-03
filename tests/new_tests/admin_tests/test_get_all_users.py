@@ -10,7 +10,7 @@ def test_get_all_users_1(client):
     user = create_user()
     
     response = client.get(
-        f'/wastewise/admin/users?email={admin["email"]}'
+        f'/wastewise/admin/users?email={admin["email"]}&password={admin["password"]}'
     )
     
     assert response.status_code == HTTPStatus.OK

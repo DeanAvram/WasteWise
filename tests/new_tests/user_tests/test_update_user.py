@@ -28,7 +28,7 @@ def test_update_user_1(client):
         'password': 'Testing192!'
     }
     response = client.put(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
         json=data
     )
     # check if status is ok
@@ -36,7 +36,7 @@ def test_update_user_1(client):
 
     # check if data updated
     response = client.get(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={data["password"]}',
     )
     assert equal_dicts_only(response.json, data, 'password')
 
@@ -62,7 +62,7 @@ def test_update_user_2(client):
         "role": "USER"
     }
     response = client.put(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
         json=data
     )
     # check if status is ok
@@ -70,7 +70,7 @@ def test_update_user_2(client):
 
     # check if data updated
     response = client.get(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
     )
     assert equal_dicts_only(response.json, data, 'role')
 
@@ -96,7 +96,7 @@ def test_update_user_3(client):
         "role": "ADMIN"
     }
     response = client.put(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
         json=data
     )
     # check if status is ok
@@ -104,7 +104,7 @@ def test_update_user_3(client):
 
     # check if data updated
     response = client.get(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
     )
     assert not equal_dicts_only(response.json, data, 'role')
 
@@ -130,7 +130,7 @@ def test_update_user_4(client):
         "role": "NOT_VALID_ROLE"
     }
     response = client.put(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
         json=data
     )
     # check if status is ok
@@ -138,7 +138,7 @@ def test_update_user_4(client):
 
     # check if data updated
     response = client.get(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&pASSWORD={usr["password"]}',
     )
     assert not equal_dicts_only(response.json, data, 'role')
 
@@ -164,7 +164,7 @@ def test_update_user_5(client):
         "name": "Name"
     }
     response = client.put(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
         json=data
     )
     # check if status is ok
@@ -172,7 +172,7 @@ def test_update_user_5(client):
 
     # check if data updated
     response = client.get(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
     )
 
     assert equal_dicts_only(response.json, data, 'name')
@@ -199,7 +199,7 @@ def test_update_user_6(client):
         "name": ""
     }
     response = client.put(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
         json=data
     )
     # check if status is ok

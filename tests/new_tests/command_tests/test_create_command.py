@@ -5,6 +5,7 @@ from tests.conftest import userService, LOGGER
 
 resource_path = Path(__file__).parent / 'resources'
 
+
 def test_create_command_1(client):
     """Create general command test
     Valid: no
@@ -13,7 +14,7 @@ def test_create_command_1(client):
     
     user: dict = create_user()
     
-    path = f'/wastewise/commands?email={user["email"]}'
+    path = f'/wastewise/commands?email={user["email"]}&password={user["password"]}'
     
     response = client.post(
         path,
@@ -28,8 +29,7 @@ def test_create_command_1(client):
     
     assert response.status_code == HTTPStatus.BAD_REQUEST
     
-    
-    
+
 def test_create_command_2(client):
     """Create general command test
     Valid: no
@@ -38,7 +38,7 @@ def test_create_command_2(client):
     
     user: dict = create_user()
     
-    path = f'/wastewise/commands?email={user["email"]}'
+    path = f'/wastewise/commands?email={user["email"]}&password={user["password"]}'
     
     response = client.post(
         path,
@@ -50,7 +50,6 @@ def test_create_command_2(client):
     )
     
     LOGGER.info(response.json)
-    
     assert response.status_code == HTTPStatus.OK
     
     

@@ -20,6 +20,7 @@ object_schema = {
         "data": {
             "description": "The data of the object",
             "type": "object",
+            "minProperties": 1
         },
         "active": {
             "description": "The active status of the object",
@@ -27,7 +28,7 @@ object_schema = {
         }
     },
     "required": [
-        "type",
+        "type"
     ],
     "additionalProperties": False
 }

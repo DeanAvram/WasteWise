@@ -20,7 +20,7 @@ def test_create_object_1(client):
 
     # create object
     response = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json={
             "type": "IMAGE",
             "data": {
@@ -44,14 +44,14 @@ def test_create_object_2(client):
 
     # create object
     response = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json={
             "type": "IMAGE",
             "data": {
             }
         }
     )
-    assert response.status_code == HTTPStatus.CREATED
+    assert response.status_code == HTTPStatus.BAD_REQUEST
 
 
 def test_create_object_3(client):
@@ -66,7 +66,7 @@ def test_create_object_3(client):
 
     # create object
     response = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json={
             "type": "IMAGE",
             "data": None
@@ -87,7 +87,7 @@ def test_create_object_4(client):
 
     # create object
     response = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json={
             "type": "IMAGE",
         }
@@ -107,7 +107,7 @@ def test_create_object_5(client):
 
     # create object
     response = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json={
             "type": "IMAGE",
         }
@@ -127,7 +127,7 @@ def test_create_object_6(client):
 
     # create object
     response = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json={
         }
     )
@@ -147,7 +147,7 @@ def test_create_object_7(client):
 
     # create object
     response = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json={
             'type': 'BDHBDIBDI'
         }

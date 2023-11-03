@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from pathlib import Path
-from tests.conftest import create_user, create_admin_user, objectService, equal_dicts_exclude, equal_dicts_only, LOGGER
+from tests.conftest import create_user, equal_dicts_only
 
 resource_path = Path(__file__).parent / 'resources'
 
@@ -19,7 +19,7 @@ def test_update_object_1(client):
         "url": "https://www.google.com"
     })
     response_post = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json=obj
     )
 
@@ -27,7 +27,7 @@ def test_update_object_1(client):
 
     # get
     response_get = client.get(
-        f'/wastewise/objects/{_id}?email={user["email"]}'
+        f'/wastewise/objects/{_id}?email={user["email"]}&password={user["password"]}'
     )
     # validate
     assert response_get.status_code == HTTPStatus.OK
@@ -39,7 +39,7 @@ def test_update_object_1(client):
         }
     }
     response_put = client.put(
-        f'/wastewise/objects/{_id}?email={user["email"]}',
+        f'/wastewise/objects/{_id}?email={user["email"]}&password={user["password"]}',
         json=update
     )
 
@@ -66,7 +66,7 @@ def test_update_object_2(client):
         "url": "https://www.google.com"
     })
     response_post = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json=obj
     )
 
@@ -74,14 +74,14 @@ def test_update_object_2(client):
 
     # get
     response_get = client.get(
-        f'/wastewise/objects/{_id}?email={user["email"]}'
+        f'/wastewise/objects/{_id}?email={user["email"]}&password={user["password"]}'
     )
     # validate
     assert response_get.status_code == HTTPStatus.OK
 
     # update
     update: dict = {
-        "type":'NOT_OBJECT'
+        "type": 'NOT_OBJECT'
     }
     response_put = client.put(
         f'/wastewise/objects/{_id}?email={user["email"]}',
@@ -111,35 +111,30 @@ def test_update_object_3(client):
         "url": "https://www.google.com"
     })
     response_post = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json=obj
     )
-
     _id: str = response_post.json['_id']
-
     # get
     response_get = client.get(
-        f'/wastewise/objects/{_id}?email={user["email"]}'
+        f'/wastewise/objects/{_id}?email={user["email"]}&password={user["password"]}'
     )
+
     # validate
     assert response_get.status_code == HTTPStatus.OK
-
     # update
     update: dict = {
         "active": False
     }
     response_put = client.put(
-        f'/wastewise/objects/{_id}?email={user["email"]}',
+        f'/wastewise/objects/{_id}?email={user["email"]}&password={user["password"]}',
         json=update
     )
-
     assert response_put.status_code == HTTPStatus.NO_CONTENT
-
     # get
     response_get = client.get(
-        f'/wastewise/objects/{_id}?email={user["email"]}'
+        f'/wastewise/objects/{_id}?email={user["email"]}&password={user["password"]}'
     )
-
     assert not equal_dicts_only(response_get.json, response_post.json, 'active')
 
 
@@ -156,7 +151,7 @@ def test_update_object_4(client):
         "url": "https://www.google.com"
     })
     response_post = client.post(
-        f'/wastewise/objects?email={user["email"]}',
+        f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json=obj
     )
 
@@ -164,7 +159,7 @@ def test_update_object_4(client):
 
     # get
     response_get = client.get(
-        f'/wastewise/objects/{_id}?email={user["email"]}'
+        f'/wastewise/objects/{_id}?email={user["email"]}&password={user["password"]}'
     )
     # validate
     assert response_get.status_code == HTTPStatus.OK
@@ -174,7 +169,7 @@ def test_update_object_4(client):
         "active": 3
     }
     response_put = client.put(
-        f'/wastewise/objects/{_id}?email={user["email"]}',
+        f'/wastewise/objects/{_id}?email={user["email"]}&password={user["password"]}',
         json=update
     )
 
@@ -182,7 +177,7 @@ def test_update_object_4(client):
 
     # get
     response_get = client.get(
-        f'/wastewise/objects/{_id}?email={user["email"]}'
+        f'/wastewise/objects/{_id}?email={user["email"]}&password={user["password"]}'
     )
 
     assert equal_dicts_only(response_get.json, response_post.json)
