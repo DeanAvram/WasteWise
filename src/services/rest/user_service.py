@@ -15,14 +15,7 @@ class UserService(MainService):
         self.users = super().get_db().users
 
     def create_user(self, user: dict) -> tuple:
-        try:
-            validate(instance=user, schema=user_schema)
-        except ValidationError as e:
-            return ({"Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)},
-                    HTTPStatus.BAD_REQUEST)
-        except Exception as e:
-            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
-
+        MainService.validate_schema(user, user_schema)
         # check if mail is already exists
         if self.users.find_one({'email': user['email']}) is not None:
             return {"Error": "User email already exists"}, HTTPStatus.BAD_REQUEST
