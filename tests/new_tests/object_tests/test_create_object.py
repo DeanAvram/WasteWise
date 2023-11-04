@@ -138,8 +138,8 @@ def test_create_object_6(client):
 def test_create_object_7(client):
     """
     Create an object:
-    Valid: yes
-    Explain: not Valid object from enum of objects should be 400 and not 201
+    Valid: no
+    Explain: Invalid type of object
     """
 
     # create user

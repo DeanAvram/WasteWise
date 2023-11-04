@@ -38,7 +38,7 @@ def test_get_user_3(client):
     """
     Get a user:
     Valid: no
-    Problem: missing email
+    Problem: missing body
     """
     usr = create_user()
 
@@ -65,3 +65,19 @@ def test_get_user_4(client):
 
     assert response.status_code == HTTPStatus.FORBIDDEN
 
+
+def test_get_user_5(client):
+    """
+        Get a user:
+        Valid: no
+        Problem: missing password
+    """
+
+    usr = create_user()
+    admin = create_admin_user()
+
+    response = client.get(
+        f'/wastewise/users/{usr["email"]}?email={admin["email"]}'
+    )
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST

@@ -9,7 +9,7 @@ resource_path = Path(__file__).parent / 'resources'
 def test_create_command_1(client):
     """Create general command test
     Valid: no
-    Explain: ...
+    Explain: Invalid type
     """
     
     user: dict = create_user()

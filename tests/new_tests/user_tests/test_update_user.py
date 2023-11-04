@@ -100,7 +100,7 @@ def test_update_user_3(client):
         json=data
     )
     # check if status is ok
-    assert response.status_code == HTTPStatus.NO_CONTENT
+    assert response.status_code == HTTPStatus.BAD_REQUEST
 
     # check if data updated
     response = client.get(

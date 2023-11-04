@@ -5,7 +5,12 @@ from tests.conftest import userService, LOGGER
 
 resource_path = Path(__file__).parent / 'resources'
 
+
 def test_get_all_users_1(client):
+    """Get all user test
+        Valid: yes
+        Explain: valid GET request
+    """
     admin = create_admin_user()
     user = create_user()
     
