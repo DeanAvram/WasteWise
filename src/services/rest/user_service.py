@@ -64,7 +64,7 @@ class UserService(MainService):
         user = self.users.find_one({'email': user_email_to_update})  # get user from database
         if user is None:
             return {"Error": "There is no user with email: " + user_email_to_update}, HTTPStatus.NOT_FOUND
-        if new_user['role'] is not None and new_user['role'] != '' and new_user['role'] != user['role']:
+        if new_user.get('role') is not None and new_user.get('role') != '' and new_user.get('role') != user['role']:
             return {"Error": "Can't change user role"}, HTTPStatus.BAD_REQUEST
         user = json.loads(json_util.dumps(user))  # convert to json
 
