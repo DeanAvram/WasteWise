@@ -34,6 +34,9 @@ class User:
     def get_id(self):
         return self._id
 
+    def set_password(self, password: str):
+        self.password = password
+
     def __str__(self):
         return f'{self.name} {self.email} {self.password} {self.role}'
 

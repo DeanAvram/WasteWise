@@ -1,11 +1,10 @@
 import json
-
 from src.data.enum_role import EnumRole
 from src.services.rest.main_service import MainService
 from src.data.user import User
 from bson import json_util
 from http import HTTPStatus
-from jsonschema import ValidationError, validate
+from passlib.hash import pbkdf2_sha256
 from src.services.input_validation import user_schema, user_schema_update
 
 
@@ -25,6 +24,7 @@ class UserService(MainService):
             return {"Error": "User name already exists"}, HTTPStatus.BAD_REQUEST
 
         new_user = User(user['name'], user['email'], user['password'], user['role'])
+        new_user.set_password(pbkdf2_sha256.hash(new_user.get_password()))
         self.users.insert_one(json.loads(new_user.toJSON()))
         return json.loads(json_util.dumps(user)), HTTPStatus.CREATED
 
