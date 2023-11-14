@@ -33,8 +33,11 @@ class MainService:
         try:
             validate(instance=args, schema=schema)
         except ValidationError as e:
+            path = e.path.pop()
+            if path == 'email':
+                abort(make_response(jsonify(message="Email is invalid"), HTTPStatus.BAD_REQUEST))
             abort(make_response(jsonify(message=str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)),
                                 HTTPStatus.BAD_REQUEST))
+
         except Exception as e:
             abort(make_response(jsonify(message=str(e)), HTTPStatus.BAD_REQUEST))
-
