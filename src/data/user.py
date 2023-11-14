@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import uuid
 from src.data.enum_role import EnumRole
 import json
+from passlib.hash import pbkdf2_sha256
 
 
 @dataclass
@@ -50,6 +51,6 @@ class User:
         if 'email' in usr and usr['email'] is not None:
             self.email = usr['email']
         if 'password' in usr and usr['password'] is not None:
-            self.password = usr['password']
+            self.password = pbkdf2_sha256.encrypt(usr['password'])
         if 'role' in usr and usr['role'] is not None:
             self.role = usr['role']

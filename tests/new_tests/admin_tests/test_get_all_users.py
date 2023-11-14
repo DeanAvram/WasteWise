@@ -20,6 +20,21 @@ def test_get_all_users_1(client):
     
     assert response.status_code == HTTPStatus.OK
     assert len(response.json) == 2
+
+
+def test_get_all_users_2(client):
+    """Get all user test
+        Valid: no
+        Explain: USER try to get all users
+    """
+    admin = create_admin_user()
+    user = create_user()
+
+    response = client.get(
+        f'/wastewise/admin/users?email={user["email"]}&password={user["password"]}'
+    )
+
+    assert response.status_code == HTTPStatus.FORBIDDEN
     
 
     

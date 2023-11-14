@@ -24,7 +24,7 @@ class UserService(MainService):
             return {"Error": "User name already exists"}, HTTPStatus.BAD_REQUEST
 
         new_user = User(user['name'], user['email'], user['password'], user['role'])
-        new_user.set_password(pbkdf2_sha256.hash(new_user.get_password()))
+        new_user.set_password(pbkdf2_sha256.encrypt(new_user.get_password()))
         self.users.insert_one(json.loads(new_user.toJSON()))
         return json.loads(json_util.dumps(user)), HTTPStatus.CREATED
 
@@ -59,9 +59,11 @@ class UserService(MainService):
             return {"Error": "There is no user with email: " + user_email_to_update}, HTTPStatus.NOT_FOUND
         if new_user.get('role') is not None and new_user.get('role') != '' and new_user.get('role') != user['role']:
             return {"Error": "Can't change user role"}, HTTPStatus.BAD_REQUEST
-        user = json.loads(json_util.dumps(user))  # convert to json
-
-        user.update(new_user)  # update user with new_user
-        
-        self.users.update_one({'email': user_email_to_update}, {'$set': user})  # update user in database
+        # user = json.loads(json_util.dumps(user))  # convert to json
+        # user_obj = User(user['name'], user['email'], user['password'], user['role'])
+        # user_obj .update(new_user)  # update user with new_user
+        # new_user_to_json = json.loads(json_util.dumps(user_obj.toJSON()))
+        if new_user.get('password') is not None and new_user.get('password') != '':
+            new_user['password'] = pbkdf2_sha256.encrypt(new_user['password'])
+        self.users.update_one({'email': user_email_to_update}, {'$set': new_user})  # update user in database
         return '', HTTPStatus.NO_CONTENT

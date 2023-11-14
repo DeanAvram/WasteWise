@@ -2,6 +2,8 @@ from http import HTTPStatus
 from pathlib import Path
 from tests.conftest import create_user, create_admin_user, equal_dicts_only
 from tests.conftest import userService
+from passlib.hash import pbkdf2_sha256
+
 
 resource_path = Path(__file__).parent / 'resources'
 
@@ -38,7 +40,8 @@ def test_update_user_1(client):
     response = client.get(
         f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={data["password"]}',
     )
-    assert equal_dicts_only(response.json, data, 'password')
+    assert response.status_code == HTTPStatus.OK
+    assert pbkdf2_sha256.verify(data['password'], response.json['password'])
 
 
 def test_update_user_2(client):
@@ -70,7 +73,7 @@ def test_update_user_2(client):
 
     # check if data updated
     response = client.get(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
+         f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}'
     )
     assert equal_dicts_only(response.json, data, 'role')
 
@@ -138,7 +141,7 @@ def test_update_user_4(client):
 
     # check if data updated
     response = client.get(
-        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&pASSWORD={usr["password"]}',
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
     )
     assert not equal_dicts_only(response.json, data, 'role')
 
