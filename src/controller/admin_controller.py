@@ -1,5 +1,7 @@
 from flask import Blueprint
 from flask import request
+from flask_cors import cross_origin
+
 from src.services.rest.admin_service import AdminService
 from flask import abort, make_response, jsonify
 from src.controller.main_controller import MainController
@@ -11,17 +13,20 @@ adminService = AdminService()
 
 
 @admin.get('/users')
+@cross_origin()
 def get_all_users():
     return adminService.get_all_users(_get_page(request), _get_limit(request),
                                       MainController.get_user_email(request), MainController.get_user_password(request))
 
 
 @admin.delete('/users')
+@cross_origin()
 def delete_users():
     return adminService.delete_users(MainController.get_user_email(request), MainController.get_user_password(request))
 
 
 @admin.get('/objects')
+@cross_origin()
 def get_all_objects():
     return adminService.get_all_objects(_get_page(request), _get_limit(request),
                                         MainController.get_user_email(request), MainController.get_user_password(request))
@@ -33,11 +38,13 @@ def delete_objects():
 
 
 @admin.get('/commands')
+@cross_origin()
 def get_all_commands():
     return adminService.get_all_commands(_get_page(request), _get_limit(request), MainController.get_user_email(request), MainController.get_user_password(request))
 
 
 @admin.delete('/commands')
+@cross_origin()
 def delete_commands():
     return adminService.delete_commands(MainController.get_user_email(request), MainController.get_user_password(request))
 

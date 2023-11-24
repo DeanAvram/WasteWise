@@ -1,5 +1,6 @@
 from flask import Blueprint
 from flask import request
+from flask_cors import cross_origin
 
 from src.services.rest.command_service import CommandService
 from src.controller.main_controller import MainController
@@ -10,6 +11,7 @@ commandService = CommandService()
 
 
 @commands.post('')
+@cross_origin()
 def create_command():
     data = request.get_json()
     return commandService.create_command(MainController.get_user_email(request),

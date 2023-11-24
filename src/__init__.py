@@ -6,12 +6,14 @@ from src.controller.users_controller import users
 from src.controller.command_controller import commands
 from src.controller.admin_controller import admin
 from src.controller.predict_controller import predict
+from flask_cors import CORS, cross_origin
 
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
-
     if test_config is None:
+        CORS(app)
+        app.config['CORS_HEADERS'] = 'Content-Type'
         app.config.from_mapping(
             SEKRET_KEY=os.environ.get('SECRET_KEY'),
         )
