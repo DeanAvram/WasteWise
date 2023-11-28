@@ -19,7 +19,7 @@ class MainService:
     def check_permissions(self, _type: EnumRole, _mail: str, _password: str):
         user = self.db.users.find_one({'email': _mail})
         if user is None:
-            abort(make_response(jsonify(message="There is no user with this email"), HTTPStatus.BAD_REQUEST))
+            abort(make_response(jsonify(message="There is no user with this email"), HTTPStatus.NOT_FOUND))
         if not pbkdf2_sha256.verify(_password, user['password']):
             abort(make_response(jsonify(message="Wrong Password"), HTTPStatus.UNAUTHORIZED))
         # if self.db.users.find_one({'email': _mail, 'password': _password}) is None:
