@@ -17,11 +17,11 @@ class UserService(MainService):
         MainService.validate_schema(user, user_schema)
         # check if mail is already exists
         if self.users.find_one({'email': user['email']}) is not None:
-            return {"Error": "User email already exists"}, HTTPStatus.BAD_REQUEST
+            return {"Error": "User with this email already exists"}, HTTPStatus.BAD_REQUEST
 
         # check if name is already exists
-        if self.users.find_one({'name': user['name']}) is not None:
-            return {"Error": "User name already exists"}, HTTPStatus.BAD_REQUEST
+        # if self.users.find_one({'name': user['name']}) is not None:
+        #     return {"Error": "User name already exists"}, HTTPStatus.BAD_REQUEST
 
         new_user = User(user['name'], user['email'], user['password'], user['role'])
         new_user.set_password(pbkdf2_sha256.encrypt(new_user.get_password()))

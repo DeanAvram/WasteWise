@@ -36,6 +36,13 @@ class MainService:
             path = e.path.pop()
             if path == 'email':
                 abort(make_response(jsonify(message="Email is invalid"), HTTPStatus.BAD_REQUEST))
+            elif path == 'password':
+                abort(
+                    make_response(jsonify(message=str("Password is too short" if "short" in e.message else
+                                                      "Invalid password. Make sure it contains at least one digit, "
+                                                      "one uppercase letter, one lowercase letter and "
+                                                      "one special character")),
+                                  HTTPStatus.BAD_REQUEST))
             abort(make_response(jsonify(message=str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)),
                                 HTTPStatus.BAD_REQUEST))
 
