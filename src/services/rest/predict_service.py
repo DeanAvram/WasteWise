@@ -1,27 +1,20 @@
 from src.data.enum_role import EnumRole
 from src.services.rest.main_service import MainService
 from http import HTTPStatus
-import torch
-from src.services import Network
 from src.data.object import Object
 from datetime import datetime
-import json
+from src.services.neural_netwrok.neural_network import NeuralNetwork
 
 
 class PredictService(MainService):
     def __init__(self):
         super().__init__()
-        self.device = Network.get_default_device()
-        self.model = Network.ResNet()
-        Network.to_device(self.model, self.device)
-        self.model.load_state_dict(torch.load("model_file.pt", map_location=torch.device('cpu')))
-        self.model.eval()
+        self.neural_network = NeuralNetwork()
 
-    def get_prediction(self, email, image) -> tuple:
-        if not super().check_permissions(EnumRole.USER, email):
-            return {"Error": "User doesn't have permissions"}, HTTPStatus.UNAUTHORIZED
+    def get_prediction(self, email: str, password: str, image) -> tuple:
+        super().check_permissions(EnumRole.USER, email, password)
         current_datetime = datetime.now()
-        pred = Network.predict_external_image(self.model, image)
+        pred = self.neural_network.predict_external_image(self.neural_network.model, image)
         d = {'prediction': pred}
         prediction_data = {
             'prediction': pred,
@@ -32,4 +25,4 @@ class PredictService(MainService):
 
         # insert prediction object into database
         MainService().get_db().objects.insert_one(prediction_obj.toDict())
-        return d, HTTPStatus.OK
+        return d, HTTPStatus.CREATED
