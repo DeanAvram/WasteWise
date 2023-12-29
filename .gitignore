@@ -11,3 +11,6 @@ __pycache__/
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/WasteWise.iml
 .idea/.gitignore
+
+
+.env
