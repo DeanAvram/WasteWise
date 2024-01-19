@@ -92,7 +92,12 @@ class History(ICommand):
             result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email}))
         else:
             return {"Error": "Period not found"}, HTTPStatus.BAD_REQUEST
-
+        if len(result) == 0:
+            data = {"data": {
+                "prediction": "No recycle found",
+                "prediction_time": "Earth will be thankful if you will start to (:"
+            }}
+            result.append(data)
         return result, HTTPStatus.CREATED
 
 
