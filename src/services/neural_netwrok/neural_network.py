@@ -1,6 +1,6 @@
 import torchvision.transforms as transforms
 import torch
-from src.services.neural_netwrok.resnet_netwrok import  ResNet
+from src.services.neural_netwrok.resnet_netwrok import ResNet
 
 
 class NeuralNetwork:
@@ -14,25 +14,12 @@ class NeuralNetwork:
         self.transformations = transforms.Compose([transforms.Resize((256, 256)), transforms.ToTensor()])
         self.classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
 
-    def predict_image(self, img):
-        # Convert to a batch of 1
-        xb = self.to_device(img.unsqueeze(0), self.device)
-        # Get predictions from model
-        yb = self.model(xb)
-        # Pick index with the highest probability
-        prob, preds = torch.max(yb, dim=1)
-        # Retrieve the class label
-        return self.classes[preds[0].item()]
-
     def get_default_device(self):
         """Pick GPU if available, else CPU"""
         if torch.cuda.is_available():
             self.device = torch.device('cuda')
         else:
             self.device = torch.device('cpu')
-
-    def predict_external_image(self, image):
-        return self.predict_image(self.transformations(image))
 
     def to_device(self, data, device):
         """Move tensor(s) to chosen device"""
@@ -48,6 +35,8 @@ class NeuralNetwork:
         # Pick index with the highest probability
         prob, preds = torch.max(yb, dim=1)
         # Retrieve the class label
+        for i, class_name in enumerate(self.classes):
+            print(class_name, yb[0][i].item())
         return self.classes[preds[0].item()]
 
     def predict_external_image(self, model, image):
