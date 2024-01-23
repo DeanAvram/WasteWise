@@ -1,9 +1,7 @@
 from src.data.enum_role import EnumRole
 from src.services.rest.main_service import MainService
 from http import HTTPStatus
-import pymongo
 from pymongo import ASCENDING
-from pymongo import DESCENDING
 
 
 def calc_to_skip(page: int, limit: int) -> int:

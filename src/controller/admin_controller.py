@@ -3,7 +3,6 @@ from flask import request
 from flask_cors import cross_origin
 
 from src.services.rest.admin_service import AdminService
-from flask import abort, make_response, jsonify
 from src.controller.main_controller import MainController
 
 

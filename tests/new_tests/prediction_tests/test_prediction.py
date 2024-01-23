@@ -9,7 +9,7 @@ from tests.conftest import create_user
 resource_path = Path(__file__).parent / 'resources'
 
 
-def test_prediction_plastic(client):
+def test_classification_plastic(client):
     user = create_user()
     arr = os.listdir("tests/test_data/images")
     print(arr)
@@ -23,7 +23,7 @@ def test_prediction_plastic(client):
         print(x)'
         img = open(f'tests/test_data/images/{img_name}', 'rb')
         response = client.post(
-            f'/wastewise/predict?email={user["email"]}&password={user["password"]}',
+            f'/wastewise/classify?email={user["email"]}&password={user["password"]}',
             data={
                 img.read()
             }

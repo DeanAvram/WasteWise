@@ -37,9 +37,9 @@ Required body:
 
 ### History
 
-Execute this command to find the history of the user's predictions
+Execute this command to find the history of the user's classifications
 
-Returns a list of predictions of a user in a specific period of time
+Returns a list of classifications of a user in a specific period of time
 
 The user's email is extracted from the query parameter
 
@@ -94,10 +94,10 @@ Required body:
 }
 ```
 
-### Predict
-Execute this command to predict the type of the waste
-Returns the type of the waste and add a prediction object to the database
-The prediction object contains the type of the waste,  and the time of the prediction
+### Classify
+Execute this command to classify the type of the waste
+Returns the type of the waste and add a classification object to the database
+The classification object contains the type of the waste,  and the time of the classification
 Require a file in the body of the request
 
 ## Venv

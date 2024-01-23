@@ -24,7 +24,7 @@ class MainService:
 
         global is_places_loaded
         to_load = os.environ.get('Load_Places')
-        if to_load and not is_places_loaded:
+        if is_places_loaded is False and to_load.lower() in ('true', '1'):
             # Delete all places from database
             self.db.objects.delete_many({'type': 'place'})
             load_from_shapefile = LoadFromShapefile(self.db)

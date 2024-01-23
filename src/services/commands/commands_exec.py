@@ -63,38 +63,38 @@ class History(ICommand):
                 "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
         except Exception as e:
             return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
-        # return all objects of type prediction for the user in the relevant time frame
-        result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email}))
+        # return all objects of type classification for the user in the relevant time frame
+        result = list(MainService().get_db().objects.find({"type": "classification", "created_by": email}))
         today = datetime.now()
         last_week = today - timedelta(weeks=1)
         last_month = today - timedelta(days=30)
         last_year = today - timedelta(days=365)
         if data.get("data").get("period") == EnumPeriod.WEEK.name:
-            result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email,
+            result = list(MainService().get_db().objects.find({"type": "classification", "created_by": email,
                                                                "active": True,
-                                                               "data.prediction_time": {
+                                                               "data.classification_time": {
                                                                    "$gte": last_week
                                                                }}))
         elif data.get("data").get("period") == EnumPeriod.MONTH.name:
-            result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email,
+            result = list(MainService().get_db().objects.find({"type": "classification", "created_by": email,
                                                                "active": True,
-                                                               "data.prediction_time": {
+                                                               "data.classification_time": {
                                                                    "$gte": last_month
                                                                }}))
         elif data.get("data").get("period") == EnumPeriod.YEAR.name:
-            result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email,
+            result = list(MainService().get_db().objects.find({"type": "classification", "created_by": email,
                                                                "active": True,
-                                                               "data.prediction_time": {
+                                                               "data.classification_time": {
                                                                    "$gte": last_year
                                                                }}))
         elif data.get("data").get("period") == EnumPeriod.ALL.name:
-            result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email}))
+            result = list(MainService().get_db().objects.find({"type": "classification", "created_by": email}))
         else:
             return {"Error": "Period not found"}, HTTPStatus.BAD_REQUEST
         if len(result) == 0:
             data = {"data": {
-                "prediction": "No recycle found",
-                "prediction_time": "Earth will be thankful if you will start to (:"
+                "classification": "No recycle found",
+                "classification_time": "Earth will be thankful if you will start to (:"
             }}
             result.append(data)
         return result, HTTPStatus.CREATED

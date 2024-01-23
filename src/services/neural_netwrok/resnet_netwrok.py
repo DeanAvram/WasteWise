@@ -13,13 +13,13 @@ class ImageClassificationBase(nn.Module):
 
     def training_step(self, batch):
         images, labels = batch
-        out = self(images)  # Generate predictions
+        out = self(images)  # Generate classification
         loss = f.cross_entropy(out, labels)  # Calculate loss
         return loss
 
     def validation_step(self, batch):
         images, labels = batch
-        out = self(images)  # Generate predictions
+        out = self(images)  # Generate classification
         loss = f.cross_entropy(out, labels)  # Calculate loss
         acc = self.accuracy(out, labels)  # Calculate accuracy
         return {'val_loss': loss.detach(), 'val_acc': acc}

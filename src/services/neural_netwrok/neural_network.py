@@ -27,10 +27,10 @@ class NeuralNetwork:
             return [self.to_device(x, device) for x in data]
         return data.to(device, non_blocking=True)
 
-    def predict_image(self, img, model):
+    def classify_image(self, img, model):
         # Convert to a batch of 1
         xb = self.to_device(img.unsqueeze(0), self.device)
-        # Get predictions from model
+        # Get classification from model
         yb = model(xb)
         # Pick index with the highest probability
         prob, preds = torch.max(yb, dim=1)
@@ -39,7 +39,7 @@ class NeuralNetwork:
         #    print(class_name, yb[0][i].item())
         return self.classes[preds[0].item()]
 
-    def predict_external_image(self, model, image):
-        return self.predict_image(self.transformations(image), model)
+    def classify_external_image(self, model, image):
+        return self.classify_image(self.transformations(image), model)
 
 

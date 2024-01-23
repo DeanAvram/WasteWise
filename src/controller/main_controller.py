@@ -1,4 +1,4 @@
-from flask import request, abort, make_response, jsonify
+from flask import abort, make_response, jsonify
 
 
 class MainController:
