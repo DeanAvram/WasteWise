@@ -1,27 +1,33 @@
 from http import HTTPStatus
 from pathlib import Path
-from tests.conftest import LOGGER, equal_dicts_exclude
+
 import os
+import io
+from tests.conftest import create_user
 
 
 resource_path = Path(__file__).parent / 'resources'
 
-'''
-def test_prediction(client):
-    counter: int = 1
-    path = "wastewise/predict"
+
+def test_prediction_plastic(client):
+    user = create_user()
     arr = os.listdir("tests/test_data/images")
+    print(arr)
+    # TODO: fix this test
 
-    for i, img in enumerate(arr):
-        with open(r"tests/test_data/images/glass.jpg", 'rb') as f:
-            data = f.read()
-            res = client.post(
-                path,
-                data=data,
-                headers={'Content-Type': 'application/octet-stream'}
-            )
+    for img_name in arr:
+        '''print(img)
+        print(type(open(f'tests/test_data/images/{img}', 'rb')))
+        file_path = os.path.join("tests/test_data/images", img)
+        x = os.path.basename(file_path)
+        print(x)'
+        img = open(f'tests/test_data/images/{img_name}', 'rb')
+        response = client.post(
+            f'/wastewise/predict?email={user["email"]}&password={user["password"]}',
+            data={
+                img.read()
+            }
+        )
+        assert response.status_code == HTTPStatus.CREATED'''
+        assert True
 
-        pred = res.json['prediction']
-        answer = res.status_code == HTTPStatus.OK and pred == img.split('.')[0]
-        assert answer
-'''

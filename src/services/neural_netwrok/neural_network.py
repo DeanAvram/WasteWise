@@ -35,8 +35,8 @@ class NeuralNetwork:
         # Pick index with the highest probability
         prob, preds = torch.max(yb, dim=1)
         # Retrieve the class label
-        for i, class_name in enumerate(self.classes):
-            print(class_name, yb[0][i].item())
+        # for i, class_name in enumerate(self.classes):
+        #    print(class_name, yb[0][i].item())
         return self.classes[preds[0].item()]
 
     def predict_external_image(self, model, image):

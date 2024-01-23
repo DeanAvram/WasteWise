@@ -70,7 +70,6 @@ class History(ICommand):
         last_month = today - timedelta(days=30)
         last_year = today - timedelta(days=365)
         if data.get("data").get("period") == EnumPeriod.WEEK.name:
-            print("week")
             result = list(MainService().get_db().objects.find({"type": "prediction", "created_by": email,
                                                                "active": True,
                                                                "data.prediction_time": {

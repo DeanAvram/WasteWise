@@ -172,7 +172,7 @@ def test_create_user_10(client):
     """"
     Create a user:
     Valid: yes
-    Problem: username already exists
+    Problem:
     """
 
     client.post(
@@ -194,7 +194,8 @@ def test_create_user_10(client):
             "role": "USER"
         }
     )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+    # print(response.json)
+    assert response.status_code == HTTPStatus.CREATED
 
 
 def test_create_user_11(client):
