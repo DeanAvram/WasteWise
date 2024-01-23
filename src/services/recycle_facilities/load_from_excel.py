@@ -16,7 +16,6 @@ class LoadFromExcel:
         self.itm_proj = Proj(init='epsg:2039')  # Israeli Transverse Mercator (ITM) projection
         self.wgs_proj = Proj(init='epsg:4326')  # World Geodetic System (WGS) projection
 
-
     def _create_place(self, row):
         itm_x = row['x']
         itm_y = row['y']

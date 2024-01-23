@@ -13,3 +13,7 @@ jsonschema~=4.19.0
 
 passlib~=1.7.4
 fonttools~=4.39.4
+pandas~=2.1.4
+pyproj~=3.6.1
+fiona~=1.9.5
+geopandas~=0.14.2

@@ -23,7 +23,10 @@ class MainService:
         self.db.objects.create_index([("data.location.coordinates", "2dsphere")])
 
         global is_places_loaded
-        if not is_places_loaded:
+        to_load = os.environ.get('Load_Places')
+        if to_load and not is_places_loaded:
+            # Delete all places from database
+            self.db.objects.delete_many({'type': 'place'})
             load_from_shapefile = LoadFromShapefile(self.db)
             load_from_shapefile.load()
             is_places_loaded = True
