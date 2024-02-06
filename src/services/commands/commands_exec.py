@@ -1,24 +1,35 @@
 import json
 
+import pymongo
+from flask import abort, make_response, jsonify
+
 from src.data.object import Object
 from src.services.commands.command_interface import ICommand
 from src.services.rest.main_service import MainService
 from http import HTTPStatus
 from jsonschema import ValidationError, validate
-from src.services.input_validation import direct_command_schema, history_command_schema, add_place_command_schema, get_places_command_schema
+from src.services.input_validation import direct_command_schema, history_command_schema, add_place_command_schema, \
+    get_places_command_schema
 from datetime import datetime, timedelta
 from src.data.enum_periods import EnumPeriod
 
 
+def validate_schema(data, schema):
+    try:
+        validate(instance=data, schema=schema)
+    except ValidationError as e:
+        return {
+            "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
+    except Exception as e:
+        return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
+    return None
+
+
 class Direct(ICommand):
     def execute(self, data: dict, email: str):
-        try:
-            validate(instance=data, schema=direct_command_schema)
-        except ValidationError as e:
-            return {
-                "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
-        except Exception as e:
-            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
+        error = validate_schema(data, direct_command_schema)
+        if error is not None:
+            return error
         lng = data.get("data").get("location").get("lng")
         lat = data.get("data").get("location").get("lat")
         reference_location = {
@@ -53,44 +64,34 @@ class Direct(ICommand):
         return result[0], HTTPStatus.CREATED
 
 
+def generate_query(data: dict):
+    query = {"type": "classification", "active": True}
+    if data.get("data").get("period") == EnumPeriod.WEEK.name:
+        query["data.classification_time"] = {
+            "$gte": datetime.now() - timedelta(weeks=1)
+        }
+    elif data.get("data").get("period") == EnumPeriod.MONTH.name:
+        query["data.classification_time"] = {
+            "$gte": datetime.now() - timedelta(days=30)
+        }
+    elif data.get("data").get("period") == EnumPeriod.YEAR.name:
+        query["data.classification_time"] = {
+            "$gte": datetime.now() - timedelta(days=365)
+        }
+    else:
+        abort(make_response(jsonify(message="Period not found"), 400))
+    return query
+
+
 class History(ICommand):
     def execute(self, data: dict, email: str):
         # TODO: check why validation on enum doesn't work
-        try:
-            validate(instance=data, schema=history_command_schema)
-        except ValidationError as e:
-            return {
-                "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
-        except Exception as e:
-            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
+        error = validate_schema(data, history_command_schema)
+        if error is not None:
+            return error
         # return all objects of type classification for the user in the relevant time frame
-        result = list(MainService().get_db().objects.find({"type": "classification", "created_by": email}))
-        today = datetime.now()
-        last_week = today - timedelta(weeks=1)
-        last_month = today - timedelta(days=30)
-        last_year = today - timedelta(days=365)
-        if data.get("data").get("period") == EnumPeriod.WEEK.name:
-            result = list(MainService().get_db().objects.find({"type": "classification", "created_by": email,
-                                                               "active": True,
-                                                               "data.classification_time": {
-                                                                   "$gte": last_week
-                                                               }}))
-        elif data.get("data").get("period") == EnumPeriod.MONTH.name:
-            result = list(MainService().get_db().objects.find({"type": "classification", "created_by": email,
-                                                               "active": True,
-                                                               "data.classification_time": {
-                                                                   "$gte": last_month
-                                                               }}))
-        elif data.get("data").get("period") == EnumPeriod.YEAR.name:
-            result = list(MainService().get_db().objects.find({"type": "classification", "created_by": email,
-                                                               "active": True,
-                                                               "data.classification_time": {
-                                                                   "$gte": last_year
-                                                               }}))
-        elif data.get("data").get("period") == EnumPeriod.ALL.name:
-            result = list(MainService().get_db().objects.find({"type": "classification", "created_by": email}))
-        else:
-            return {"Error": "Period not found"}, HTTPStatus.BAD_REQUEST
+        query = generate_query(data)
+        result = list(MainService().get_db().objects.find(query).sort('data.classification_time', pymongo.DESCENDING))
         if len(result) == 0:
             data = {"data": {
                 "classification": "No recycle found",
@@ -102,13 +103,9 @@ class History(ICommand):
 
 class Places(ICommand):
     def execute(self, data: dict, email: str):
-        try:
-            validate(instance=data, schema=get_places_command_schema)
-        except ValidationError as e:
-            return {
-                "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
-        except Exception as e:
-            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
+        error = validate_schema(data, get_places_command_schema)
+        if error is not None:
+            return error
         # Extract the location from the request
         lng = data.get("data").get("location").get("lng")
         lat = data.get("data").get("location").get("lat")
@@ -136,13 +133,9 @@ class Places(ICommand):
 
 class AddPlace(ICommand):
     def execute(self, data: dict, email: str):
-        try:
-            validate(instance=data, schema=add_place_command_schema)
-        except ValidationError as e:
-            return {
-                "Error": str(e.schema["error_msg"] if "error_msg" in e.schema else e.message)}, HTTPStatus.BAD_REQUEST
-        except Exception as e:
-            return {"Error": str(e)}, HTTPStatus.BAD_REQUEST
+        error = validate_schema(data, add_place_command_schema)
+        if error is not None:
+            return error
         # Extract the location from the request
         lng = data.get("data").get("location").get("lng")
         lat = data.get("data").get("location").get("lat")
