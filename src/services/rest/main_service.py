@@ -13,11 +13,11 @@ is_places_loaded = False
 
 class MainService:
     def __init__(self):
-        # self.client = MongoClient('localhost', 27017)
-        username = os.environ.get('mongo_username')
-        password = os.environ.get('mongo_password')
-        self.client = MongoClient(f'mongodb+srv://{username}:{password}@cluster.p8ymxwu.mongodb.net/?retryWrites=true&w'
-                                  '=majority')
+        self.client = MongoClient('localhost', 27017)
+        # username = os.environ.get('mongo_username')
+        # password = os.environ.get('mongo_password')
+        # self.client = MongoClient(f'mongodb+srv://{username}:{password}@cluster.p8ymxwu.mongodb.net/?retryWrites=true&w'
+        #                           '=majority')
         self.db = self.client.wastewise
         # Create a 2dsphere index on the "data.location.coordinates" field
         self.db.objects.create_index([("data.location.coordinates", "2dsphere")])
