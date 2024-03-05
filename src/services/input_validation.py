@@ -151,6 +151,9 @@ direct_command_schema = {
         "data": {
             "type": "object",
             "properties": {
+                "bin_type": {
+                    type: "string"
+                },
                 "location": {
                     "type": "object",
                     "properties": {
@@ -165,7 +168,7 @@ direct_command_schema = {
                     "additionalProperties": False
                 }
             },
-            "required": ["location"],
+            "required": ["bin_type", "location"],
             "additionalProperties": False
         }
     },

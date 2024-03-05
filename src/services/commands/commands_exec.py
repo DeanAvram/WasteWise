@@ -32,6 +32,7 @@ class Direct(ICommand):
             return error
         lng = data.get("data").get("location").get("lng")
         lat = data.get("data").get("location").get("lat")
+        bin_type = data.get("data").get("bin_type")
         reference_location = {
             "type": "Point",
             "coordinates": [lng, lat]
@@ -49,7 +50,8 @@ class Direct(ICommand):
             {
                 # Filter only objects of type place that are active
                 "$match": {
-                    "type": "place",
+                    "data.bin_type": bin_type,
+                    "type": "recycle_facility",
                     "active": True
                 }
             },
@@ -101,7 +103,7 @@ class History(ICommand):
         return result, HTTPStatus.CREATED
 
 
-class Places(ICommand):
+class RecycleFacilities(ICommand):
     def execute(self, data: dict, email: str):
         error = validate_schema(data, get_places_command_schema)
         if error is not None:
@@ -122,7 +124,7 @@ class Places(ICommand):
                     "$centerSphere": [curr_location["coordinates"], radius / 6371]
                 }
             },
-            "type": "place",
+            "type": "recycle_facility",
             "active": True
         }
 

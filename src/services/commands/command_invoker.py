@@ -1,6 +1,5 @@
 from src.services.commands.command_interface import ICommand
-from src.services.commands.commands_exec import Direct, History, Places, AddPlace, CommandNotFound, General
-
+from src.services.commands.commands_exec import Direct, History, RecycleFacilities, AddPlace, CommandNotFound, General
 
 
 class CommandInvoker:
@@ -22,8 +21,8 @@ class CommandInvoker:
             self.command = Direct()
         elif _type == "HISTORY":
             self.command = History()
-        elif _type == "PLACES":
-            self.command = Places()
+        elif _type == "FACILITIES":
+            self.command = RecycleFacilities()
         elif _type == "ADD_PLACE":
             self.command = AddPlace()
         elif _type == "GENERAL":
