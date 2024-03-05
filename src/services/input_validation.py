@@ -236,7 +236,6 @@ add_place_command_schema = {
     "additionalProperties": False
 }
 
-
 get_places_command_schema = {
     "title": "Places Command",
     "type": "object",
@@ -271,4 +270,3 @@ get_places_command_schema = {
     "required": ["type", "data"],
     "additionalProperties": False
 }
-
