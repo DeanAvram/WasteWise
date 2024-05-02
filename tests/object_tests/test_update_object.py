@@ -12,7 +12,7 @@ def test_update_object_1(client):
     Explain:
     """
     # create user
-    user: dict = create_user()
+    user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     obj: dict = dict(type="IMAGE", data={
@@ -59,7 +59,7 @@ def test_update_object_2(client):
     Valid: No
     Explain: change type
     """
-    user: dict = create_user()
+    user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     obj: dict = dict(type="IMAGE", data={
@@ -104,7 +104,7 @@ def test_update_object_3(client):
     Valid: Yes
     Explain: change active
     """
-    user: dict = create_user()
+    user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     obj: dict = dict(type="IMAGE", data={
@@ -144,7 +144,7 @@ def test_update_object_4(client):
     Valid: No
     Explain: change active to not valid
     """
-    user: dict = create_user()
+    user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     obj: dict = dict(type="IMAGE", data={

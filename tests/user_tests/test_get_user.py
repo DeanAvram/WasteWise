@@ -11,7 +11,7 @@ def test_get_user_1(client):
     Valid: yes
     """
 
-    usr = create_user()
+    usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
     response = client.get(
         f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}'
     )
@@ -25,7 +25,7 @@ def test_get_user_2(client):
     Valid: no
     Problem: missing email
     """
-    usr = create_user()
+    usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     response = client.get(
         f'/wastewise/users/{usr["email"]}'
@@ -40,7 +40,7 @@ def test_get_user_3(client):
     Valid: no
     Problem: missing body
     """
-    usr = create_user()
+    usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     response = client.get(
         f'/wastewise/users?email={usr["email"]}'
@@ -56,7 +56,7 @@ def test_get_user_4(client):
     Problem: unauthorized email
     """
 
-    usr = create_user()
+    usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
     admin = create_admin_user()
 
     response = client.get(
@@ -73,7 +73,7 @@ def test_get_user_5(client):
         Problem: missing password
     """
 
-    usr = create_user()
+    usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
     admin = create_admin_user()
 
     response = client.get(

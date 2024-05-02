@@ -13,7 +13,7 @@ def test_get_object_1(client):
     """
 
     # create user
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     response = client.post(
@@ -44,7 +44,7 @@ def test_get_object_2(client):
     """
 
     # create user
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     _response = client.post(

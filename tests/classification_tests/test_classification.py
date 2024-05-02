@@ -10,7 +10,7 @@ resource_path = Path(__file__).parent / 'resources'
 
 
 def test_classification_plastic(client):
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
     arr = os.listdir("tests/test_data/images")
     print(arr)
     # TODO: fix this test

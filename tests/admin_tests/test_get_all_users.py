@@ -12,7 +12,7 @@ def test_get_all_users_1(client):
         Explain: valid GET request
     """
     admin = create_admin_user()
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
     
     response = client.get(
         f'/wastewise/admin/users?email={admin["email"]}&password={admin["password"]}'
@@ -28,7 +28,7 @@ def test_get_all_users_2(client):
         Explain: USER try to get all users
     """
     admin = create_admin_user()
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     response = client.get(
         f'/wastewise/admin/users?email={user["email"]}&password={user["password"]}'

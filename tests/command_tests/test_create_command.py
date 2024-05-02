@@ -12,7 +12,7 @@ def test_create_command_1(client):
     Explain: Invalid type
     """
     
-    user: dict = create_user()
+    user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
     
     path = f'/wastewise/commands?email={user["email"]}&password={user["password"]}'
     
@@ -36,7 +36,7 @@ def test_create_command_2(client):
     Explain: ...
     """
     
-    user: dict = create_user()
+    user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
     
     path = f'/wastewise/commands?email={user["email"]}&password={user["password"]}'
     

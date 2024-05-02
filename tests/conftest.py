@@ -45,7 +45,7 @@ def before_and_after_test():
 
     # add admin user
     create_admin_user()
-    create_user()
+    create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     yield
 
@@ -65,12 +65,12 @@ def create_admin_user() -> dict:
     return user
 
 
-def create_user() -> dict:
+def create_user(username: str, email: str,password: str, role: str) -> dict:
     user = {
-        "name": "User",
-        "email": "user@gmail.com",
-        "password": "Testing193!",
-        "role": "USER"
+        "name": username,
+        "email": email,
+        "password": password,
+        "role": role
     }
     userService.create_user(user)
     return user

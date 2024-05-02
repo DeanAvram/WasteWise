@@ -16,7 +16,7 @@ def test_create_object_1(client):
     """
 
     # create user
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     response = client.post(
@@ -40,7 +40,7 @@ def test_create_object_2(client):
     """
 
     # create user
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     response = client.post(
@@ -62,7 +62,7 @@ def test_create_object_3(client):
     """
 
     # create user
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     response = client.post(
@@ -83,7 +83,7 @@ def test_create_object_4(client):
     """
 
     # create user
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     response = client.post(
@@ -103,7 +103,7 @@ def test_create_object_5(client):
     """
 
     # create user
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     response = client.post(
@@ -123,7 +123,7 @@ def test_create_object_6(client):
     """
 
     # create user
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     response = client.post(
@@ -143,7 +143,7 @@ def test_create_object_7(client):
     """
 
     # create user
-    user = create_user()
+    user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     # create object
     response = client.post(
