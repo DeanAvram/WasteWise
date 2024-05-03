@@ -6,6 +6,10 @@ from tests.conftest import LOGGER
 resource_path = Path(__file__).parent / 'resources'
 
 
+def test_create_user_0(client):
+    LOGGER.info("\n\n")
+    LOGGER.info("Tests for create user\n")
+
 def test_create_user_1(client):
     LOGGER.info("Test create user started")
     LOGGER.info("Valid: yes")
@@ -66,143 +70,156 @@ def test_create_user_3(client):
 
 
 def test_create_user_4(client):
-    """
-    Create a user:
-    Valid: no
-    Problem: missing password
-    """
-    response = client.post(
-        '/wastewise/users',
-        json={
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: missing password")
+    user = {
             "name": "test",
             "email": "test@gmail.com",
             "role": "USER"
-        }
+    }
+    LOGGER.info(f"User: {user}")
+    response = client.post(
+        '/wastewise/users',
+        json=user
     )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
-
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
 
 def test_create_user_5(client):
-    """
-    Create a user:
-    Valid: no
-    Problem: missing role
-    """
-    response = client.post(
-        '/wastewise/users',
-        json={
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: missing role")
+    user = {
             "name": "test",
             "email": "test@gmail.com",
             "role": "USER"
-        }
-    )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+    }
 
-
-def test_create_user_6(client):
-    """
-    Create a user:
-    Valid: no
-    Problem: empty name
-    """
-
+    LOGGER.info(f"User: {user}")
     response = client.post(
         '/wastewise/users',
-        json={
+        json=user
+    )
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
+
+def test_create_user_6(client):
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: empty name")
+    user = {
             "name": "",
             "email": "test@gmail.com",
             "password": "Testing193!",
             "role": "USER"
-        }
-    )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
-
-
-def test_create_user_7(client):
-    """
-    Create a user:
-    Valid: no
-    Problem: empty email
-    """
-
+    }
+    LOGGER.info(f"User: {user}")
     response = client.post(
         '/wastewise/users',
-        json={
+        json=user
+    )
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
+
+def test_create_user_7(client):
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: empty email")
+    user = {
             "name": "test",
             "email": "",
             "password": "Testing193!",
             "role": "USER"
-        }
+    }
+    LOGGER.info(f"User: {user}")
+    response = client.post(
+        '/wastewise/users',
+        json=user
     )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
-
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
 
 def test_create_user_8(client):
-    """
-    Create a user:
-    Valid: no
-    Problem: empty password
-    """
-
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: empty password")
+    user = {
+        "name": "test",
+        "email": "test@gmail.com",
+        "password": "",
+        "role": "USER"
+    }
+    LOGGER.info(f"User: {user}")
     response = client.post(
         '/wastewise/users',
-        json={
-            "name": "test",
-            "email": "test@gmail.com",
-            "password": "",
-            "role": "USER"
-        }
+        json=user
     )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
-
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
 
 def test_create_user_9(client):
-    """
-    Create a user:
-    Valid: no
-    Problem: empty role
-    """
-
-    response = client.post(
-        '/wastewise/users',
-        json={
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: empty role")
+    user = {
             "name": "test",
             "email": "test@gmail.com",
             "password": "Testing193!",
             "role": ""
-        }
+    }
+    LOGGER.info(f"User: {user}")
+    response = client.post(
+        '/wastewise/users',
+        json=user
     )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
 
 
 def test_create_user_10(client):
-    """"
-    Create a user:
-    Valid: yes
-    Problem:
-    """
-
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: 2 users with the same name")
+    LOGGER.info("Expected: 201")
+    user1 = {
+        "name": "test",
+        "email": "test@gmail.com",
+        "password": "Testing193!",
+        "role": "USER"
+    }
+    LOGGER.info(f"User1: {user1}")
     client.post(
         '/wastewise/users',
-        json={
-            "name": "test",
-            "email": "test@gmail.com",
-            "password": "Testing193!",
-            "role": "USER"
-        }
+        json=user1
     )
-
+    user2 = {
+        "name": "test",
+        "email": "test1@gmail.com",
+        "password": "Testing193!",
+        "role": "USER"
+    }
+    LOGGER.info(f"User2: {user2}")
     response = client.post(
         '/wastewise/users',
-        json={
-            "name": "test",
-            "email": "test1@gmail.com",
-            "password": "Testing193!",
-            "role": "USER"
-        }
+        json=user2
     )
-    # print(response.json)
-    assert response.status_code == HTTPStatus.CREATED
+    answer = response.status_code == HTTPStatus.CREATED
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
 
 
 def test_create_user_11(client):
@@ -211,29 +228,37 @@ def test_create_user_11(client):
     Valid: no
     Problem: email already exists
     """
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: email already exists")
+    LOGGER.info("Expected: 400")
 
+    user1 = {
+        "name": "test1",
+        "email": "test@gmail.com",
+        "password": "Testing193!",
+        "role": "USER"
+    }
+    LOGGER.info(f"User1: {user1}")
     response = client.post(
         '/wastewise/users',
-        json={
-            "name": "test",
-            "email": "test@gmail.com",
-            "password": "Testing193!",
-            "role": "USER"
-        }
+        json=user1
     )
-    LOGGER.info(response)
-
+    user2 = {
+        "name": "test2",
+        "email": "test@gmail.com",
+        "password": "Testing193!",
+        "role": "USER"
+    }
+    LOGGER.info(f"User2: {user2}")
     response = client.post(
         '/wastewise/users',
-        json={
-            "name": "test1",
-            "email": "test@gmail.com",
-            "password": "Testing193!",
-            "role": "USER"
-        }
+        json=user2
     )
-
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
 
 
 def test_create_user_12(client):
@@ -242,14 +267,92 @@ def test_create_user_12(client):
     Valid: no
     Problem: wrong role
     """
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: wrong role")
+    LOGGER.info("Expected: 400")
 
+    user = {
+        "name": "test",
+        "email": "test@gmail.com",
+        "password": "Testing193!",
+        "role": "not a valid role"
+    }
+    LOGGER.info(f"User: {user}")
     response = client.post(
         '/wastewise/users',
-        json={
+        json=user
+    )
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
+
+def test_create_user_13(client):
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: password too short")
+
+    user = {
+        "name": "test",
+        "email": "test@gmail.com",
+        "password": "R1$4",
+        "role": "USER"
+    }
+
+    LOGGER.info(f"User: {user}")
+    response = client.post(
+        '/wastewise/users',
+        json=user
+    )
+
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
+
+def test_create_user_14(client):
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: password too long")
+
+    user = {
             "name": "test",
             "email": "test@gmail.com",
-            "password": "Testing193!",
-            "role": "not role"
+            "password": "fSdfsderes@$#@$T",
+            "role": "USER"
         }
+
+    LOGGER.info(f"User: {user}")
+    response = client.post(
+        '/wastewise/users',
+        json=user
     )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer}")
+    assert answer
+    LOGGER.info("Test create user finished\n")
+
+def test_create_user_15(client):
+    LOGGER.info("Test create user started")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: password no uppercase")
+
+    user = {
+            "name": "test",
+            "email": "test@gmail.com",
+            "password": "abcdefg123!",
+            "role": "USER"
+        }
+
+    LOGGER.info(f"User: {user}")
+    response = client.post(
+        '/wastewise/users',
+        json=user
+    )
+
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Response answer: {answer} \n\t, {response.json} ")
+    assert answer
+    LOGGER.info("Test create user finished\n")
