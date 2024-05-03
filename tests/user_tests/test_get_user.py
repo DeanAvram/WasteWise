@@ -119,3 +119,23 @@ def test_get_user_6(client):
     LOGGER.info(f"Response: {response.json}")
     assert answer
     LOGGER.info("Test Get User 6 passed\n")
+
+def test_get_user_7(client):
+    LOGGER.info("Test Get User 7")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: user1 cannot get user2's information")
+
+    usr1 = create_user("User1", "user1@gmail.com", "Testing193!", "USER")
+    LOGGER.info(f"User1: {usr1}")
+    usr2 = create_user("User2", "user2@gmail.com", "Testing193!", "USER")
+    LOGGER.info(f"User2: {usr2}")
+
+    response = client.get(
+        f'/wastewise/users/{usr2["email"]}?email={usr1["email"]}&password={usr1["password"]}'
+    )
+
+    answer = response.status_code == HTTPStatus.FORBIDDEN
+    LOGGER.info(f"answer: {answer}")
+    LOGGER.info(f"Response: {response.json}")
+    assert answer
+    LOGGER.info("Test Get User 7 passed\n")
