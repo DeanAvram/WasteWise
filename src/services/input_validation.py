@@ -4,7 +4,6 @@ from src.data.enum_commands import EnumCommands
 from src.data.enum_periods import EnumPeriod
 
 email_regex = "[A-Za-z]*[A-Za-z0-9]@([\w-]+\.)+[\w-]{2,4}$"
-# password_regex = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
 password_regex = '^(?=.*)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[^a-zA-Z])(?=.*[0-9]).{8,}$'
 
 object_schema = {
@@ -64,7 +63,9 @@ user_schema = {
         "email": {
             "description": "The email of the user",
             "type": "string",
-            "pattern": email_regex
+            # "pattern": email_regex
+            "format": "email",
+            "minLength": 1
         },
         "password": {
             "description": "The password of the user",
