@@ -10,11 +10,12 @@ The user will scan a waste with his camera. With the image classification algori
 
 The app is connecting to many APIs and maps to find the closest relevant recycling facility to the user.
 
-
 ## Commands
+
 ```
 /wastewise/commands?email=<USER_EMAIL>
 ```
+
 ### Direct
 
 Execute this command to find the closest recycling facility to the user
@@ -22,16 +23,16 @@ Execute this command to find the closest recycling facility to the user
 Returns the closest recycling facilities
 
 Required body:
-    
+
 ```json
 {
-    "type": "DIRECT",
-    "data": {
-        "location": {
-            "lng": "<LNG>",
-            "lat": "<LAT>"
-        }
+  "type": "DIRECT",
+  "data": {
+    "location": {
+      "lng": "<LNG>",
+      "lat": "<LAT>"
     }
+  }
 }
 ```
 
@@ -44,13 +45,13 @@ Returns a list of classifications of a user in a specific period of time
 The user's email is extracted from the query parameter
 
 Required body:
-    
+
 ```json
 {
-    "type": "HISTORY",
-    "data": {
-        "period": "EnumPeriod"
-    }
+  "type": "HISTORY",
+  "data": {
+    "period": "EnumPeriod"
+  }
 }
 ```
 
@@ -61,6 +62,7 @@ Execute this command to add a new recycling facility to the database
 Returns the new recycling facility and add it to the database
 
 Required body:
+
 ```json
 {
   "type": "ADD_PLACE",
@@ -81,6 +83,7 @@ Execute this command to get all the recycling facilities in a specific radius
 Returns a list of recycling facilities in a specific radius
 
 Required body:
+
 ```json
 {
   "type": "PLACES",
@@ -95,9 +98,10 @@ Required body:
 ```
 
 ### Classify
+
 Execute this command to classify the type of the waste
 Returns the type of the waste and add a classification object to the database
-The classification object contains the type of the waste,  and the time of the classification
+The classification object contains the type of the waste, and the time of the classification
 Require a file in the body of the request
 
 ## Venv
@@ -119,7 +123,7 @@ python -m venv venv
 #### bash
 
 ```bash
-source venv/bin/activate 
+source venv/bin/activate
 ```
 
 ## Build
@@ -133,8 +137,14 @@ pip install -r requirements.txt
 ### Terminal
 
 ```bash
-export FLASK_APP=src 
+export FLASK_APP=src
 flask run
+```
+
+## Test
+
+```bash
+pytest tests
 ```
 
 ## Mongo
