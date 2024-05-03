@@ -1,83 +1,121 @@
 from http import HTTPStatus
 from pathlib import Path
-from tests.conftest import create_user, create_admin_user
+from tests.conftest import LOGGER, create_user, create_admin_user
 
 resource_path = Path(__file__).parent / 'resources'
 
+def test_get_user_0(client):
+    LOGGER.info("\n\n")
+    LOGGER.info("Tests for GET /wastewise/users/{email}?email={email}&password={password}")
+
 
 def test_get_user_1(client):
-    """
-    Get a user:
-    Valid: yes
-    """
+    LOGGER.info("Test Get User 1")
+    LOGGER.info("Valid: yes")
 
     usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info(f"User: {usr}")
     response = client.get(
         f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}'
     )
 
-    assert response.status_code == HTTPStatus.OK
+    answer = response.status_code == HTTPStatus.OK
+    LOGGER.info(f"answer: {answer}")
+    LOGGER.info(f"Response: {response.json}")
+    assert answer
+    LOGGER.info("Test Get User 1 passed\n")
 
 
 def test_get_user_2(client):
-    """
-    Get a user:
-    Valid: no
-    Problem: missing email
-    """
+    LOGGER.info("Test Get User 2")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: invalid email")
     usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
-
+    LOGGER.info(f"User: {usr}")
+    false_email = "false_email@gmail.com"
+    LOGGER.info(f"False email: {false_email}")
     response = client.get(
-        f'/wastewise/users/{usr["email"]}'
+        f'/wastewise/users/{false_email}?email={false_email}&password={usr["password"]}'
     )
 
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+    answer = response.status_code == HTTPStatus.NOT_FOUND
+    LOGGER.info(f"answer: {answer}")
+    LOGGER.info(f"Response: {response.json}")
+    assert answer
+    LOGGER.info("Test Get User 2 passed\n")
 
 
 def test_get_user_3(client):
-    """
-    Get a user:
-    Valid: no
-    Problem: missing body
-    """
+    LOGGER.info("Test Get User 3")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: missing request variables")
     usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info(f"User: {usr}")
 
     response = client.get(
         f'/wastewise/users?email={usr["email"]}'
     )
 
-    assert response.status_code == HTTPStatus.METHOD_NOT_ALLOWED
+    answer = response.status_code == HTTPStatus.METHOD_NOT_ALLOWED
+    LOGGER.info(f"answer: {answer}")
+    LOGGER.info(f"Response: {response.json}")
+    assert answer
+    LOGGER.info("Test Get User 3 passed\n")
 
 
 def test_get_user_4(client):
-    """
-    Get a user:
-    Valid: no
-    Problem: unauthorized email
-    """
+    LOGGER.info("Test Get User 4")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: unauthorized user")
+    LOGGER.info("Explanation: admin user cannot get another user's information")
 
     usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info(f"User: {usr}")
     admin = create_admin_user()
+    LOGGER.info(f"Admin: {admin}")
 
     response = client.get(
         f'/wastewise/users/{usr["email"]}?email={admin["email"]}&password={admin["password"]}'
     )
 
-    assert response.status_code == HTTPStatus.FORBIDDEN
+    answer = response.status_code == HTTPStatus.FORBIDDEN
+    LOGGER.info(f"answer: {answer}")
+    LOGGER.info(f"Response: {response.json}")
+    assert answer
+    LOGGER.info("Test Get User 4 passed\n")
 
 
 def test_get_user_5(client):
-    """
-        Get a user:
-        Valid: no
-        Problem: missing password
-    """
-
+    LOGGER.info("Test Get User 5")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: missing request password")
     usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
-    admin = create_admin_user()
+    LOGGER.info(f"User: {usr}")
 
     response = client.get(
-        f'/wastewise/users/{usr["email"]}?email={admin["email"]}'
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}'
     )
 
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"answer: {answer}")
+    LOGGER.info(f"Response: {response.json}")
+    assert answer
+    LOGGER.info("Test Get User 5 passed\n")
+
+def test_get_user_6(client):
+    LOGGER.info("Test Get User 6")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Problem: invalid password")
+
+    usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info(f"User: {usr}")
+
+    response = client.get(
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password=invalid_password'
+    )
+
+    answer = response.status_code == HTTPStatus.UNAUTHORIZED
+    LOGGER.info(f"answer: {answer}")
+    LOGGER.info(f"Response: {response.json}")
+    assert answer
+    LOGGER.info("Test Get User 6 passed\n")

@@ -8,7 +8,7 @@ resource_path = Path(__file__).parent / 'resources'
 
 def test_create_user_0(client):
     LOGGER.info("\n\n")
-    LOGGER.info("Tests for create user\n")
+    LOGGER.info("Tests for POST /wastewise/users\n")
 
 def test_create_user_1(client):
     LOGGER.info("Test create user 1 started")
