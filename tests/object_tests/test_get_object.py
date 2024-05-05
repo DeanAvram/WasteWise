@@ -74,3 +74,42 @@ def test_get_object_2(client):
     # validate
     assert response.status_code == HTTPStatus.NOT_FOUND
     LOGGER.info("Test 2 passed\n")
+
+def test_get_object_3(client):
+    LOGGER.info("Test 3: Get an object")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Explain: get object created by another user")
+    
+    LOGGER.info("Create user1")
+    user1 = create_user("User1", "user1@gmail.com", "Testing193!", "USER")
+    LOGGER.info("User1 created") if user1 else LOGGER.error("User1 not created")
+    LOGGER.info("Create user2")
+    user2 = create_user("User2", "user2@gmail.com", "Testing193!", "USER")
+    LOGGER.info("User2 created") if user2 else LOGGER.error("User2 not created")
+    
+    LOGGER.info("Create an object")
+    object = {
+        "type": "IMAGE",
+        "data": {
+            "url": "https://www.google.com"
+        }
+    }
+    LOGGER.info(f'Object: {object}')
+    
+    object = create_object(user1, object)
+    LOGGER.info("Object created") if object else LOGGER.error("Object not created")
+    
+    _id = object["_id"]
+    
+    # get
+    response = client.get(
+        f'/wastewise/objects/{_id}?email={user2["email"]}&password={user2["password"]}'
+    )
+    
+    LOGGER.info(response.json)
+    LOGGER.info(response.status_code)
+    answer = response.status_code == HTTPStatus.FORBIDDEN
+    assert answer
+    LOGGER.info("Test 3 passed\n")
+    
+    
