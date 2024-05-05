@@ -42,7 +42,8 @@ def test_create_object_1(client):
 
 def test_create_object_2(client):
     LOGGER.info("Test 2: Create an object")
-    LOGGER.info("Valid: yes")
+    LOGGER.info("Valid: no")
+    LOGGER.info("IMAGE object without data")
 
     LOGGER.info("Create a user")
     user = create_user("User", "user@gmail.com", "Testing193!", "USER")
@@ -58,8 +59,11 @@ def test_create_object_2(client):
         f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json=object
     )
-    answer = response.status_code == HTTPStatus.CREATED
-    LOGGER.info("Object created") if answer else LOGGER.error("Object not created")
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info("Object not created") if answer else LOGGER.error("Object created")
+
+    assert answer
+    LOGGER.info("Test 2 passed\n")
 
 
 def test_create_object_3(client):
@@ -81,8 +85,12 @@ def test_create_object_3(client):
         f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json=object
     )
-    answer = response.status_code == HTTPStatus.CREATED
-    LOGGER.info("Object created") if answer else LOGGER.error("Object not created")
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info("Object not created") if answer else LOGGER.error("Object created")
+    LOGGER.info("Response: %s", response.json)
+
+    assert answer
+    LOGGER.info("Test 3 passed\n")
 
 
 def test_create_object_4(client):
@@ -104,7 +112,9 @@ def test_create_object_4(client):
         json=object
     )
     answer = response.status_code == HTTPStatus.CREATED
-    LOGGER.info("Object created") if answer else LOGGER.error("Object not created")
+    LOGGER.info("Object created") if not answer else LOGGER.error("Object not created")
+    assert answer
+    LOGGER.info("Test 4 passed\n")
 
 
 def test_create_object_5(client):
@@ -123,7 +133,9 @@ def test_create_object_5(client):
         }
     )
     answer = response.status_code == HTTPStatus.BAD_REQUEST
-    LOGGER.info("Object created") if answer else LOGGER.error("Object not created")
+    LOGGER.info("Object created") if not answer else LOGGER.error("Object not created")
+    assert answer
+    LOGGER.info("Test 5 passed\n")
 
 
 def test_create_object_6(client):
@@ -145,5 +157,8 @@ def test_create_object_6(client):
         json=object
     )
     answer = response.status_code == HTTPStatus.BAD_REQUEST
-    LOGGER.info("Object created") if answer else LOGGER.error("Object not created")
+    LOGGER.info("Object created") if not answer else LOGGER.error("Object not created")
+
+    assert answer
+    LOGGER.info("Test 6 passed\n")
 

@@ -44,8 +44,8 @@ def before_and_after_test():
     commandService.db.commands.delete_many({})
 
     # add admin user
-    create_admin_user()
-    create_user("User", "user@gmail.com", "Testing193!", "USER")
+    # create_admin_user()
+    # create_user("User", "user@gmail.com", "Testing193!", "USER")
 
     yield
 
@@ -65,7 +65,7 @@ def create_admin_user() -> dict:
     return user
 
 
-def create_user(username: str, email: str,password: str, role: str) -> dict:
+def create_user(username: str, email: str, password: str, role: str) -> dict:
     user = {
         "name": username,
         "email": email,
@@ -73,23 +73,26 @@ def create_user(username: str, email: str,password: str, role: str) -> dict:
         "role": role
     }
     userService.create_user(user)
+
     return user
 
 
-def get_test_data(filename) -> dict:
-    folder_path = os.path.abspath(Path(os.path.dirname(__file__)))
-    folder = os.path.join(folder_path, 'test_data')
-    jsonfile = os.path.join(folder, filename)
-    with open(jsonfile) as file:
-        data = json.load(file)
+def create_object(client, name: str, description: str, location: str, owner: str) -> dict:
+    temp_object = {
+        "name": name,
+        "description": description,
+        "location": location,
+        "owner": owner
+    }
 
-    return data
+    response = client.post(
+        '/wastewise/objects',
+        json=temp_object
+    )
+
+    return response.json
 
 
-def equal_dicts_exclude(d1, d2, *ignore_keys):
-    d1_filtered = {k: v for k, v in d1.items() if k not in ignore_keys}
-    d2_filtered = {k: v for k, v in d2.items() if k not in ignore_keys}
-    return d1_filtered == d2_filtered
 
 
 def equal_dicts_only(d1, d2, *keys):
@@ -100,62 +103,5 @@ def equal_dicts_only(d1, d2, *keys):
     return answer
 
 
-def start_test(data, length, file, name):
-    LOGGER.info(f' Starting: {name}')
 
-
-    try:
-        data = get_test_data(file)
-        LOGGER.info(' Got test data')
-    except Exception as e:
-        LOGGER.error(f' Failing in get test data Got exception {e}')
-        return
-
-    length = len(data['tasks'])
-
-    LOGGER.info(f' Got {length} tasks')
-
-    LOGGER.info('')
-    return data, length
-
-
-def next_sub_test(e, counter):
-    LOGGER.error(f' Failing in put object -> {e}')
-    LOGGER.error(f' Failing test {counter}\n')
-    counter += 1
-    return counter
-
-
-def end_loop(counter, success):
-    LOGGER.info(f' End Subtest {counter}\n')
-    success += 1
-    counter += 1
-    objectService.db.objects.delete_many({})
-    # userService.db.users.delete_many({})
-    commandService.db.commands.delete_many({})
-    return counter, success
-
-
-def end_test(success, length):
-    LOGGER.info(f' Succeeded: {success} of {length}\n\n')
-
-
-def post_everything(client, path: str, data: list):
-    LOGGER.info(f' Posting {len(data)} objects to {path}')
-    counter: int = 1
-
-    for i in data:
-        response = client.post(
-            path,
-            json=i
-        )
-        LOGGER.info(f' Posted {counter} : {i}')
-        LOGGER.info(f' Got response {counter} : {response.json}')
-
-        try:
-            assert response.status_code == HTTPStatus.CREATED
-        except AssertionError as e:
-            continue
-
-        counter += 1
 

@@ -1,15 +1,16 @@
 from http import HTTPStatus
 from pathlib import Path
-from tests.conftest import LOGGER, create_user, create_admin_user, equal_dicts_only
+from tests.conftest import LOGGER
 from tests.conftest import userService
 from passlib.hash import pbkdf2_sha256
 
-
 resource_path = Path(__file__).parent / 'resources'
+
 
 def test_update_user_0(client):
     LOGGER.info("\n\n")
     LOGGER.info("Tests for PUT /wastewise/users/{email}?email={email}&password={password}\n")
+
 
 def test_update_user_1(client):
     LOGGER.info("Test Update User 1")
@@ -79,14 +80,16 @@ def test_update_user_2(client):
     assert answer
 
     response = client.get(
-         f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}'
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}'
     )
     answer = response.status_code == HTTPStatus.OK
     LOGGER.info(f"Response: {response.json}")
     assert answer
-    answer = equal_dicts_only(response.json, data, 'role')
+
+    answer = response.json['role'] == data['role']
     LOGGER.info(f"Role is correct: {answer}")
     assert answer
+
     LOGGER.info("Test Update User 2 Passed\n")
 
 
@@ -122,7 +125,7 @@ def test_update_user_3(client):
     answer = response.status_code == HTTPStatus.OK
     LOGGER.info(f"Response: {response.json}")
     assert answer
-    answer = not equal_dicts_only(response.json, data, 'role')
+    answer = response.json['role'] == usr['role']
     LOGGER.info(f"Role is correct: {answer}")
     assert answer
 
@@ -170,6 +173,7 @@ def test_update_user_4(client):
     assert answer
     LOGGER.info("Test Update User 4 Passed\n")
 
+
 def test_update_user_5(client):
     LOGGER.info("Test Update User 5")
     LOGGER.info("Valid: yes")
@@ -202,7 +206,7 @@ def test_update_user_5(client):
     LOGGER.info(f"Response: {response.json}")
     answer = response.status_code == HTTPStatus.OK
     assert answer
-    answer = equal_dicts_only(response.json, data, 'name')
+    answer = response.json['name'] == data['name']
     LOGGER.info(f"Name is correct: {answer}")
     assert answer
     LOGGER.info("Test Update User 5 Passed\n")
@@ -241,8 +245,10 @@ def test_update_user_6(client):
     LOGGER.info(f"Response: {response.json}")
     answer = response.status_code == HTTPStatus.OK
     assert answer
-    answer = not equal_dicts_only(response.json, data, 'name')
+    answer = response.json['name'] == usr['name']
+    assert answer
     LOGGER.info("Test Update User 6 Passed\n")
+
 
 def test_update_user_7(client):
     LOGGER.info("Test Update User 7")
@@ -284,6 +290,7 @@ def test_update_user_7(client):
     answer = response.json['password'] == usr['password']
     LOGGER.info("Test Update User 7 Passed\n")
 
+
 def test_update_user_8(client):
     LOGGER.info("Test Update User 8")
     LOGGER.info("Valid: no")
@@ -323,6 +330,7 @@ def test_update_user_8(client):
     assert answer
     answer = response.json['password'] == usr['password']
     LOGGER.info("Test Update User 8 Passed\n")
+
 
 def test_update_user_9(client):
     LOGGER.info("Test Update User 9")
