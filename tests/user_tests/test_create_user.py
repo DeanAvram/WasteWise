@@ -10,6 +10,7 @@ def test_create_user_0(client):
     LOGGER.info("\n\n")
     LOGGER.info("Tests for POST /wastewise/users\n")
 
+
 def test_create_user_1(client):
     LOGGER.info("Test create user 1 started")
     LOGGER.info("Valid: yes")
@@ -77,9 +78,9 @@ def test_create_user_4(client):
     LOGGER.info("Valid: no")
     LOGGER.info("Problem: missing password")
     user = {
-            "name": "test",
-            "email": "test@gmail.com",
-            "role": "USER"
+        "name": "test",
+        "email": "test@gmail.com",
+        "role": "USER"
     }
     LOGGER.info(f"User: {user}")
     response = client.post(
@@ -91,15 +92,16 @@ def test_create_user_4(client):
     LOGGER.info(f"Response: {response.json}")
     assert answer
     LOGGER.info("Test create user finished\n")
+
 
 def test_create_user_5(client):
     LOGGER.info("Test create user 5 started")
     LOGGER.info("Valid: no")
     LOGGER.info("Problem: missing role")
     user = {
-            "name": "test",
-            "email": "test@gmail.com",
-            "role": "USER"
+        "name": "test",
+        "email": "test@gmail.com",
+        "role": "USER"
     }
 
     LOGGER.info(f"User: {user}")
@@ -112,16 +114,17 @@ def test_create_user_5(client):
     LOGGER.info(f"Response: {response.json}")
     assert answer
     LOGGER.info("Test create user finished\n")
+
 
 def test_create_user_6(client):
     LOGGER.info("Test create user 6 started")
     LOGGER.info("Valid: no")
     LOGGER.info("Problem: empty name")
     user = {
-            "name": "",
-            "email": "test@gmail.com",
-            "password": "Testing193!",
-            "role": "USER"
+        "name": "",
+        "email": "test@gmail.com",
+        "password": "Testing193!",
+        "role": "USER"
     }
     LOGGER.info(f"User: {user}")
     response = client.post(
@@ -133,16 +136,17 @@ def test_create_user_6(client):
     LOGGER.info(f"Response: {response.json}")
     assert answer
     LOGGER.info("Test create user finished\n")
+
 
 def test_create_user_7(client):
     LOGGER.info("Test create user 7 started")
     LOGGER.info("Valid: no")
     LOGGER.info("Problem: empty email")
     user = {
-            "name": "test",
-            "email": "",
-            "password": "Testing193!",
-            "role": "USER"
+        "name": "test",
+        "email": "",
+        "password": "Testing193!",
+        "role": "USER"
     }
     LOGGER.info(f"User: {user}")
     response = client.post(
@@ -155,6 +159,7 @@ def test_create_user_7(client):
     LOGGER.info(f"Response: {response.json}")
     assert answer
     LOGGER.info("Test create user finished\n")
+
 
 def test_create_user_8(client):
     LOGGER.info("Test create user 8 started")
@@ -177,15 +182,16 @@ def test_create_user_8(client):
     assert answer
     LOGGER.info("Test create user finished\n")
 
+
 def test_create_user_9(client):
     LOGGER.info("Test create user 9 started")
     LOGGER.info("Valid: no")
     LOGGER.info("Problem: empty role")
     user = {
-            "name": "test",
-            "email": "test@gmail.com",
-            "password": "Testing193!",
-            "role": ""
+        "name": "test",
+        "email": "test@gmail.com",
+        "password": "Testing193!",
+        "role": ""
     }
     LOGGER.info(f"User: {user}")
     response = client.post(
@@ -291,6 +297,7 @@ def test_create_user_12(client):
     assert answer
     LOGGER.info("Test create user finished\n")
 
+
 def test_create_user_13(client):
     LOGGER.info("Test create user 13 started")
     LOGGER.info("Valid: no")
@@ -315,17 +322,18 @@ def test_create_user_13(client):
     assert answer
     LOGGER.info("Test create user finished\n")
 
+
 def test_create_user_14(client):
     LOGGER.info("Test create user 14 started")
     LOGGER.info("Valid: no")
     LOGGER.info("Problem: password too long")
 
     user = {
-            "name": "test",
-            "email": "test@gmail.com",
-            "password": "fSdfsderes@$#@$T",
-            "role": "USER"
-        }
+        "name": "test",
+        "email": "test@gmail.com",
+        "password": "fSdfsderes@$#@$T",
+        "role": "USER"
+    }
 
     LOGGER.info(f"User: {user}")
     response = client.post(
@@ -339,17 +347,18 @@ def test_create_user_14(client):
     assert answer
     LOGGER.info("Test create user finished\n")
 
+
 def test_create_user_15(client):
     LOGGER.info("Test create user 15 started")
     LOGGER.info("Valid: no")
     LOGGER.info("Problem: password no uppercase")
 
     user = {
-            "name": "test",
-            "email": "test@gmail.com",
-            "password": "abcdefg123!",
-            "role": "USER"
-        }
+        "name": "test",
+        "email": "test@gmail.com",
+        "password": "abcdefg123!",
+        "role": "USER"
+    }
 
     LOGGER.info(f"User: {user}")
     response = client.post(

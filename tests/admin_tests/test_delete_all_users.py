@@ -6,7 +6,7 @@ from tests.conftest import create_user, create_admin_user
 resource_path = Path(__file__).parent / 'resources'
 
 
-def test_get_all_users_1(client):
+def test_delete_all_users_1(client):
     """Get all user test
         Valid: yes
         Explain: valid GET request
