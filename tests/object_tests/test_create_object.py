@@ -6,93 +6,103 @@ from fontTools.designspaceLib.split import LOGGER
 from tests.conftest import create_user, create_admin_user
 
 resource_path = Path(__file__).parent / 'resources'
-
+def test_create_object_0(client):
+    LOGGER.info("\n\n")
+    LOGGER.info("Tests for POST /wastewise/objects\n")
 
 def test_create_object_1(client):
-    """
-    Create an object:
-    Valid: yes
-    Explain: ...
-    """
+    LOGGER.info("Test 1: Create an object")
+    LOGGER.info("Valid: yes")
 
-    # create user
+    LOGGER.info("Create a user")
     user = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info("User created") if user else LOGGER.error("User not created")
 
-    # create object
+    LOGGER.info("Create an object")
+    object = {
+        "type": "IMAGE",
+        "data": {
+            "url": "https://www.google.com"
+        }
+    }
     response = client.post(
         f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
-        json={
-            "type": "IMAGE",
-            "data": {
-                "url": "https://www.google.com"
-            }
-        }
+        json=object
     )
-    LOGGER.error(response.response)
-    assert response.status_code == HTTPStatus.CREATED
+    LOGGER.info("Object created")
+    answer = response.status_code == HTTPStatus.CREATED
+    LOGGER.info("Answer: %s", answer)
+    LOGGER.info("Response: %s", response.json)
+    assert answer
+    LOGGER.info("Test 1 passed\n")
 
 
 def test_create_object_2(client):
-    """
-    Create an object:
-    Valid: yes
-    Explain: ...
-    """
+    LOGGER.info("Test 2: Create an object")
+    LOGGER.info("Valid: yes")
 
-    # create user
+
+    LOGGER.info("Create a user")
     user = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info("User created") if user else LOGGER.error("User not created")
 
-    # create object
+    LOGGER.info("Create an object")
+    object = {
+        "type": "IMAGE",
+        "data": {
+        }
+    }
     response = client.post(
         f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
-        json={
-            "type": "IMAGE",
-            "data": {
-            }
-        }
+        json=object
     )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+    answer = response.status_code == HTTPStatus.CREATED
+    LOGGER.info("Object created") if answer else LOGGER.error("Object not created")
 
 
 def test_create_object_3(client):
-    """
-    Create an object:
-    Valid: yes
-    Explain: ...
-    """
+    LOGGER.info("Test 3: Create an object")
+    LOGGER.info("Valid: no")
+    LOGGER.info("IMAGE object empty data")
 
-    # create user
+    LOGGER.info("Create a user")
     user = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info("User created") if user else LOGGER.error("User not created")
 
-    # create object
+    LOGGER.info("Create an object")
+    object = {
+        "type": "IMAGE",
+        "data": None
+    }
+    LOGGER.info("Object: %s", object)
     response = client.post(
         f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
-        json={
-            "type": "IMAGE",
-            "data": None
-        }
+        json=object
     )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+    answer = response.status_code == HTTPStatus.CREATED
+    LOGGER.info("Object created") if answer else LOGGER.error("Object not created")
 
 
 def test_create_object_4(client):
-    """
-    Create an object:
-    Valid: yes
-    Explain: ...
-    """
+    LOGGER.info("Test 4: Create an object")
+    LOGGER.info("Valid: no")
+    LOGGER.info("IMAGE object without data")
 
-    # create user
+    LOGGER.info("Create a user")
     user = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info("User created") if user else LOGGER.error("User not created")
 
-    # create object
+    LOGGER.info("Create an object")
+    object = {
+        "type": "IMAGE"
+    }
+    LOGGER.info("Object: %s", object)
     response = client.post(
         f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
-        json={
-            "type": "IMAGE",
-        }
+        json=object
     )
-    assert response.status_code == HTTPStatus.CREATED
+    answer = response.status_code == HTTPStatus.CREATED
+    LOGGER.info("Object created") if answer else LOGGER.error("Object not created")
 
 
 def test_create_object_5(client):

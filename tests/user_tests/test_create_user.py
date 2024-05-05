@@ -54,7 +54,7 @@ def test_create_user_2(client):
 def test_create_user_3(client):
     LOGGER.info("Test create user 3 started")
     LOGGER.info("Valid: no")
-    LOGGER.info("Problem: missing password")
+    LOGGER.info("Problem: missing email")
     user = {
         "name": "test",
         "password": "Testing193!",

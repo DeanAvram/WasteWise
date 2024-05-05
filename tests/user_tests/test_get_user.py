@@ -88,7 +88,7 @@ def test_get_user_4(client):
 def test_get_user_5(client):
     LOGGER.info("Test Get User 5")
     LOGGER.info("Valid: no")
-    LOGGER.info("Problem: missing request password")
+    LOGGER.info("Problem: wrong request password")
     usr = create_user("User", "user@gmail.com", "Testing193!", "USER")
     LOGGER.info(f"User: {usr}")
 

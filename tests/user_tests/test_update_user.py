@@ -92,7 +92,7 @@ def test_update_user_2(client):
 
 def test_update_user_3(client):
     LOGGER.info("Test Update User 3")
-    LOGGER.info("Valid: yes")
+    LOGGER.info("Valid: No")
     LOGGER.info("Explain: role is not valid to change")
 
     usr = {
@@ -323,3 +323,43 @@ def test_update_user_8(client):
     assert answer
     answer = response.json['password'] == usr['password']
     LOGGER.info("Test Update User 8 Passed\n")
+
+def test_update_user_9(client):
+    LOGGER.info("Test Update User 9")
+    LOGGER.info("Valid: no")
+    LOGGER.info("Explain: password is too long")
+
+    usr = {
+        "name": "User",
+        "email": "test@gmail.com",
+        "password": "Testing193!",
+        "role": "USER"
+    }
+
+    LOGGER.info(f"Creating user: {usr}")
+    userService.create_user(user=usr)
+
+    data = {
+        "password": "Test1!aaaaaaaaaaaaaaaaaa"
+    }
+
+    LOGGER.info(f"Updating user with data: {data}")
+
+    response = client.put(
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}',
+        json=data
+    )
+
+    LOGGER.info(f"Response: {response.json}")
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info(f"Answer: {answer}")
+    assert answer
+
+    response = client.get(
+        f'/wastewise/users/{usr["email"]}?email={usr["email"]}&password={usr["password"]}')
+
+    LOGGER.info(f"Response: {response.json}")
+    answer = response.status_code == HTTPStatus.OK
+    assert answer
+    answer = response.json['password'] == usr['password']
+    LOGGER.info("Test Update User 9 Passed\n")
