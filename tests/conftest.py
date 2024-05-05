@@ -18,6 +18,8 @@ LOGGER = logging.getLogger(__name__)
 # write to file after clearing it
 open('test.log', 'w').close()
 logging.basicConfig(filename='test.log', level=logging.INFO)
+logging.getLogger().addHandler(logging.StreamHandler())
+logging.getLogger().setLevel(logging.INFO)
 
 
 @pytest.fixture
@@ -76,22 +78,9 @@ def create_user(username: str, email: str, password: str, role: str) -> dict:
 
     return user
 
-
-def create_object(client, name: str, description: str, location: str, owner: str) -> dict:
-    temp_object = {
-        "name": name,
-        "description": description,
-        "location": location,
-        "owner": owner
-    }
-
-    response = client.post(
-        '/wastewise/objects',
-        json=temp_object
-    )
-
-    return response.json
-
+def create_object(user: dict, object: dict) -> dict:
+    responese = objectService.create_object(user["email"], user["password"], object)
+    return responese[0]
 
 
 

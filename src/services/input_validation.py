@@ -27,7 +27,7 @@ object_schema = {
         }
     },
     "required": [
-        "type"
+        "type", "data"
     ],
     "additionalProperties": False
 }

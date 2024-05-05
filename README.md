@@ -12,7 +12,7 @@ The app is connecting to many APIs and maps to find the closest relevant recycli
 
 ## Commands
 
-```
+```bash
 /wastewise/commands?email=<USER_EMAIL>
 ```
 

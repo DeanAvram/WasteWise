@@ -60,7 +60,9 @@ def test_create_object_2(client):
         json=object
     )
     answer = response.status_code == HTTPStatus.BAD_REQUEST
-    LOGGER.info("Object not created") if answer else LOGGER.error("Object created")
+    LOGGER.info(f'response status code: {response.status_code}')
+    LOGGER.info("Response: %s", response.json)
+    LOGGER.error("Object created") if not answer else LOGGER.info("Object not created")
 
     assert answer
     LOGGER.info("Test 2 passed\n")
@@ -111,8 +113,10 @@ def test_create_object_4(client):
         f'/wastewise/objects?email={user["email"]}&password={user["password"]}',
         json=object
     )
-    answer = response.status_code == HTTPStatus.CREATED
-    LOGGER.info("Object created") if not answer else LOGGER.error("Object not created")
+    answer = response.status_code == HTTPStatus.BAD_REQUEST
+    LOGGER.info("Object not created") if answer else LOGGER.error("Object created")
+    LOGGER.info(f'response status code: {response.status_code}')
+    LOGGER.info("Response: %s", response.json)
     assert answer
     LOGGER.info("Test 4 passed\n")
 
@@ -133,7 +137,9 @@ def test_create_object_5(client):
         }
     )
     answer = response.status_code == HTTPStatus.BAD_REQUEST
-    LOGGER.info("Object created") if not answer else LOGGER.error("Object not created")
+    LOGGER.info("Response: %s", response.json)
+    LOGGER.info(f'response status code: {response.status_code}')
+    LOGGER.info("Object not created") if answer else LOGGER.error("Object created")
     assert answer
     LOGGER.info("Test 5 passed\n")
 
@@ -157,7 +163,9 @@ def test_create_object_6(client):
         json=object
     )
     answer = response.status_code == HTTPStatus.BAD_REQUEST
-    LOGGER.info("Object created") if not answer else LOGGER.error("Object not created")
+    LOGGER.info("Response: %s", response.json)
+    LOGGER.info(f'response status code: {response.status_code}')
+    LOGGER.info("Object not created") if answer else LOGGER.error("Object created")
 
     assert answer
     LOGGER.info("Test 6 passed\n")
