@@ -84,13 +84,3 @@ def create_object(user: dict, object: dict) -> dict:
 
 
 
-def equal_dicts_only(d1, d2, *keys):
-    d1_filtered = {k: v for k, v in d1.items() if k in keys}
-    d2_filtered = {k: v for k, v in d2.items() if k in keys}
-
-    answer = d1_filtered == d2_filtered
-    return answer
-
-
-
-

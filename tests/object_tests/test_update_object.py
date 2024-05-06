@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from pathlib import Path
-from tests.conftest import LOGGER, create_object, create_user, equal_dicts_only
+from tests.conftest import LOGGER, create_object, create_user 
 
 resource_path = Path(__file__).parent / 'resources'
 

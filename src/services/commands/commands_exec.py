@@ -157,7 +157,7 @@ class AddPlace(ICommand):
 
 
 class CommandNotFound(ICommand):
-    def execute(self) -> dict:
+    def execute(self, data, email) -> dict:
         return {
             "message": "Command not found"
         }
