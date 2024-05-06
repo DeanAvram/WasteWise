@@ -75,6 +75,7 @@ def test_create_command_2(client):
 
 
 def test_create_command_3(client):
+    # FIXME: This test is failing, return object not found
     LOGGER.info("Test create command 3")
     LOGGER.info("Valid: yes")
     LOGGER.info("Explain: Direct command")
@@ -92,9 +93,10 @@ def test_create_command_3(client):
     command = {
         "type": command_type,
         "data": {
+            'bin_type': "paper",
             'location': {
-                'lng': "0.0",
-                'lat': "0.0"
+                'lng': 0.0,
+                'lat': 0.0
             }
         }
     }
