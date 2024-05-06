@@ -78,9 +78,7 @@ def create_user(username: str, email: str, password: str, role: str) -> dict:
 
     return user
 
+
 def create_object(user: dict, object: dict) -> dict:
     responese = objectService.create_object(user["email"], user["password"], object)
     return responese[0]
-
-
-

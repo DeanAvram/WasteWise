@@ -1,4 +1,5 @@
 import json
+from typing import Tuple, Dict
 
 import pymongo
 from flask import abort, make_response, jsonify
@@ -157,15 +158,13 @@ class AddPlace(ICommand):
 
 
 class CommandNotFound(ICommand):
-    def execute(self, data, email) -> dict:
+    def execute(self, data, email):
         return {
             "message": "Command not found"
-        }
+        }, HTTPStatus.BAD_REQUEST
 
 
 class General(ICommand):
     def execute(self, data: dict, email: str):
-        return {
-            "email": email,
-            "data": data
-        }
+        return {'message': 'General command executed, by ' + email}, HTTPStatus.CREATED
+
