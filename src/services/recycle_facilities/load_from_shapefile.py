@@ -11,7 +11,7 @@ class LoadFromShapefile:
     def _create_place(self, row):
         itm_x = row['geometry'].x
         itm_y = row['geometry'].y
-        obj = Object("recycle_facility", "admin")
+        obj = Object("PUBLIC_FACILITY", "admin")
         # bin_type = self._determine_bin_type(row['tsug'])
         bin_type = row['tsug']
         if ('זכוכית' in bin_type):

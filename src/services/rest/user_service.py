@@ -36,6 +36,8 @@ class UserService(MainService):
             user_email: str -> The email of the user to get
         """
         super().check_permissions(EnumRole.USER, email, password)
+        if email.lower() != user_email.lower():
+            return {"Error": "User can't display data of other user!"}, HTTPStatus.FORBIDDEN
         data = self.users.find_one({'email': user_email})
         if data is None:
             return {"Error": "Can't find user with email: " + user_email}, HTTPStatus.NOT_FOUND
@@ -64,6 +66,8 @@ class UserService(MainService):
         # user_obj .update(new_user)  # update user with new_user
         # new_user_to_json = json.loads(json_util.dumps(user_obj.toJSON()))
         if new_user.get('password') is not None and new_user.get('password') != '':
+            if pbkdf2_sha256.verify(str(new_user.get('password')),user['password']):
+                return {"Error": "Can't change password to the same password"}, HTTPStatus.BAD_REQUEST
             new_user['password'] = pbkdf2_sha256.encrypt(new_user['password'])
         self.users.update_one({'email': user_email_to_update}, {'$set': new_user})  # update user in database
         return '', HTTPStatus.NO_CONTENT

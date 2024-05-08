@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from pathlib import Path
-from tests.conftest import create_user, create_admin_user
+from tests.conftest import create_user, create_admin_user, create_object
 from tests.conftest import userService, LOGGER
 
 resource_path = Path(__file__).parent / 'resources'
@@ -86,6 +86,30 @@ def test_create_command_3(client):
 
     path = f'/wastewise/commands?email={user["email"]}&password={user["password"]}'
     LOGGER.info(f"Path: {path}")
+    
+
+    # TODO: by admin
+    LOGGER.info("Creating admin user")
+    admin = create_admin_user()
+    LOGGER.info("Admin user created")
+    
+    LOGGER.info("Creating object")
+    object = {
+        "type": "PUBLIC_FACILITY",
+        "data": {
+            "name": "Recycle Facility",
+            "bin_type": "paper",
+            "location": {
+                "coordinates": [
+                    34.752834537498536,
+                    32.03852621707681
+                ]
+            }
+        }
+    }
+    
+    object = create_object(user, object)
+    LOGGER.info("Object created")
 
     command_type = "DIRECT"
     LOGGER.info(f"Command type: {command_type}")

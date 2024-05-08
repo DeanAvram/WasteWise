@@ -34,9 +34,15 @@ class ObjectService(MainService):
 
         super().check_permissions(EnumRole.USER, email, password)
 
+
         data = self.objects.find_one({'_id': object_id})
+        
         if data is None:
             return {"Error": "Can't find object with id: " + object_id}, HTTPStatus.NOT_FOUND
+        
+        if data['created_by'] != email:
+            return {"Error": "User does not have permission to access this object"}, HTTPStatus.FORBIDDEN
+        
         return json.loads(json_util.dumps(data)), HTTPStatus.OK
 
     def update_object(self, email: str, password: str, object_id: str, args: dict) -> tuple:
@@ -46,8 +52,13 @@ class ObjectService(MainService):
         MainService.validate_schema(args, object_schema_update)
 
         _object = self.objects.find_one({'_id': object_id})  # get object from database
+        
         if _object is None:
             return {"Error": "Can't find object with id: " + object_id}, HTTPStatus.NOT_FOUND
+        
+        if _object['created_by'] != email:
+            return {"Error": "User does not have permission to access this object"}, HTTPStatus.FORBIDDEN        
+        
         _object = json.loads(json_util.dumps(_object))  # convert to json
 
         _object.update(args)  # update object with args

@@ -52,7 +52,7 @@ class Direct(ICommand):
                 # Filter only objects of type place that are active
                 "$match": {
                     "data.bin_type": bin_type,
-                    "type": "recycle_facility",
+                    "type": "PUBLIC_FACILITY",
                     "active": True
                 }
             },
