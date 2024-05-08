@@ -13,6 +13,10 @@ class ObjectService(MainService):
         self.objects = super().get_db().objects
 
     def create_object(self, email: str, password: str, args: dict) -> tuple:
+        
+        if 'type' not in args:
+            return {"Error": "Type is required"}, HTTPStatus.BAD_REQUEST
+        
         if args['type'] == 'PUBLIC_FACILITY':
             super().check_permissions(EnumRole.ADMIN, email, password)
         else:
