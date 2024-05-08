@@ -75,7 +75,6 @@ def test_create_command_2(client):
 
 
 def test_create_command_3(client):
-    # FIXME: This test is failing, return object not found
     LOGGER.info("Test create command 3")
     LOGGER.info("Valid: yes")
     LOGGER.info("Explain: Direct command")
@@ -87,8 +86,6 @@ def test_create_command_3(client):
     path = f'/wastewise/commands?email={user["email"]}&password={user["password"]}'
     LOGGER.info(f"Path: {path}")
     
-
-    # TODO: by admin
     LOGGER.info("Creating admin user")
     admin = create_admin_user()
     LOGGER.info("Admin user created")
@@ -108,7 +105,7 @@ def test_create_command_3(client):
         }
     }
     
-    object = create_object(user, object)
+    object = create_object(admin, object)
     LOGGER.info("Object created")
 
     command_type = "DIRECT"

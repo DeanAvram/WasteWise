@@ -13,8 +13,11 @@ class ObjectService(MainService):
         self.objects = super().get_db().objects
 
     def create_object(self, email: str, password: str, args: dict) -> tuple:
-
-        super().check_permissions(EnumRole.USER, email, password)
+        if args['type'] == 'PUBLIC_FACILITY':
+            super().check_permissions(EnumRole.ADMIN, email, password)
+        else:
+            super().check_permissions(EnumRole.USER, email, password)
+            
         MainService.validate_schema(args, object_schema)
 
         # create object
