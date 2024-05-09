@@ -135,29 +135,6 @@ class RecycleFacilities(ICommand):
         return result, HTTPStatus.CREATED
 
 
-class AddPlace(ICommand):
-    def execute(self, data: dict, email: str):
-        error = validate_schema(data, add_place_command_schema)
-        if error is not None:
-            return error
-        # Extract the location from the request
-        lng = data.get("data").get("location").get("lng")
-        lat = data.get("data").get("location").get("lat")
-        # Create a GeoJSON object
-
-        # Create a new object
-        obj = Object("place", email)
-        obj.data = {
-            "name": data.get("data").get("name"),
-            "location": {
-                "coordinates": [lng, lat]
-            }
-        }
-        # Insert the object into the database
-        MainService().get_db().objects.insert_one(json.loads(obj.toJSON()))
-        return json.loads(obj.toJSON()), HTTPStatus.CREATED
-
-
 class CommandNotFound(ICommand):
     def execute(self, data, email):
         return {

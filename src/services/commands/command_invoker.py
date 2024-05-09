@@ -23,8 +23,6 @@ class CommandInvoker:
             self.command = History()
         elif _type == "FACILITIES":
             self.command = RecycleFacilities()
-        elif _type == "ADD_PLACE":
-            self.command = AddPlace()
         elif _type == "GENERAL":
             self.command = General()
         else:
