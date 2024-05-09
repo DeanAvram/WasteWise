@@ -1,5 +1,5 @@
 from src.services.commands.command_interface import ICommand
-from src.services.commands.commands_exec import Direct, History, RecycleFacilities, AddPlace, CommandNotFound, General
+from src.services.commands.commands_exec import Direct, History, RecycleFacilities, CommandNotFound, General
 
 
 class CommandInvoker:
