@@ -31,6 +31,7 @@ class Direct(ICommand):
         error = validate_schema(data, direct_command_schema)
         if error is not None:
             return error
+        
         lng = data.get("data").get("location").get("lng")
         lat = data.get("data").get("location").get("lat")
         bin_type = data.get("data").get("bin_type")
