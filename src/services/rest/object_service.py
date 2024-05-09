@@ -16,11 +16,12 @@ class ObjectService(MainService):
         
         if 'type' not in args:
             return {"Error": "Type is required"}, HTTPStatus.BAD_REQUEST
-        
-        if args['type'] == 'PUBLIC_FACILITY':
+
+        super().check_permissions(EnumRole.ADMIN, email, password, object_type='PUBLIC_FACILITY')
+        '''if args['type'] == 'PUBLIC_FACILITY':
             super().check_permissions(EnumRole.ADMIN, email, password)
         else:
-            super().check_permissions(EnumRole.USER, email, password)
+            super().check_permissions(EnumRole.USER, email, password)'''
             
         MainService.validate_schema(args, object_schema)
 

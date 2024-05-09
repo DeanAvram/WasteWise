@@ -5,7 +5,7 @@ from pymongo import ASCENDING
 
 
 def calc_to_skip(page: int, limit: int) -> int:
-    return page * limit
+    return (page - 1) * limit
 
 
 class AdminService(MainService):
