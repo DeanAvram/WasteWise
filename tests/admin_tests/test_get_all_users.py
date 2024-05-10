@@ -1,16 +1,14 @@
 from http import HTTPStatus
 from pathlib import Path
 
-from tests.conftest import create_user, create_admin_user
+from tests.conftest import LOGGER, create_user, create_admin_user
 
 resource_path = Path(__file__).parent / 'resources'
 
 
 def test_get_all_users_1(client):
-    """Get all user test
-        Valid: yes
-        Explain: valid GET request
-    """
+    LOGGER.info('Test get all users 1')
+    LOGGER.info('1 user and 1 admin')
     admin = create_admin_user()
     user = create_user("User", "user@gmail.com", "Testing193!", "USER")
     
@@ -20,13 +18,11 @@ def test_get_all_users_1(client):
     
     assert response.status_code == HTTPStatus.OK
     assert len(response.json) == 2
+    LOGGER.info('Test passed\n')
 
 
 def test_get_all_users_2(client):
-    """Get all user test
-        Valid: no
-        Explain: USER try to get all users
-    """
+    LOGGER.info('Test get all users 2')
     admin = create_admin_user()
     user = create_user("User", "user@gmail.com", "Testing193!", "USER")
 
@@ -36,5 +32,6 @@ def test_get_all_users_2(client):
 
     assert response.status_code == HTTPStatus.FORBIDDEN
     
+    LOGGER.info('Test passed\n')
 
     
