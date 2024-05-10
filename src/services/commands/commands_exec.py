@@ -126,7 +126,7 @@ class RecycleFacilities(ICommand):
                     "$centerSphere": [curr_location["coordinates"], radius / 6371]
                 }
             },
-            "type": "recycle_facility",
+            "type": "PUBLIC_FACILITY",
             "active": True
         }
 
