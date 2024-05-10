@@ -242,7 +242,7 @@ def test_create_command_5(client):
 def test_create_command_6(client):
     LOGGER.info("Test create command 6")
     LOGGER.info("Valid: yes")
-    LOGGER.info("Explain: History command of 1 command")
+    LOGGER.info("Explain: History command of 1 image")
     
     LOGGER.info("Creating user")
     user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
@@ -470,7 +470,10 @@ def test_create_command_9(client):
     LOGGER.info(f'Response: {response.json}')
 
     LOGGER.info(f'Http Status: {response.status_code}')
-
+    
+    assert response.status_code == HTTPStatus.CREATED
+    assert len(response.json) == 2 
+    LOGGER.info(f'Test Passed\n')
 
 
      
