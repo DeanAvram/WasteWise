@@ -236,5 +236,165 @@ def test_create_command_5(client):
     )
     LOGGER.info(f'Response: {response.json}')
     LOGGER.info(f'Status code: {response.status_code}')
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    LOGGER.info(f'Test passed\n')
     
+    
+def test_create_command_6(client):
+    LOGGER.info("Test create command 6")
+    LOGGER.info("Valid: yes")
+    LOGGER.info("Explain: History command of 1 command")
+    
+    LOGGER.info("Creating user")
+    user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info("User created")
+    
+    LOGGER.info("Add Classifications")
+    
+    image = open('tests/test_data/images/glass.jpg', 'rb')
+    assert image is not None
+    LOGGER.info("Image opened")
+    
+    path = f'/wastewise/classify?email={user["email"]}&password={user["password"]}'
+    LOGGER.info(f"Path: {path}")    
+    
+    LOGGER.info("Sending request")
+    response = client.post(
+            path,
+            data=image,
+            content_type='image/jpeg'
+        )
+    LOGGER.info(f'Response: {response.json}')
+    LOGGER.info(f'Status code: {response.status_code}')
+    assert response.status_code == HTTPStatus.CREATED
+    LOGGER.info("Classification is glass") if response.json['classification'] == 'glass' else LOGGER.error("Classification is not glass")
+    
+    LOGGER.info(f'Create History Command')
+    path = f'/wastewise/commands?email={user["email"]}&password={user["password"]}'
+
+    command_type = 'HISTORY'
+
+    command = {
+        "type": command_type,
+        "data": {
+            "period": "WEEK"
+        }
+    }
+    LOGGER.info(f'Command = {command}')
+
+    response = client.post(
+        path,
+        json=command
+    )
+
+    LOGGER.info(f'Respone = {response.json}')
+    LOGGER.info(f'Status code = {response.status_code}')
+    assert response.status_code == HTTPStatus.CREATED
+    LOGGER.info('Test passed\n')
+
+
+
+def test_create_command_7(client):
+    LOGGER.info("Test create command 7")
+    LOGGER.info("Valid: yes")
+    LOGGER.info("Explain: History command of 2 commands")
+    
+    LOGGER.info("Creating user")
+    user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info("User created")
+    
+    LOGGER.info("Add Classification 1")
+    
+    image = open('tests/test_data/images/glass.jpg', 'rb')
+    assert image is not None
+    LOGGER.info("Image opened")
+    
+    path = f'/wastewise/classify?email={user["email"]}&password={user["password"]}'
+    LOGGER.info(f"Path: {path}")    
+    
+    LOGGER.info("Sending request")
+    response = client.post(
+            path,
+            data=image,
+            content_type='image/jpeg'
+        )
+    LOGGER.info(f'Response: {response.json}')
+    LOGGER.info(f'Status code: {response.status_code}')
+    assert response.status_code == HTTPStatus.CREATED
+    LOGGER.info("Classification is glass") if response.json['classification'] == 'glass' else LOGGER.error("Classification is not glass")
+    
+    LOGGER.info("Add Classification 2")
+    image = open('tests/test_data/images/plastic.jpeg', 'rb')
+    assert image is not None
+    LOGGER.info("Image opened")
+
+    path = f'/wastewise/classify?email={user["email"]}&password={user["password"]}'
+    LOGGER.info(f"Path: {path}")    
+    
+    LOGGER.info("Sending request")
+    response = client.post(
+            path,
+            data=image,
+            content_type='image/jpeg'
+        )
+    LOGGER.info(f'Response: {response.json}')
+    LOGGER.info(f'Status code: {response.status_code}')
+    assert response.status_code == HTTPStatus.CREATED
+    LOGGER.info("Classification is plastic") if response.json['classification'] == 'plastic' else LOGGER.error("Classification is not glass")
+    
+
+    LOGGER.info(f'Create History Command')
+    path = f'/wastewise/commands?email={user["email"]}&password={user["password"]}'
+
+    command_type = 'HISTORY'
+
+    command = {
+        "type": command_type,
+        "data": {
+            "period": "WEEK"
+        }
+    }
+    LOGGER.info(f'Command = {command}')
+
+    response = client.post(
+        path,
+        json=command
+    )
+
+    LOGGER.info(f'Respone = {response.json}')
+    LOGGER.info(f'Status code = {response.status_code}')
+    assert response.status_code == HTTPStatus.CREATED
+    assert len(response.json) == 2
+    LOGGER.info('Test passed\n')
+    
+def test_create_command_8(client):
+    LOGGER.info("Test create command 8")
+    LOGGER.info("Valid: yes")
+    LOGGER.info("Explain: History command of 0 commands")
+
+    LOGGER.info("Creating user")
+    user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info("User created")
+
+    LOGGER.info(f'Create History Command')
+    path = f'/wastewise/commands?email={user["email"]}&password={user["password"]}'
+
+    command_type = 'HISTORY'
+
+    command = {
+        "type": command_type,
+        "data": {
+            "period": "WEEK"
+        }
+    }
+    LOGGER.info(f'Command = {command}')
+
+    response = client.post(
+        path,
+        json=command
+    )
+
+    LOGGER.info(f'Respone = {response.json}')
+    LOGGER.info(f'Status code = {response.status_code}')
+    assert response.status_code == HTTPStatus.CREATED
+    LOGGER.info('Test passed\n')
