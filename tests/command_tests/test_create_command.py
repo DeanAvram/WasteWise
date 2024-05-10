@@ -239,7 +239,6 @@ def test_create_command_5(client):
     assert response.status_code == HTTPStatus.NOT_FOUND
     LOGGER.info(f'Test passed\n')
     
-    
 def test_create_command_6(client):
     LOGGER.info("Test create command 6")
     LOGGER.info("Valid: yes")
@@ -291,8 +290,6 @@ def test_create_command_6(client):
     LOGGER.info(f'Status code = {response.status_code}')
     assert response.status_code == HTTPStatus.CREATED
     LOGGER.info('Test passed\n')
-
-
 
 def test_create_command_7(client):
     LOGGER.info("Test create command 7")
@@ -398,3 +395,82 @@ def test_create_command_8(client):
     LOGGER.info(f'Status code = {response.status_code}')
     assert response.status_code == HTTPStatus.CREATED
     LOGGER.info('Test passed\n')
+
+def test_create_command_9(client):
+    LOGGER.info("Test create command 8")
+    LOGGER.info("Valid: yes")
+    LOGGER.info("Explain: Get Places")
+
+    LOGGER.info("Creating user")
+    user: dict = create_user("User", "user@gmail.com", "Testing193!", "USER")
+    LOGGER.info("User created")
+    
+    LOGGER.info("Create Admin")
+    admin = create_admin_user()
+    LOGGER.info('Admin Created')
+
+    LOGGER.info('Create Recycle Facilites')
+
+    LOGGER.info("Creating object 1")
+    object1 = {
+        "type": "PUBLIC_FACILITY",
+        "data": {
+            "name": "Recycle Facility 1",
+            "bin_type": "paper",
+            "location": {
+                "coordinates": [
+                   31.5516,34.6742
+                ]
+            }
+        }
+    }
+    object = create_object(admin, object1)
+    LOGGER.info(f'Object {object}')
+
+    LOGGER.info("Creating object 2")
+    object2 = {
+        "type": "PUBLIC_FACILITY",
+        "data": {
+            "name": "Recycle Facility 2",
+            "bin_type": "paper",
+            "location": {
+                "coordinates": [
+                   31.89549,35.00969
+                ]
+            }
+        }
+    }
+    object = create_object(admin, object2) 
+    LOGGER.info(f'Object {object}')
+
+    LOGGER.info('Create Command')
+    path = f'/wastewise/commands?email={user["email"]}&password={user["password"]}'
+    LOGGER.info(f"Path: {path}")
+
+    command_type = "FACILITIES"
+    LOGGER.info(f"Command type: {command_type}")
+
+    command = {
+        "type": command_type,
+        "data": {
+            "location": {
+                "lng": 31.89521,
+                "lat":35.00946 
+            },
+            "radius":1000000000000000
+        }
+    }
+    LOGGER.info(f'Command: {command}')
+    
+    response = client.post(
+        path,
+        json=command
+    )
+
+    LOGGER.info(f'Response: {response.json}')
+
+    LOGGER.info(f'Http Status: {response.status_code}')
+
+
+
+     
