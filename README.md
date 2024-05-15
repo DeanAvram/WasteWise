@@ -10,10 +10,139 @@ The user will scan a waste with his camera. With the image classification algori
 
 The app is connecting to many APIs and maps to find the closest relevant recycling facility to the user.
 
+## API Specification
+
+## User
+
+### Create new User
+```
+POST /wastewise/users
+```
+Request Body:
+```json
+{
+  "name": "<NAME>",
+  "email": "<EMAIL>",
+  "password": "<PASSWORD>",
+  "role": "<Role>"
+}
+```
+
+Response:
+```json
+{
+  "name": "<NAME>",
+  "email": "<EMAIL>",
+  "password": "<PASSWORD>",
+  "role": "<Role>"
+}
+```
+### Get User
+```
+GET /wastewise/users?email=<EMAIL>?email=<LOGGED_IN_USER_EMAIL>&password=<LOGGED_IN_USER_PASSWORD>
+```
+
+Response:
+```json
+{
+  "name": "<NAME>",
+  "email": "<EMAIL>",
+  "password": "<PASSWORD>",
+  "role": "<Role>"
+}
+```
+
+### Update User
+```
+PUT /wastewise/users
+```
+```json
+{
+  "email": "<EMAIL>",
+  "name": "<NAME>",
+  "password": "<PASSWORD>"
+}
+```
+
+## Object
+
+### Create new Object
+```
+POST /wastewise/objects?email=<USER_EMAIL>&password=<USER_PASSWORD>
+```
+Request Body:
+```json
+{
+  "type": "<TYPE>",
+  "active": "<ACTIVE>",
+  "data": {
+    "location": {
+      "lng": "<LNG>",
+      "lat": "<LAT>"
+    }
+  }
+}
+```
+
+Response:
+```json
+{
+  "_id": "<ID>",
+  "active": "<ACTIVE>",
+  "created_by": "<CREATED_BY>",
+  "type": "<TYPE>",
+  "data": {
+    "location": {
+      "lng": "<LNG>",
+      "lat": "<LAT>"
+    }
+  }
+}
+```
+
+### Get Object
+```
+GET /wastewise/objects/<OBJECT_ID>?email=<USER_EMAIL>&password=<USER_PASSWORD>
+```
+
+Response:
+```json
+{
+  "_id": "<ID>",
+  "active": "<ACTIVE>",
+  "created_by": "<CREATED_BY>",
+  "type": "<TYPE>",
+  "data": {
+    "location": {
+      "lng": "<LNG>",
+      "lat": "<LAT>"
+    }
+  }
+}
+```
+
+### Update Object
+```
+PUT /wastewise/objects/<OBJECT_ID>?email=<USER_EMAIL>&password=<USER_PASSWORD>
+```
+
+Request Body:
+```json
+{
+  "active": "<ACTIVE>",
+  "data": {
+    "location": {
+      "lng": "<LNG>",
+      "lat": "<LAT>"
+    }
+  }
+}
+```
+
 ## Commands
 
-```bash
-/wastewise/commands?email=<USER_EMAIL>
+```
+POST /wastewise/commands?email=<USER_EMAIL>&password=<USER_PASSWORD>
 ```
 
 ### Direct
@@ -22,17 +151,38 @@ Execute this command to find the closest recycling facility to the user
 
 Returns the closest recycling facilities
 
-Required body:
+Request body:
 
 ```json
 {
   "type": "DIRECT",
   "data": {
+    "bin_type": "<BIN_TYPE>",
     "location": {
       "lng": "<LNG>",
       "lat": "<LAT>"
     }
   }
+}
+```
+
+Response:
+
+```json
+{
+  "_id": "<ID>",
+  "active": "true",
+  "created_by": "<CREATED_BY>",
+  "data": {
+    "bin_type": "<BIN_TYPE>",
+    "name": "<NAME>",
+    "location": {
+      "lng": "<LNG>",
+      "lat": "<LAT>"
+    }
+  },
+  "distance": "<DISTANCE>",
+  "type": "PUBLIC_FACILITY"
 }
 ```
 
@@ -42,36 +192,13 @@ Execute this command to find the history of the user's classifications
 
 Returns a list of classifications of a user in a specific period of time
 
-The user's email is extracted from the query parameter
-
-Required body:
+Request body:
 
 ```json
 {
   "type": "HISTORY",
   "data": {
     "period": "EnumPeriod"
-  }
-}
-```
-
-### Add Place
-
-Execute this command to add a new recycling facility to the database
-
-Returns the new recycling facility and add it to the database
-
-Required body:
-
-```json
-{
-  "type": "ADD_PLACE",
-  "data": {
-    "name": "<NAME>",
-    "location": {
-      "lng": "<LNG>",
-      "lat": "<LAT>"
-    }
   }
 }
 ```
@@ -86,7 +213,7 @@ Required body:
 
 ```json
 {
-  "type": "PLACES",
+  "type": "FACILITIES",
   "data": {
     "location": {
       "lng": "<LNG>",
@@ -102,7 +229,11 @@ Required body:
 Execute this command to classify the type of the waste
 Returns the type of the waste and add a classification object to the database
 The classification object contains the type of the waste, and the time of the classification
-Require a file in the body of the request
+Require a binary file in the body of the request
+
+```
+POST /wastewise/classify?email=<USER_EMAIL>&password=<USER_PASSWORD>
+```
 
 ## Venv
 
