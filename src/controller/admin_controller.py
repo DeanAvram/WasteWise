@@ -17,10 +17,12 @@ def get_all_users():
       - in: query
         name: email
         type: string
+        required: true
         description: The email of the logged in user.
       - in: query
         name: password
         type: string
+        required: true
         description: The password of the logged in user.
       - in: query
         name: limit
@@ -56,10 +58,12 @@ def delete_users():
       - in: query
         name: email
         type: string
+        required: true
         description: The email of the logged in user.
       - in: query
         name: password
         type: string
+        required: true
         description: The password of the logged in user.
     responses:
       400:
@@ -86,10 +90,12 @@ def get_all_objects():
       - in: query
         name: email
         type: string
+        required: true
         description: The email of the logged in user.
       - in: query
         name: password
         type: string
+        required: true
         description: The password of the logged in user.
       - in: query
         name: limit
@@ -124,10 +130,12 @@ def delete_objects():
       - in: query
         name: email
         type: string
+        required: true
         description: The email of the logged in user.
       - in: query
         name: password
         type: string
+        required: true
         description: The password of the logged in user.
     responses:
       400:
@@ -154,10 +162,12 @@ def get_all_commands():
       - in: query
         name: email
         type: string
+        required: true
         description: The email of the logged in user.
       - in: query
         name: password
         type: string
+        required: true
         description: The password of the logged in user.
       - in: query
         name: limit
@@ -193,10 +203,12 @@ def delete_commands():
       - in: query
         name: email
         type: string
+        required: true
         description: The email of the logged in user.
       - in: query
         name: password
         type: string
+        required: true
         description: The password of the logged in user.
     responses:
       204:

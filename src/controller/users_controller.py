@@ -14,14 +14,6 @@ def create_user():
     Create a new user.
     ---
     parameters:
-      - in: query
-        name: email
-        type: string
-        description: The email of the logged in user.
-      - in: query
-        name: password
-        type: string
-        description: The password of the logged in user.
       - name: body
         in: body
         required: true
@@ -71,14 +63,22 @@ def get_user(user_id: str):
       - in: query
         name: email
         type: string
+        required: true
         description: The email of the logged in user.
       - in: query
         name: password
         type: string
+        required: true
         description: The password of the logged in user.
     responses:
       200:
         description: User returned successfully.
+      400:
+        description: Bad request - Invalid input or missing user email or password.
+      401:
+        description: Unauthorized - Invalid credentials.
+      403:
+        description: Forbidden - Insufficient permissions.
       404:
         description: User not found or no user with given email (requester) found.
     """

@@ -17,10 +17,12 @@ def create_command():
       - in: query
         name: email
         type: string
+        required: true
         description: The email of the logged in user.
       - in: query
         name: password
         type: string
+        required: true
         description: The password of the logged in user.
       - name: body
         in: body
