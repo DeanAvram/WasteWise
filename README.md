@@ -12,13 +12,16 @@ The app is connecting to many APIs and maps to find the closest relevant recycli
 
 ## API Specification
 
-## User
+## Users API
 
-### Create new User
-```
-POST /wastewise/users
-```
-Request Body:
+| Description        | HTTP Method | URL                                                                                | Input | Output |
+|--------------------|-------------|------------------------------------------------------------------------------------|-------|--------|
+| Create a new user  | POST        | /wastewise/users                                                                   | User  | User   |
+| Get a user (Login) | GET         | /wastewise/users/{user_email}?email={logged_in_user}&password={logged_in_password} |       | User   |
+| Update a user      | PATCH       | /wastewise/users/{user_email}?email={email}&password={password}                    | User  |        |
+
+
+### User
 ```json
 {
   "name": "<NAME>",
@@ -28,122 +31,58 @@ Request Body:
 }
 ```
 
-Response:
+## Objects API
+
+
+| Description         | HTTP Method | URL                                                              | Input      | Output |
+|---------------------|-------------|------------------------------------------------------------------|------------|--------|
+| Create a new object | POST        | /wastewise/objects?email={email]&password={password}             | New object | Object |
+| Get an object       | GET         | /wastewise/objects/{object_id}?email={email}&password={password} |            | Object |
+| Update an object    | PATCH       | /wastewise/objects/{object_id}?email={email}&password={password} | New Object |        |
+
+
+### New Object
 ```json
 {
-  "name": "<NAME>",
-  "email": "<EMAIL>",
-  "password": "<PASSWORD>",
-  "role": "<Role>"
-}
-```
-### Get User
-```
-GET /wastewise/users?email=<EMAIL>?email=<LOGGED_IN_USER_EMAIL>&password=<LOGGED_IN_USER_PASSWORD>
-```
-
-Response:
-```json
-{
-  "name": "<NAME>",
-  "email": "<EMAIL>",
-  "password": "<PASSWORD>",
-  "role": "<Role>"
-}
-```
-
-### Update User
-```
-PUT /wastewise/users
-```
-```json
-{
-  "email": "<EMAIL>",
-  "name": "<NAME>",
-  "password": "<PASSWORD>"
-}
-```
-
-## Object
-
-### Create new Object
-```
-POST /wastewise/objects?email=<USER_EMAIL>&password=<USER_PASSWORD>
-```
-Request Body:
-```json
-{
-  "type": "<TYPE>",
+  "type": "<OBJECT_TYPE>",
   "active": "<ACTIVE>",
   "data": {
     "location": {
-      "lng": "<LNG>",
-      "lat": "<LAT>"
+      "coordinates": ["<LNG>", "<LAT>"]
     }
   }
 }
 ```
 
-Response:
+### Object
 ```json
 {
   "_id": "<ID>",
   "active": "<ACTIVE>",
   "created_by": "<CREATED_BY>",
-  "type": "<TYPE>",
+  "type": "<OBJECT_TYPE>",
   "data": {
     "location": {
-      "lng": "<LNG>",
-      "lat": "<LAT>"
+      "coordinates": ["<LNG>", "<LAT>"]
     }
   }
 }
 ```
 
-### Get Object
-```
-GET /wastewise/objects/<OBJECT_ID>?email=<USER_EMAIL>&password=<USER_PASSWORD>
-```
+### Object Types
+- PUBLIC_FACILITY
+- PRIVATE_FACILITY
+- CLASSIFICATION
+- IMAGE
 
-Response:
-```json
-{
-  "_id": "<ID>",
-  "active": "<ACTIVE>",
-  "created_by": "<CREATED_BY>",
-  "type": "<TYPE>",
-  "data": {
-    "location": {
-      "lng": "<LNG>",
-      "lat": "<LAT>"
-    }
-  }
-}
-```
 
-### Update Object
-```
-PUT /wastewise/objects/<OBJECT_ID>?email=<USER_EMAIL>&password=<USER_PASSWORD>
-```
 
-Request Body:
-```json
-{
-  "active": "<ACTIVE>",
-  "data": {
-    "location": {
-      "lng": "<LNG>",
-      "lat": "<LAT>"
-    }
-  }
-}
-```
+## Commands API
 
-## Commands
+| Description          | HTTP Method | URL                                                   | Input              | Output             |
+|----------------------|-------------|-------------------------------------------------------|--------------------|--------------------|
+| Create a new command | POST        | /wastewise/commands?email={email]&password={password} | Any Command object | Any Command Object |
 
-```
-POST /wastewise/commands?email=<USER_EMAIL>&password=<USER_PASSWORD>
-```
 
 ### Direct
 
@@ -224,15 +163,43 @@ Required body:
 }
 ```
 
-### Classify
+Response:
 
-Execute this command to classify the type of the waste
+```json
+[{
+  "_id": "<ID>",
+  "active": "true",
+  "created_by": "<CREATED_BY>",
+  "data": {
+    "name": "<NAME>",
+    "bin_type": "<BIN_TYPE>",
+    "location": {
+      "coordinates": ["<LNG>", "<LAT>"]
+    }
+  },
+  "distance": "<DISTANCE>",
+  "type": "PUBLIC_FACILITY"
+}]
+```
+
+### Classify API
+
+| Description      | HTTP Method | URL                                                   | Input | Output         |
+|------------------|-------------|-------------------------------------------------------|-------|----------------|
+| Classify a waste | POST        | /wastewise/classify?email={email]&password={password} | Image | classification |
+
+
+Execute this api to classify the type of the waste
 Returns the type of the waste and add a classification object to the database
 The classification object contains the type of the waste, and the time of the classification
 Require a binary file in the body of the request
 
-```
-POST /wastewise/classify?email=<USER_EMAIL>&password=<USER_PASSWORD>
+### classification
+
+```json
+{
+  "classification": "<CLASSIFICATION>"
+}
 ```
 
 ## Venv
