@@ -14,11 +14,11 @@ The app is connecting to many APIs and maps to find the closest relevant recycli
 
 ## Users API
 
-| Description        | HTTP Method | URL                                                                                | Input | Output |
-|--------------------|-------------|------------------------------------------------------------------------------------|-------|--------|
-| Create a new user  | POST        | /wastewise/users                                                                   | User  | User   |
-| Get a user (Login) | GET         | /wastewise/users/{user_email}?email={logged_in_user}&password={logged_in_password} |       | User   |
-| Update a user      | PATCH       | /wastewise/users/{user_email}?email={email}&password={password}                    | User  |        |
+| Description        | HTTP Method | URL                                                                                | Input         | Output        |
+|--------------------|-------------|------------------------------------------------------------------------------------|---------------|---------------|
+| Create a new user  | POST        | /wastewise/users                                                                   | [User](#User) | [User](#User) |
+| Get a user (Login) | GET         | /wastewise/users/{user_email}?email={logged_in_user}&password={logged_in_password} |               | [User](#User) |
+| Update a user      | PATCH       | /wastewise/users/{user_email}?email={email}&password={password}                    | [User](#User) |               |
 
 
 ### User
@@ -34,11 +34,11 @@ The app is connecting to many APIs and maps to find the closest relevant recycli
 ## Objects API
 
 
-| Description         | HTTP Method | URL                                                              | Input      | Output |
-|---------------------|-------------|------------------------------------------------------------------|------------|--------|
-| Create a new object | POST        | /wastewise/objects?email={email]&password={password}             | New object | Object |
-| Get an object       | GET         | /wastewise/objects/{object_id}?email={email}&password={password} |            | Object |
-| Update an object    | PATCH       | /wastewise/objects/{object_id}?email={email}&password={password} | New Object |        |
+| Description         | HTTP Method | URL                                                              | Input                     | Output            |
+|---------------------|-------------|------------------------------------------------------------------|---------------------------|-------------------|
+| Create a new object | POST        | /wastewise/objects?email={email]&password={password}             | [New object](#New-Object) | [Object](#Object) |
+| Get an object       | GET         | /wastewise/objects/{object_id}?email={email}&password={password} |                           | [Object](#Object) |
+| Update an object    | PATCH       | /wastewise/objects/{object_id}?email={email}&password={password} | [New object](#New-Object) |                   |
 
 
 ### New Object
@@ -184,9 +184,9 @@ Response:
 
 ### Classify API
 
-| Description      | HTTP Method | URL                                                   | Input | Output         |
-|------------------|-------------|-------------------------------------------------------|-------|----------------|
-| Classify a waste | POST        | /wastewise/classify?email={email]&password={password} | Image | classification |
+| Description      | HTTP Method | URL                                                   | Input | Output                            |
+|------------------|-------------|-------------------------------------------------------|-------|-----------------------------------|
+| Classify a waste | POST        | /wastewise/classify?email={email]&password={password} | Image | [Classification](#Classification) |
 
 
 Execute this api to classify the type of the waste
@@ -194,7 +194,7 @@ Returns the type of the waste and add a classification object to the database
 The classification object contains the type of the waste, and the time of the classification
 Require a binary file in the body of the request
 
-### classification
+### Classification
 
 ```json
 {
