@@ -24,10 +24,10 @@ The app is connecting to many APIs and maps to find the closest relevant recycli
 ### User
 ```json
 {
-  "name": "<NAME>",
-  "email": "<EMAIL>",
-  "password": "<PASSWORD>",
-  "role": "<Role>"
+  "name": "Moshe",
+  "email": "moshe@mail.com",
+  "password": "Abcd1234!",
+  "role": "User"
 }
 ```
 
@@ -44,11 +44,13 @@ The app is connecting to many APIs and maps to find the closest relevant recycli
 ### New Object
 ```json
 {
-  "type": "<OBJECT_TYPE>",
-  "active": "<ACTIVE>",
+  "type": "PUBLIC_FACILITY",
+  "active": true,
   "data": {
+    "name": "מגדל שרשן 18",
+    "bin_type": "glass",
     "location": {
-      "coordinates": ["<LNG>", "<LAT>"]
+      "coordinates": [0.0, 0.0]
     }
   }
 }
@@ -57,13 +59,15 @@ The app is connecting to many APIs and maps to find the closest relevant recycli
 ### Object
 ```json
 {
-  "_id": "<ID>",
-  "active": "<ACTIVE>",
-  "created_by": "<CREATED_BY>",
-  "type": "<OBJECT_TYPE>",
+  "_id": "5b25e395-12d6-11ef-8521-0c7a15236f90",
+  "active": true,
+  "created_by": "bins_admin@mail.com",
+  "type": "PUBLIC_FACILITY",
   "data": {
+    "name": "מגדל שרשן 18",
+    "bin_type": "glass",
     "location": {
-      "coordinates": ["<LNG>", "<LAT>"]
+      "coordinates": [0.0, 0.0]
     }
   }
 }
@@ -167,18 +171,58 @@ Response:
 
 ```json
 [{
-  "_id": "<ID>",
-  "active": "true",
-  "created_by": "<CREATED_BY>",
+  "_id": "5b25e395-12d6-11ef-8521-0c7a15236f90",
+  "active": true,
+  "created_by": "bins_admin@mail.com",
   "data": {
-    "name": "<NAME>",
-    "bin_type": "<BIN_TYPE>",
+    "name": "מגדל שרשן 18",
+    "bin_type": "glass",
     "location": {
-      "coordinates": ["<LNG>", "<LAT>"]
+      "coordinates": [0.0, 0.0]
     }
   },
-  "distance": "<DISTANCE>",
+  "distance": 180,
   "type": "PUBLIC_FACILITY"
+}]
+```
+
+
+### Get Private Facilities
+
+Execute this command to get all the private recycling facilities of a specific user
+
+Returns a list of recycling facilities in a specific radius
+
+Required body:
+
+```json
+{
+  "type": "PRIVATE_FACILITIES",
+  "data": {
+    "bin_type": "<BIN_TYPE>"
+  }
+}
+```
+
+Response:
+
+```json
+[{
+        "_id": "9fc0bf3b-2753-11ef-9bd9-0c7a15236f94",
+        "active": true,
+        "created_by": "user@gmail.com",
+        "data": {
+            "bin_type": "glass",
+            "location": {
+                "coordinates": [
+                    34.80354728937988,
+                    32.07512400933965
+                ]
+            },
+            "name": "Katzenelson St 18, Giv'atayim, Israel",
+            "private_name": "Work"
+        },
+        "type": "PRIVATE_FACILITY"
 }]
 ```
 
