@@ -1,18 +1,15 @@
-import json
-from typing import Tuple, Dict
+from datetime import datetime, timedelta
+from http import HTTPStatus
 
 import pymongo
 from flask import abort, make_response, jsonify
-
-from src.data.object import Object
-from src.services.commands.command_interface import ICommand
-from src.services.rest.main_service import MainService
-from http import HTTPStatus
 from jsonschema import ValidationError, validate
-from src.services.input_validation import direct_command_schema, history_command_schema, add_place_command_schema, \
-    get_places_command_schema
-from datetime import datetime, timedelta
+
 from src.data.enum_periods import EnumPeriod
+from src.services.commands.command_interface import ICommand
+from src.services.input_validation import direct_command_schema, history_command_schema, get_places_command_schema, \
+    get_private_facilities_command_schema
+from src.services.rest.main_service import MainService
 
 
 def validate_schema(data, schema):
@@ -128,6 +125,24 @@ class RecycleFacilities(ICommand):
             },
             "type": "PUBLIC_FACILITY",
             "active": True
+        }
+
+        # return all places in the relevant radius
+        result = list(MainService().get_db().objects.find(query))
+        return result, HTTPStatus.CREATED
+
+
+class PrivateFacilities(ICommand):
+    def execute(self, data: dict, email: str):
+        error = validate_schema(data, get_private_facilities_command_schema)
+        if error is not None:
+            return error
+        # Extract the location from the request
+        query = {
+            "type": "PRIVATE_FACILITY",
+            "active": True,
+            "created_by": email,
+            "data.bin_type": data.get("data").get("bin_type").lower()
         }
 
         # return all places in the relevant radius

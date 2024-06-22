@@ -1,5 +1,6 @@
 from src.services.commands.command_interface import ICommand
-from src.services.commands.commands_exec import Direct, History, RecycleFacilities, CommandNotFound, General
+from src.services.commands.commands_exec import (Direct, History, RecycleFacilities, PrivateFacilities,
+                                                 CommandNotFound, General)
 
 
 class CommandInvoker:
@@ -23,6 +24,8 @@ class CommandInvoker:
             self.command = History()
         elif _type == "FACILITIES":
             self.command = RecycleFacilities()
+        elif _type == "PRIVATE_FACILITIES":
+            self.command = PrivateFacilities()
         elif _type == "GENERAL":
             self.command = General()
         else:

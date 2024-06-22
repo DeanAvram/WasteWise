@@ -269,3 +269,25 @@ get_places_command_schema = {
     "required": ["type", "data"],
     "additionalProperties": False
 }
+
+get_private_facilities_command_schema = {
+    "title": "Private Facilities Command",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "bin_type": {
+                    "type": "string"
+                },
+            },
+            "required": ["bin_type"],
+            "additionalProperties": False
+        }
+    },
+    "required": ["type", "data"],
+    "additionalProperties": False
+}
